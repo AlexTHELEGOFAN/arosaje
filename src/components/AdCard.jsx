@@ -6,8 +6,8 @@ import dayjs from "dayjs"
 
 // ** Event card
 // { advert }
-function AdCard({ ads }) {
-  console.log(ads)
+function AdCard({ advert }) {
+  console.log(advert)
   //   const items = [
   //     { value: 100_000_000, label: 'Planifié' },
   //     { value: 100_000_001, label: 'Terminé' },
@@ -15,33 +15,29 @@ function AdCard({ ads }) {
   //   const stateName = items.find((item) => item.value === event.state);
 
   return (
-    <div className="bg-white py-4 pl-7 pr-5 border-2 border-solid border-lightgrey-200 rounded-2xl mb-5">
+    <div className="bg-green-100 py-4 pl-7 pr-5 border-2 border-solid border-lightgrey-200 rounded-2xl mb-5">
       <div className="flex justify-between items-center align-center mb-3">
         <h1 className="truncate block">
           {/* {!event.name ? 'Evenement sans nom' : event.name} */}
         </h1>
 
         <div className="status-tag bg-lightgrey-100">
-          <p className=" text-lightgrey-300 font-normal">
-            {/* {!stateName.label ? 'Aucun status' : stateName.label} */}
-          </p>
+          <img
+            // max-width="70%"
+            src={advert.image_annonce}
+            alt={advert.titre_annonce}
+            className="bg-green-100 block ml-auto mr-auto max-w-[90%]"
+          />
         </div>
       </div>
 
       <div className="flex my-2 ">
         <ul className="w-[100px]">
-          <li className="event-field pb-2">Utilisateur</li>
-          <li className="event-field pb-2">Titre</li>
+          <li className="event-field pb-2">{advert.nom_proprio}</li>
+          <li className="event-field pb-2">{advert.titre_annonce}</li>
           <li className="event-field pb-2">Type</li>
-          <li className="event-field pb-2">Prix</li>
+          <li className="event-field pb-2">{advert.prix_annonce} €</li>
         </ul>
-
-        <img
-          width="30%"
-          src={ads.img}
-          alt={ads.title}
-          className="bg-green-100 flex ml-[35%]"
-        />
       </div>
 
       <div className="flex md:justify-end xs:justify-center">

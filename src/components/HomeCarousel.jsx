@@ -2,19 +2,42 @@ import * as React from "react"
 import { Link } from "gatsby"
 import Carousel from "better-react-carousel"
 
-const HomeCarousel = ({ ads }) => {
-  console.log(ads)
+const HomeCarousel = ({ advert }) => {
+  console.log(advert)
+
   return (
-    <Carousel cols={1} rows={1} gap={100} scrollSnap={true} showDots={true}>
-      {ads ? (
-        ads.map(ads => (
+    <Carousel
+      cols={3}
+      rows={1}
+      gap={50}
+      scrollSnap={true}
+      showDots={true}
+      dotColorActive="green"
+      dotColorInactive="#c7cccf"
+    >
+      {advert ? (
+        advert.map(advert => (
           <Carousel.Item>
-            <img
-              width="30%"
-              src={ads.img}
-              alt={ads.title}
-              className="bg-green-100 flex ml-[35%]"
-            />
+            <div className="pl-[2.5rem] pt-5">
+              <img
+                // width="90%"
+                src={advert.image_annonce}
+                alt={advert.nom_plante}
+                className="drop-shadow-md pb-1"
+              />
+              <div className="">
+                <div className="flex font-medium text-xl">
+                  {advert.titre_annonce}
+                </div>
+                <div className="flex pb-1">{advert.prix_annonce} €</div>
+                <div className="flex justify-between">
+                  <p>{advert.adresse_plante}</p>
+                  <div>
+                    {advert.nom_proprio} {advert.prenom_proprio}
+                  </div>
+                </div>
+              </div>
+            </div>
           </Carousel.Item>
         ))
       ) : (

@@ -1,5 +1,5 @@
 import * as React from "react"
-import { Link } from "gatsby"
+import { Link, navigate } from "gatsby"
 import Carousel from "better-react-carousel"
 
 const HomeCarousel = ({ advert }) => {
@@ -18,7 +18,10 @@ const HomeCarousel = ({ advert }) => {
       {advert ? (
         advert.map(advert => (
           <Carousel.Item>
-            <div className="pl-[2.5rem] pt-5">
+            <span
+              className="pl-[2.5rem] pt-5"
+              onClick={() => navigate(`/advert/${advert?.id_annonce}/`)}
+            >
               <img
                 // width="90%"
                 src={advert.image_annonce}
@@ -37,7 +40,7 @@ const HomeCarousel = ({ advert }) => {
                   </div>
                 </div>
               </div>
-            </div>
+            </span>
           </Carousel.Item>
         ))
       ) : (

@@ -5,7 +5,7 @@ import { faPlus, faUser } from "@fortawesome/free-solid-svg-icons"
 
 const Header = ({ siteTitle }) => (
   <header
-    className="bg-green-500 px-4 py-6 flex justify-between items-center"
+    className="bg-headerGreen px-4 py-6 flex justify-between items-center"
     // style={{
     //   margin: `0 auto`,
     //   padding: `var(--space-4) var(--size-gutter)`,
@@ -31,18 +31,15 @@ const Header = ({ siteTitle }) => (
       />
     </div>
 
-    <div>
-      <div>
-        <div>
-          <Link to="/" className="w-5 h-5 text-black">
-            Créer un compte
-          </Link>
-        </div>
-        <div>
-          <Link to="/" className="w-5 h-5 text-black">
-            Se connecter
-          </Link>
-        </div>
+    <div className="flex justify-center">
+      <div className="mr-6">
+        <Link to="/register" className="w-5 h-5 text-black header-button mr-4">
+          Créer un compte
+        </Link>
+
+        <Link to="/login" className="w-5 h-5 text-black header-button">
+          Se connecter
+        </Link>
       </div>
 
       <FontAwesomeIcon icon={faUser} size="2xl" className="w-5 h-5 " />

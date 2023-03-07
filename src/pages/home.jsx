@@ -180,7 +180,7 @@ const HomePage = () => {
         </h1>
 
         {/* <div className="grid justify-center"> */}
-        <div className="flex items-center bg-green-100 px-5 pb-8">
+        <div className="flex items-center bg-secondGreen px-5 pb-8">
           <HomeCarousel advert={adverts} />
         </div>
 

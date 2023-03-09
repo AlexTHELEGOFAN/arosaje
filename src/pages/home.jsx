@@ -4,15 +4,10 @@ import React, { useEffect, useState } from "react"
 
 // ** Gatsby imports
 
-import { Link } from "gatsby"
-
 // ** Packages
 
-import axios from "axios"
-import Cookies from "universal-cookie"
 import { toast } from "react-toastify"
 import Select from "react-select"
-import ReactSelect from "react-select"
 
 // ** Components
 

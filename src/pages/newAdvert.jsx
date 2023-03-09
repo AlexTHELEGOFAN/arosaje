@@ -117,15 +117,9 @@ function NewAdvert() {
                   >
                     Mot de passe *
                   </label>
-                  <button
-                    type="button"
-                    onClick={toggleVisibility}
-                    className="absolute right-2 top-8"
-                  >
-                    {/* <AiFillEye className="w-8 h-6" /> */}
-                  </button>
+
                   <Field
-                    type={inputType}
+                    type="password"
                     name="password"
                     placeholder="Mot de passe"
                     className="w-[250px] md:w-full justify-center login-field"

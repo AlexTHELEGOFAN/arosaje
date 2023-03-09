@@ -1,6 +1,6 @@
 import * as React from "react"
 
-import { Link } from "gatsby"
+import { Link, navigate } from "gatsby"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faPlus, faSearch, faUser } from "@fortawesome/free-solid-svg-icons"
 import { UserContext } from "../context/UserContext"

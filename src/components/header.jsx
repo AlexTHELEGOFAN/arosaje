@@ -8,7 +8,7 @@ import { faSearch, faUser } from "@fortawesome/free-solid-svg-icons"
 
 const Header = ({ siteTitle, currentUser }) => (
   <header
-    className="bg-headerGreen px-4 py-6 flex justify-between items-center"
+    className="bg-headerGreen px-4 py-6 flex justify-between items-center sticky top-0 z-50"
     // style={{
     //   margin: `0 auto`,
     //   padding: `var(--space-4) var(--size-gutter)`,
@@ -36,7 +36,7 @@ const Header = ({ siteTitle, currentUser }) => (
         icon={faSearch}
         size="2xl"
         className="absolute w-4 h-4 right-4 cursor-pointer"
-        // onClick={(e) => setSearchValue(e.target.value)}
+        onClick={window.scrollTo(500, 0)}
       />
     </div>
 

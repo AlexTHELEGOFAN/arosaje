@@ -3,7 +3,9 @@
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { navigate } from "gatsby"
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
+import { useParams } from "react-router-dom"
+import { useQueryParams } from "use-query-params"
 
 import Layout from "../../components/layout"
 
@@ -33,8 +35,24 @@ const fakeAds = [
 ]
 
 const Advert = () => {
+  const param = window.location.href.slice(-2, -1)
   // const { currentUser, setCurrentUser } = useContext(UserContext);
   const { currentAd, setCurrentAd } = useState()
+
+  const fetchCurrentAd = async () => {
+    // try {
+    //   const resCurrentAd = await axios.get()
+    //   setCurrentAd(resCurrentAd.data);
+    // } catch {
+    //   toast.error("Erreur", {
+    //     position: "bottom-right",
+    //   })
+    // }
+  }
+
+  useEffect(() => {
+    // fetchCurrentAd()
+  }, [])
 
   return (
     <Layout>
@@ -54,16 +72,31 @@ const Advert = () => {
         <div className="pr-4">
           <img
             width="80%"
-            src={fakeAds[0].image_annonce}
-            alt={fakeAds[0].nom_plante}
+            src={
+              fakeAds[0].image_annonce
+              // currentAd.image_annonce
+            }
+            alt={
+              fakeAds[0].nom_plante
+              // currentAd.nom_plante
+            }
             className="drop-shadow-md pb-1"
           />
         </div>
 
         <div>
-          <p>{fakeAds[0].prix_annonce} €</p>
+          <p>
+            {
+              fakeAds[0].prix_annonce
+              // currentAd.prix_annonce
+            }{" "}
+            €
+          </p>
           <h1 className="text-xl font-semibold mb-[40px]">
-            {fakeAds[0].titre_annonce}
+            {
+              fakeAds[0].titre_annonce
+              // currentAd.titre_annonce
+            }
           </h1>
           <div className="pb-4">
             <p>Nom de la plante : {fakeAds[0].nom_plante}</p>

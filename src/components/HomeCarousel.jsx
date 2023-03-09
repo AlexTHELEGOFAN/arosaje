@@ -11,23 +11,34 @@ const HomeCarousel = ({ advert }) => {
     <Carousel
       cols={3}
       rows={1}
-      gap={50}
+      gap={1}
       scrollSnap={true}
       showDots={true}
       dotColorActive="green"
       dotColorInactive="#c7cccf"
+      responsiveLayout={[
+        {
+          breakpoint: 1200,
+          cols: 1,
+          loop: true,
+          autoplay: 1000,
+        },
+      ]}
     >
       {advert ? (
         advert.map(advert => (
           <Carousel.Item>
             <div className="pl-[2.5rem] pt-5">
-              <img
-                width="90%"
-                src={advert.image_annonce}
-                alt={advert.nom_plante}
-                className="drop-shadow-md pb-1 cursor-pointer"
-                onClick={() => navigate(`/advert/${advert?.id_annonce}/`)}
-              />
+              <div>
+                <img
+                  width="90%"
+                  src={advert.image_annonce}
+                  alt={advert.nom_plante}
+                  className="drop-shadow-md pb-1 cursor-pointer"
+                  onClick={() => navigate(`/advert/${advert?.id_annonce}/`)}
+                />
+              </div>
+
               <div className="w-[90%]">
                 <div
                   className="flex font-medium text-xl cursor-pointer"

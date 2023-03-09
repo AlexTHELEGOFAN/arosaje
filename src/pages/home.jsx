@@ -56,8 +56,8 @@ const fakeAds = [
 
     // I only need the id
     id_proprio: 2,
-    nom_proprio: "nom proprio",
-    prenom_proprio: "prenom proprio",
+    nom_proprio: "nom",
+    prenom_proprio: "prenom",
     absent: false,
   },
   {
@@ -123,12 +123,54 @@ const fakeAds = [
     prenom_proprio: "prenom proprio 5",
     absent: false,
   },
+  {
+    // I only need the id
+    id_annonce: 5,
+    titre_annonce: "Annonce 5",
+    description_annonce: "Description 5",
+    image_annonce: "https://picsum.photos/800/600?random=5",
+    prix_annonce: 50,
+    type_annonce: "Conseil",
+
+    // I only need the id
+    id_plante: 5,
+    nom_plante: "nom plante 5",
+    espece_plante: "espece plante 5",
+    adresse_plante: "location plante 5",
+
+    // I only need the id
+    id_proprio: 5,
+    nom_proprio: "nom proprio 5",
+    prenom_proprio: "prenom proprio 5",
+    absent: false,
+  },
+  {
+    // I only need the id
+    id_annonce: 5,
+    titre_annonce: "Annonce 5",
+    description_annonce: "Description 5",
+    image_annonce: "https://picsum.photos/800/600?random=5",
+    prix_annonce: 50,
+    type_annonce: "Conseil",
+
+    // I only need the id
+    id_plante: 5,
+    nom_plante: "nom plante 5",
+    espece_plante: "espece plante 5",
+    adresse_plante: "location plante 5",
+
+    // I only need the id
+    id_proprio: 5,
+    nom_proprio: "nom proprio 5",
+    prenom_proprio: "prenom proprio 5",
+    absent: false,
+  },
 ]
 
 const items = [
-  { value: "0", label: "Prix croissant" },
-  { value: "1", label: "Prix décroissant" },
-  { value: "2", label: "Date de mise en ligne" },
+  { value: "1", label: "Prix croissant" },
+  { value: "2", label: "Prix décroissant" },
+  { value: "3", label: "Date de mise en ligne" },
 ]
 
 // ** Accueil
@@ -162,7 +204,8 @@ const HomePage = () => {
   }
 
   const handleFilterChange = e => {
-    // setFilterAds()
+    console.log(e)
+    setFilterAds(adverts)
   }
 
   useEffect(() => {
@@ -184,7 +227,8 @@ const HomePage = () => {
           <HomeCarousel advert={adverts} />
         </div>
 
-        <div className="flex justify-between flex-row-reverse py-[20px]">
+        <div className="flex justify-between items-center  py-[20px] mb-[40px]">
+          <h1 className="text-xl font-semibold ">Annonces de plantes</h1>
           <Select
             options={filterAds}
             defaultValue={"2"}
@@ -194,13 +238,17 @@ const HomePage = () => {
           />
         </div>
 
-        <div className="grid sm:gap-3 sm:grid-cols-2 md:gap-6 md:grid-cols-4">
+        <div
+          className="grid
+        sm:gap-3 sm:grid-cols-2
+        md:gap-4 md:grid-cols-3
+        lg:gap-5 lg:grid-cols-3
+        xl:gap-6 xl:grid-cols-3
+        2xl:gap-6 2xl:grid-cols-4"
+        >
           {adverts ? (
             adverts.map(advert => (
-              <div
-                // className="w-[10rem] sm:w-[10rem] md:w-[20rem]"
-                key={advert.id}
-              >
+              <div key={advert.id}>
                 <AdCard advert={advert} />
               </div>
             ))

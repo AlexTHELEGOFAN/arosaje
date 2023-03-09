@@ -13,12 +13,12 @@ import Cookies from "universal-cookie"
 import { toast } from "react-toastify"
 import Select from "react-select"
 import ReactSelect from "react-select"
+import Layout from "../../components/layout"
 
 // ** Components
 
-import Layout from "../components/layout"
-import HomeCarousel from "../components/HomeCarousel"
-import AdCard from "../components/AdCard"
+// import Layout from "../components/layout"
+// import AdCard from "../components/AdCard"
 
 const fakeAds = [
   {
@@ -136,9 +136,9 @@ const items = [
   { value: "2", label: "Date de mise en ligne" },
 ]
 
-// ** Accueil
+// ** Results page
 
-const HomePage = () => {
+const Results = () => {
   // const cookies = new Cookies()
   // const jwt = cookies.get("jwt")
 
@@ -180,15 +180,6 @@ const HomePage = () => {
   return (
     <Layout>
       <div>
-        <h1 className="text-xl font-semibold mb-[40px]">
-          Des milliers d'annonces de plantes
-        </h1>
-
-        {/* <div className="grid justify-center"> */}
-        <div className="flex items-center bg-secondGreen px-5 pb-8">
-          <HomeCarousel advert={adverts} />
-        </div>
-
         <div className="flex justify-between flex-row-reverse py-[20px]">
           <Select
             options={filterAds}
@@ -218,6 +209,4 @@ const HomePage = () => {
   )
 }
 
-// export const Head = () => <Seo title="Home" />
-
-export default HomePage
+export default Results

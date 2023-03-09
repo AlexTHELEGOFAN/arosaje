@@ -17,10 +17,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons"
 // import { REACT_APP_BASE_URL } from '../CONF';
 
-// ** Register page
+// ** Login page
 
-function Register() {
-  const [inputType, setInputType] = useState("password")
+function NewAdvert() {
   const { setCurrentUser } = useContext(UserContext)
 
   //   const UrlAPI = REACT_APP_BASE_URL;
@@ -28,13 +27,8 @@ function Register() {
     "Access-Control-Allow-Origin": "*",
   }
 
-  // Toggle show or hide password
-  const toggleVisibility = () => {
-    setInputType(inputType === "password" ? "text" : "password")
-  }
-
-  // Handle register Formik
-  const handleRegister = values => {
+  // Handle login Formik
+  const handleSubmit = values => {
     // axios
     //   .get(
     //     `${UrlAPI}/api/Token?password=${values.username}&username=${values.password}`,
@@ -53,7 +47,7 @@ function Register() {
     //     const decodedToken = jwtDecode(jwt);
     //     setCurrentUser(decodedToken.unique_name);
     //     localStorage.setItem('user', decodedToken.unique_name);
-    navigate("/login")
+    navigate("/home")
     //   })
     //   .catch((err) => {
     //     console.error(err);
@@ -77,20 +71,13 @@ function Register() {
         Retour
       </button>
       <div className="flex justify-center items-center">
-        <div className="bg-secondGreen px-8 py-5  rounded-md drop-shadow-md">
-          <h1 className="text-center text-2xl font-medium my-4">
-            Nouveau compte
-          </h1>
+        <div className="bg-secondGreen px-8 py-5 rounded-md drop-shadow-md">
+          <h1 className="text-center text-2xl font-medium my-4">Connexion</h1>
 
           <Formik
             initialValues={{
               username: "",
-              name: "",
-              email: "",
-              tel: "",
-              address: "",
               password: "",
-              confirmPassword: "",
             }}
             validateOnChange={false}
             validate={values => {
@@ -98,34 +85,19 @@ function Register() {
               if (!values.username) {
                 errors.username = "Ce champ est requis"
               }
-              if (!values.email) {
-                errors.email = "Ce champ est requis"
-              }
-              if (!values.tel) {
-                errors.tel = "Ce champ est requis"
-              }
-              if (!values.address) {
-                errors.address = "Ce champ est requis"
-              }
               if (!values.password) {
                 errors.password = "Ce champ est requis"
               }
-              if (!values.confirmPassword) {
-                errors.confirmPassword = "Ce champ est requis"
-              }
-              if (values.password !== values.confirmPassword) {
-                errors.confirmPassword = "Le mot de passe est différent"
-              }
               return errors
             }}
-            onSubmit={handleRegister}
+            onSubmit={handleSubmit}
           >
             {({ isSubmitting }) => (
               <Form>
-                <div className="pb-4">
+                <div className="pb-8">
                   <label
                     className="flex text-left text-black text-sm mb-1"
-                    htmlFor="text"
+                    htmlFor="username"
                   >
                     Nom d'utilisateur *
                   </label>
@@ -138,55 +110,7 @@ function Register() {
                   <ErrorMessage name="username" component="div" />
                 </div>
 
-                <div className="pb-4">
-                  <label
-                    className="flex text-left text-black text-sm mb-1"
-                    htmlFor="email"
-                  >
-                    Adresse email *
-                  </label>
-                  <Field
-                    type="text"
-                    name="email"
-                    placeholder="Adresse email"
-                    className="w-[250px] md:w-full justify-center login-field"
-                  />
-                  <ErrorMessage name="email" component="div" />
-                </div>
-
-                <div className="pb-4">
-                  <label
-                    className="flex text-left text-black text-sm mb-1"
-                    htmlFor="text"
-                  >
-                    Numéro de téléphone *
-                  </label>
-                  <Field
-                    type="text"
-                    name="tel"
-                    placeholder="Numéro de téléphone"
-                    className="w-[250px] md:w-full justify-center login-field"
-                  />
-                  <ErrorMessage name="tel" component="div" />
-                </div>
-
-                <div className="pb-4">
-                  <label
-                    className="flex text-left text-black text-sm mb-1"
-                    htmlFor="text"
-                  >
-                    Adresse *
-                  </label>
-                  <Field
-                    type="text"
-                    name="address"
-                    placeholder="Adresse"
-                    className="w-[250px] md:w-full justify-center login-field"
-                  />
-                  <ErrorMessage name="address" component="div" />
-                </div>
-
-                <div className="pb-4 text-left relative">
+                <div className="pb-8 text-left relative">
                   <label
                     className="flex text-left text-black text-sm mb-1"
                     htmlFor="password"
@@ -209,33 +133,12 @@ function Register() {
                   <ErrorMessage name="password" component="div" />
                 </div>
 
-                <div className="pb-8 text-left relative">
-                  <label
-                    className="flex text-left text-black text-sm mb-1"
-                    htmlFor="password"
-                  >
-                    Confirmer le mot de passe *
-                  </label>
-                  <button
-                    type="button"
-                    onClick={toggleVisibility}
-                    className="absolute right-2 top-8"
-                  ></button>
-                  <Field
-                    type={inputType}
-                    name="confirmPassword"
-                    placeholder="Confirmer le mot de passe"
-                    className="w-[250px] md:w-full justify-center login-field"
-                  />
-                  <ErrorMessage name="confirmPassword" component="div" />
-                </div>
-
                 <div className="flex justify-center">
                   <button
                     type="submit"
                     className="form-button bg-white flex items-center bg-primary text-black uppercase hover:bg-threeGreen active:bg-fourGreen disabled:bg-disabledButton disabled:text-lightgrey-200 transition-all"
                   >
-                    Créer un compte
+                    Connexion
                   </button>
                 </div>
               </Form>
@@ -247,4 +150,4 @@ function Register() {
   )
 }
 
-export default Register
+export default NewAdvert

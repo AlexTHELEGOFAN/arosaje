@@ -53,7 +53,7 @@ function Login() {
     //     const decodedToken = jwtDecode(jwt);
     //     setCurrentUser(decodedToken.unique_name);
     //     localStorage.setItem('user', decodedToken.unique_name);
-    navigate("/")
+    navigate("/home")
     //   })
     //   .catch((err) => {
     //     console.error(err);
@@ -77,7 +77,7 @@ function Login() {
         Retour
       </button>
       <div className="flex justify-center items-center">
-        <div className="bg-secondGreen px-8 py-5 w-[25%] rounded-md drop-shadow-md">
+        <div className="bg-secondGreen px-8 py-5 rounded-md drop-shadow-md">
           <h1 className="text-center text-2xl font-medium my-4">Connexion</h1>
 
           <Formik
@@ -105,7 +105,7 @@ function Login() {
                     className="flex text-left text-black text-sm mb-1"
                     htmlFor="username"
                   >
-                    Nom d'utilisateur
+                    Nom d'utilisateur *
                   </label>
                   <Field
                     type="text"
@@ -121,7 +121,7 @@ function Login() {
                     className="flex text-left text-black text-sm mb-1"
                     htmlFor="password"
                   >
-                    Mot de passe
+                    Mot de passe *
                   </label>
                   <button
                     type="button"

@@ -1,9 +1,13 @@
 import * as React from "react"
+
 import { Link } from "gatsby"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faPlus, faUser } from "@fortawesome/free-solid-svg-icons"
+import { faPlus, faSearch, faUser } from "@fortawesome/free-solid-svg-icons"
+import { UserContext } from "../context/UserContext"
 
-const Header = ({ siteTitle }) => (
+// Header layout
+
+const Header = ({ siteTitle, currentUser }) => (
   <header
     className="bg-headerGreen px-4 py-6 flex justify-between items-center"
     // style={{
@@ -15,19 +19,25 @@ const Header = ({ siteTitle }) => (
     // }}
   >
     <div>
-      <Link to="/" className="text-sm">
+      <Link to="/home" className="text-sm">
         Logo Arosa'je
       </Link>
     </div>
 
-    <div className="flex justify-between items-center">
+    <div className="flex justify-between items-center relative">
       <input
-        className="w-[200px] bg-white border border-solid border-gray-400 text-gray-700 text-sm rounded p-2"
+        className="w-52 bg-white border border-solid border-gray-400 text-gray-700 text-sm rounded p-2"
         type="text"
         id="searchParticipant"
         name="searchParticipant"
         placeholder="Que recherchez vous ?"
         // onChange={(e) => setSearchValue(e.target.value)}
+      />
+      <FontAwesomeIcon
+        icon={faSearch}
+        size="2xl"
+        className="absolute w-4 h-4 right-4 cursor-pointer"
+        // onClick={(e) => setSearchValue(e.target.value)}
       />
     </div>
 
@@ -42,7 +52,22 @@ const Header = ({ siteTitle }) => (
         </Link>
       </div>
 
-      <FontAwesomeIcon icon={faUser} size="2xl" className="w-5 h-5 " />
+      {/* <Select
+            options={filterAds}
+            defaultValue={"2"}
+            onChange={handleFilterChange}
+            placeholder={"Filtres"}
+            className="w-[250px]"
+            components={{ Option: IconOption }}
+          /> */}
+      {/* <Link to="/account/${advert?.id_annonce}/" className="text-black"> */}
+      <FontAwesomeIcon
+        icon={faUser}
+        size="2xl"
+        className="w-5 h-5 text-black"
+        onClick={() => navigate(`/account/${currentUser?.id}/`)}
+      />
+      {/* </Link> */}
     </div>
   </header>
 )

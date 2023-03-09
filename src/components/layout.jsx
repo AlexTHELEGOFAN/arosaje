@@ -32,7 +32,10 @@ const Layout = ({ children }) => {
   return (
     <>
       <ToastContainer />
-      <Header siteTitle={data.site.siteMetadata?.title || `Title`} />
+      <Header
+        siteTitle={data.site.siteMetadata?.title || `Title`}
+        currentUser={currentUser}
+      />
       <div
         style={{
           margin: `0 auto`,

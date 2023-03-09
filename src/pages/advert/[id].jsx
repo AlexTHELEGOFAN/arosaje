@@ -1,5 +1,8 @@
 // ** React imports
 
+import { faArrowLeft } from "@fortawesome/free-solid-svg-icons"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { navigate } from "gatsby"
 import React, { useState } from "react"
 
 import Layout from "../../components/layout"
@@ -35,6 +38,18 @@ const Advert = () => {
 
   return (
     <Layout>
+      <button
+        className="flex text-center items-center"
+        onClick={() => navigate(-1)}
+      >
+        <FontAwesomeIcon
+          icon={faArrowLeft}
+          size="2xl"
+          className="w-5 h-5 text black mr-5"
+        />
+        Retour
+      </button>
+
       <div className="flex justify-center">
         <div className="pr-4">
           <img
@@ -56,8 +71,8 @@ const Advert = () => {
             <p>Adresse de la plante : {fakeAds[0].adresse_plante}</p>
           </div>
           <div className="pb-4">
-            <button>Acheter</button>
-            <button>Envoyer un message</button>
+            <button className="header-button">Garder</button>
+            <button className="header-button">Envoyer un conseil</button>
           </div>
 
           <div>
@@ -67,6 +82,9 @@ const Advert = () => {
                 La personne qui possède cette plante est actuellement absente.
               </p>
             )}
+            <p>
+              <button className="header-button">Contacter</button>
+            </p>
           </div>
         </div>
       </div>

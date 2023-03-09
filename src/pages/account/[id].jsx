@@ -2,14 +2,13 @@ import * as React from "react"
 import { Link, navigate } from "gatsby"
 
 import Layout from "../../components/layout"
-import Seo from "../../components/seo"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faArrowLeft, faUser } from "@fortawesome/free-solid-svg-icons"
 
 // Account page
 
-const AccountPage = () => (
-  <Layout>
+function AccountPage() {
+  ;<Layout>
     <button
       className="flex text-center items-center"
       onClick={() => navigate(-1)}
@@ -48,6 +47,6 @@ const AccountPage = () => (
       </div>
     </div>
   </Layout>
-)
+}
 
 export default AccountPage

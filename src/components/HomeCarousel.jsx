@@ -28,7 +28,7 @@ const HomeCarousel = ({ advert }) => {
                 className="drop-shadow-md pb-1 cursor-pointer"
                 onClick={() => navigate(`/advert/${advert?.id_annonce}/`)}
               />
-              <div className="">
+              <div className="w-[90%]">
                 <div
                   className="flex font-medium text-xl cursor-pointer"
                   onClick={() => navigate(`/advert/${advert?.id_annonce}/`)}

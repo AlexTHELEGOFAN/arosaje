@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from "react"
+import React from "react"
 
 // ** Utils
 
-import dayjs from "dayjs"
 import { navigate } from "gatsby"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faUser } from "@fortawesome/free-solid-svg-icons"

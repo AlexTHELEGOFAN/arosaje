@@ -2,8 +2,7 @@ import * as React from "react"
 
 import { Link, navigate } from "gatsby"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faPlus, faSearch, faUser } from "@fortawesome/free-solid-svg-icons"
-import { UserContext } from "../context/UserContext"
+import { faSearch, faUser } from "@fortawesome/free-solid-svg-icons"
 
 // Header layout
 
@@ -43,6 +42,10 @@ const Header = ({ siteTitle, currentUser }) => (
 
     <div className="flex justify-center">
       <div className="mr-6">
+        <Link to="/new" className="w-5 h-5 text-black header-button mr-4">
+          + Nouvelle annonce
+        </Link>
+
         <Link to="/register" className="w-5 h-5 text-black header-button mr-4">
           Créer un compte
         </Link>

@@ -1,22 +1,13 @@
-/**
- * Layout component that queries for data
- * with Gatsby's useStaticQuery component
- *
- * See: https://www.gatsbyjs.com/docs/how-to/querying-data/use-static-query/
- */
-
-import React, { useContext, useEffect, useState } from "react"
+import React, { useContext } from "react"
 import { useStaticQuery, graphql } from "gatsby"
 import { ToastContainer } from "react-toastify"
 
 import Header from "./header"
 import "./global.css"
 import { UserContext } from "../context/UserContext"
-import { useLocation } from "@reach/router"
 import Footer from "./footer"
 
 const Layout = ({ children }) => {
-  const [isLoading, setIsLoading] = useState(true)
   const { setCurrentUser, currentUser } = useContext(UserContext)
 
   const data = useStaticQuery(graphql`

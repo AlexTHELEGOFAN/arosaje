@@ -1,6 +1,6 @@
 // ** React imports
 
-import React, { useEffect, useState } from "react"
+import React, { useState } from "react"
 
 import Layout from "../../components/layout"
 
@@ -31,6 +31,7 @@ const fakeAds = [
 
 const Advert = () => {
   // const { currentUser, setCurrentUser } = useContext(UserContext);
+  const { currentAd, setCurrentAd } = useState()
 
   return (
     <Layout>

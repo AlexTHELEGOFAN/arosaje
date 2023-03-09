@@ -4,15 +4,10 @@ import React, { useContext, useState } from "react"
 
 // ** Utils
 
-import Cookies from "universal-cookie"
-import axios from "axios"
 import { Formik, Form, ErrorMessage, Field } from "formik"
-import { toast } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
 import { UserContext } from "../context/UserContext"
-import jwtDecode from "jwt-decode"
-import { Link, navigate } from "gatsby"
-import Layout from "../components/layout"
+import { navigate } from "gatsby"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons"
 // import { REACT_APP_BASE_URL } from '../CONF';
@@ -21,12 +16,12 @@ import { faArrowLeft } from "@fortawesome/free-solid-svg-icons"
 
 function Register() {
   const [inputType, setInputType] = useState("password")
-  const { setCurrentUser } = useContext(UserContext)
+  // const { setCurrentUser } = useContext(UserContext)
 
   //   const UrlAPI = REACT_APP_BASE_URL;
-  const config = {
-    "Access-Control-Allow-Origin": "*",
-  }
+  // const config = {
+  //   "Access-Control-Allow-Origin": "*",
+  // }
 
   // Toggle show or hide password
   const toggleVisibility = () => {
@@ -100,6 +95,11 @@ function Register() {
               }
               if (!values.email) {
                 errors.email = "Ce champ est requis"
+              }
+              if (
+                !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)
+              ) {
+                errors.email = "Adresse email invalide"
               }
               if (!values.tel) {
                 errors.tel = "Ce champ est requis"

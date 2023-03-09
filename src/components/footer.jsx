@@ -1,5 +1,4 @@
 import * as React from "react"
-import { Link } from "gatsby"
 
 const Footer = ({ siteTitle }) => (
   <footer className="flex justify-between bg-green-500 px-4 py-6">

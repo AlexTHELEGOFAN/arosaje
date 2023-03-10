@@ -16,30 +16,57 @@ const HomeCarousel = ({ advert }) => {
       showDots={true}
       dotColorActive="green"
       dotColorInactive="#c7cccf"
+      mobileBreakpoint={768}
       responsiveLayout={[
         {
-          breakpoint: 1200,
+          breakpoint: 640,
           cols: 1,
-          loop: true,
-          autoplay: 1000,
+        },
+        {
+          breakpoint: 768,
+          cols: 1,
+        },
+        {
+          breakpoint: 1024,
+          cols: 1,
+        },
+        {
+          breakpoint: 1280,
+          cols: 1,
+        },
+        {
+          breakpoint: 1536,
+          cols: 2,
+          gap: 1,
         },
       ]}
     >
       {advert ? (
         advert.map(advert => (
           <Carousel.Item>
-            <div className="pl-[2.5rem] pt-5">
-              <div>
+            <div
+              className="pl-[2.5rem] pt-5 pr-0 mr-0
+              w-auto
+              sm:w-[40%]
+              md:w-[40%]
+              lg:w-[40%]
+         xl:w-[50%]
+         2xl:w-[75%]
+            "
+            >
+              <div className="">
                 <img
-                  width="90%"
+                  width="100%"
                   src={advert.image_annonce}
                   alt={advert.nom_plante}
-                  className="drop-shadow-md pb-1 cursor-pointer"
+                  className="drop-shadow-md pb-1 cursor-pointer
+                  max-w-[411px]
+                  "
                   onClick={() => navigate(`/advert/${advert?.id_annonce}/`)}
                 />
               </div>
 
-              <div className="w-[90%]">
+              <div className="">
                 <div
                   className="flex font-medium text-xl cursor-pointer"
                   onClick={() => navigate(`/advert/${advert?.id_annonce}/`)}

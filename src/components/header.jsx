@@ -36,7 +36,7 @@ const Header = ({ siteTitle, currentUser }) => (
         icon={faSearch}
         size="2xl"
         className="absolute w-4 h-4 right-4 cursor-pointer"
-        onClick={window.scrollTo(500, 0)}
+        // onClick={window.scrollTo(500, 0)}
       />
     </div>
 

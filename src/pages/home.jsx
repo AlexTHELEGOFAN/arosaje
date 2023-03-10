@@ -223,7 +223,11 @@ const HomePage = () => {
         </h1>
 
         {/* <div className="grid justify-center"> */}
-        <div className="flex items-center bg-secondGreen px-5 pb-8">
+        <div
+          className="flex items-center bg-secondGreen px-5 pb-8 max-h-[536px]
+        
+        "
+        >
           <HomeCarousel advert={adverts} />
         </div>
 
@@ -240,8 +244,8 @@ const HomePage = () => {
 
         <div
           className="grid
-        sm:gap-3 sm:grid-cols-2
-        md:gap-4 md:grid-cols-3
+        sm:gap-3 sm:grid-cols-1
+        md:gap-4 md:grid-cols-2
         lg:gap-5 lg:grid-cols-3
         xl:gap-6 xl:grid-cols-3
         2xl:gap-6 2xl:grid-cols-4"

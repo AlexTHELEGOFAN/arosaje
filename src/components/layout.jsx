@@ -22,7 +22,7 @@ const Layout = ({ children }) => {
   //   )
   // }, [searchValue])
 
-  window.scrollTo(0, 500)
+  // window.scrollTo(0, 500)
 
   const data = useStaticQuery(graphql`
     query SiteTitleQuery {

@@ -4,9 +4,36 @@ import { Link, navigate } from "gatsby"
 import Layout from "../../components/layout"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faArrowLeft, faUser } from "@fortawesome/free-solid-svg-icons"
+import { useEffect } from "react"
+import { useState } from "react"
+
+const fakeUserPlants = [
+  {
+    id_plante: 1,
+    image: "https://picsum.photos/800/600?random=1",
+  },
+  {
+    id_plante: 2,
+    image: "https://picsum.photos/800/600?random=2",
+  },
+  {
+    id_plante: 3,
+    image: "https://picsum.photos/800/600?random=3",
+  },
+  {
+    id_plante: 4,
+    image: "https://picsum.photos/800/600?random=4",
+  },
+]
 
 // Account page
 const AccountPage = () => {
+  const [userPlants, setUserPlants] = useState([])
+
+  useEffect(() => {
+    setUserPlants(fakeUserPlants)
+  }, [])
+
   return (
     <Layout>
       <button
@@ -40,13 +67,42 @@ const AccountPage = () => {
           </div>
 
           <div className="">
-            <div className="">
-              <Link to="/" className="pb-6 w-5 h-5 text-black header-button">
+            <div className="pb-6">
+              <Link to="/" className="w-5 h-5 text-black header-button">
                 Contacter
               </Link>
             </div>
 
-            <div className="">Annonces de l'utilisateur</div>
+            <div className="overflow-hidden">
+              <div className="pb-4">Plantes de l'utilisateur :</div>
+              <div
+                className="grid
+        sm:gap-3 sm:grid-cols-1
+        md:gap-4 md:grid-cols-2
+        lg:gap-5 lg:grid-cols-3
+        xl:gap-6 xl:grid-cols-3
+        2xl:gap-6 2xl:grid-cols-4"
+              >
+                {userPlants ? (
+                  userPlants.map(plant => (
+                    <div key={plant.id}>
+                      <img
+                        width="100%"
+                        src={plant.image}
+                        alt={plant.id_plante}
+                        className="drop-shadow-md pb-1 cursor-pointer
+              max-w-[411px]
+              "
+                      />
+                    </div>
+                  ))
+                ) : (
+                  <p className="text-center">
+                    Cet utilisateur n'a aucune plante
+                  </p>
+                )}
+              </div>
+            </div>
           </div>
         </div>
       </div>

@@ -41,7 +41,7 @@ const Header = ({ siteTitle, currentUser }) => (
       />
     </div>
 
-    <div className="flex justify-center">
+    <div className="flex items-center">
       <Select
         type="button"
         className="px-4 text-gray-500 focus:outline-none md:hidden"
@@ -74,12 +74,14 @@ const Header = ({ siteTitle, currentUser }) => (
             components={{ Option: IconOption }}
           /> */}
       {/* <Link to="/account/${advert?.id_annonce}/" className="text-black"> */}
-      <FontAwesomeIcon
-        icon={faUser}
-        size="2xl"
-        className="w-5 h-5 text-black"
-        onClick={() => navigate(`/account/${currentUser?.id}/`)}
-      />
+      <div className="cursor-pointer">
+        <FontAwesomeIcon
+          icon={faUser}
+          size="2xl"
+          className="w-5 h-5 text-black"
+          onClick={() => navigate(`/account/${currentUser?.id}/`)}
+        />
+      </div>
       {/* </Link> */}
     </div>
   </header>

@@ -61,7 +61,11 @@ function newAdvert() {
             <Formik
               initialValues={{
                 title: "",
-                price: "",
+                desc: "",
+                picture: "",
+                plantName: "",
+                plantSpecies: "",
+                address: "",
               }}
               validateOnChange={false}
               validate={values => {
@@ -69,8 +73,20 @@ function newAdvert() {
                 if (!values.title) {
                   errors.title = "Ce champ est requis"
                 }
-                if (!values.price) {
-                  errors.price = "Ce champ est requis"
+                if (!values.desc) {
+                  errors.desc = "Ce champ est requis"
+                }
+                if (!values.picture) {
+                  errors.picture = "Ce champ est requis"
+                }
+                if (!values.plantName) {
+                  errors.plantName = "Ce champ est requis"
+                }
+                if (!values.plantSpecies) {
+                  errors.plantSpecies = "Ce champ est requis"
+                }
+                if (!values.address) {
+                  errors.address = "Ce champ est requis"
                 }
                 return errors
               }}
@@ -78,6 +94,7 @@ function newAdvert() {
             >
               {({ isSubmitting }) => (
                 <Form>
+                  {/* Titre ---------------------------------- */}
                   <div className="pb-8">
                     <label
                       className="flex text-left text-black text-sm mb-1"
@@ -88,27 +105,95 @@ function newAdvert() {
                     <Field
                       type="text"
                       name="title"
-                      placeholder="Titre"
+                      placeholder="Titre *"
                       className="w-[250px] md:w-full justify-center login-field"
                     />
                     <ErrorMessage name="title" component="div" />
                   </div>
 
+                  {/* Description ---------------------------------- */}
                   <div className="pb-8 text-left relative">
                     <label
                       className="flex text-left text-black text-sm mb-1"
-                      htmlFor="price"
+                      htmlFor="desc"
                     >
-                      Prix
+                      Description *
                     </label>
-
                     <Field
-                      type="password"
-                      name="price"
-                      placeholder="Mot de passe"
+                      type="text"
+                      name="desc"
+                      placeholder="Description"
                       className="w-[250px] md:w-full justify-center login-field"
                     />
-                    <ErrorMessage name="price" component="div" />
+                    <ErrorMessage name="desc" component="div" />
+                  </div>
+
+                  {/* Image ---------------------------------- */}
+                  <div className="pb-8 text-left relative">
+                    <label
+                      className="flex text-left text-black text-sm mb-1"
+                      htmlFor="picture"
+                    >
+                      Image *
+                    </label>
+                    <Field
+                      type="file"
+                      name="picture"
+                      placeholder=""
+                      className="w-[250px] md:w-full justify-center login-field"
+                    />
+                    <ErrorMessage name="picture" component="div" />
+                  </div>
+
+                  {/* Nom de la plante ---------------------------------- */}
+                  <div className="pb-8 text-left relative">
+                    <label
+                      className="flex text-left text-black text-sm mb-1"
+                      htmlFor="plantName"
+                    >
+                      Nom de la plante *
+                    </label>
+                    <Field
+                      type="text"
+                      name="plantName"
+                      placeholder="Nom de la plante"
+                      className="w-[250px] md:w-full justify-center login-field"
+                    />
+                    <ErrorMessage name="plantName" component="div" />
+                  </div>
+
+                  {/* Espèce de la plante ---------------------------------- */}
+                  <div className="pb-8 text-left relative">
+                    <label
+                      className="flex text-left text-black text-sm mb-1"
+                      htmlFor="plantSpecies"
+                    >
+                      Espèce de la plante *
+                    </label>
+                    <Field
+                      type="text"
+                      name="plantSpecies"
+                      placeholder="Nom de la plante"
+                      className="w-[250px] md:w-full justify-center login-field"
+                    />
+                    <ErrorMessage name="plantSpecies" component="div" />
+                  </div>
+
+                  {/* Adresse ---------------------------------- */}
+                  <div className="pb-8 text-left relative">
+                    <label
+                      className="flex text-left text-black text-sm mb-1"
+                      htmlFor="address"
+                    >
+                      Adresse *
+                    </label>
+                    <Field
+                      type="text"
+                      name="address"
+                      placeholder="Adresse"
+                      className="w-[250px] md:w-full justify-center login-field"
+                    />
+                    <ErrorMessage name="address" component="div" />
                   </div>
 
                   <div className="flex justify-center">

@@ -14,8 +14,8 @@ function AdCard({ advert }) {
       className="bg-green-100 min-h-[400px] py-4 pl-7 pr-5
     border-2 border-solid border-lightgrey-200 rounded-2xl mb-5 "
     >
-      <div className="flex justify-between items-center align-center mb-3">
-        <div className="status-tag bg-lightgrey-100">
+      <div className="flex justify-between items-center align-center">
+        <div className="status-tag bg-lightgrey-100 pb-2">
           <img
             src={advert.image_annonce}
             alt={advert.titre_annonce}
@@ -28,24 +28,17 @@ function AdCard({ advert }) {
       <div className="flex my-2">
         <div className="w-full">
           <div
-            className="flex font-medium text-xl cursor-pointer"
+            className="flex font-medium text-xl cursor-pointer pb-2"
             onClick={() => navigate(`/advert/${advert?.id_annonce}/`)}
           >
             {advert.titre_annonce}
           </div>
 
-          <div className="flex justify-between">
-            <p>{advert.prix_annonce} €</p>
-
-            <div
-              className="flex items-center pb-6"
-              //  onClick={() => navigate(`/account/${advert?.id_annonce}/`)}
-            >
-              <div>{advert.type_annonce}</div>
-            </div>
+          <div className="flex pb-2">
+            {advert.description_annonce.substring(0, 100).concat("...")}
           </div>
 
-          <div className="flex pb-1">
+          <div className="flex pb-2">
             {advert.nom_plante} {advert.espece_plante}
           </div>
           <div className="flex justify-between">
@@ -53,7 +46,7 @@ function AdCard({ advert }) {
 
             <div
               className="flex items-center pb-6 cursor-pointer"
-              //  onClick={() => navigate(`/account/${advert?.id_annonce}/`)}
+              onClick={() => navigate(`/account/${advert?.id}/`)}
             >
               <div>
                 {advert.nom_proprio} {advert.prenom_proprio}

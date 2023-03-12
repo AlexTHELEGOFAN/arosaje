@@ -31,11 +31,11 @@ const HomeCarousel = ({ advert }) => {
           cols: 1,
         },
         {
-          breakpoint: 1280,
+          breakpoint: 1380,
           cols: 1,
         },
         {
-          breakpoint: 1536,
+          breakpoint: 1590,
           cols: 2,
           gap: 1,
         },
@@ -47,18 +47,18 @@ const HomeCarousel = ({ advert }) => {
             <div
               className="pl-[2.5rem] pt-5 pr-0 mr-0
               w-auto
-              sm:w-[40%]
-              md:w-[40%]
-              lg:w-[40%]
+              sm:w-[50%]
+              md:w-[50%]
+              lg:w-[50%]
          xl:w-[50%]
          2xl:w-[75%]
             "
             >
-              <div className="">
+              <div className="pb-2">
                 <img
                   width="100%"
                   src={advert.image_annonce}
-                  alt={advert.nom_plante}
+                  alt={advert.titre_annonce}
                   className="drop-shadow-md pb-1 cursor-pointer
                   max-w-[411px]
                   "
@@ -66,26 +66,26 @@ const HomeCarousel = ({ advert }) => {
                 />
               </div>
 
-              <div className="">
+              <div
+                className="
+                sm:w-[75%]
+                md:w-[100%]
+                lg:w-[100%]
+                xl:w-[100%]
+                2xl:w-[100%]"
+              >
                 <div
-                  className="flex font-medium text-xl cursor-pointer"
+                  className="flex font-medium text-xl cursor-pointer pb-2"
                   onClick={() => navigate(`/advert/${advert?.id_annonce}/`)}
                 >
                   {advert.titre_annonce}
                 </div>
 
-                <div className="flex justify-between">
-                  <p>{advert.prix_annonce} €</p>
-
-                  <div
-                    className="flex items-center pb-6 cursor-pointer"
-                    //  onClick={() => navigate(`/account/${advert?.id_annonce}/`)}
-                  >
-                    <div>{advert.type_annonce}</div>
-                  </div>
+                <div className="flex pb-2">
+                  {advert.description_annonce.substring(0, 100).concat("...")}
                 </div>
 
-                <div className="flex pb-1">
+                <div className="flex pb-2">
                   {advert.nom_plante} {advert.espece_plante}
                 </div>
                 <div className="flex justify-between">
@@ -93,7 +93,7 @@ const HomeCarousel = ({ advert }) => {
 
                   <div
                     className="flex items-center pb-6 cursor-pointer"
-                    //  onClick={() => navigate(`/account/${advert?.id_annonce}/`)}
+                    onClick={() => navigate(`/account/${advert?.id_annonce}/`)}
                   >
                     <div>
                       {advert.nom_proprio} {advert.prenom_proprio}
@@ -102,7 +102,6 @@ const HomeCarousel = ({ advert }) => {
                       icon={faUser}
                       size="2xl"
                       className="w-5 h-5 pl-2"
-                      onClick={() => navigate(`/account/${advert?.id}/`)}
                     />
                   </div>
                 </div>

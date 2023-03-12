@@ -21,7 +21,7 @@ const fakeAds = [
     id_annonce: 1,
     titre_annonce: "Nourrir Groot",
     description_annonce:
-      "J'ai besoin que quelqu'un s'occupe de Groot pendant mon absence svp.",
+      "J'ai besoin que quelqu'un s'occupe de Groot pendant mon absence svp. J'ai besoin que quelqu'un s'occupe de Groot pendant mon absence svp.",
     image_annonce:
       "https://static.onecms.io/wp-content/uploads/sites/13/2016/08/15/guardians-of-the-galaxy-baby-groot-scene.jpg",
     prix_annonce: 20,

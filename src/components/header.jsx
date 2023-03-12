@@ -2,7 +2,8 @@ import * as React from "react"
 
 import { Link, navigate } from "gatsby"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faSearch, faUser } from "@fortawesome/free-solid-svg-icons"
+import { faBurger, faSearch, faUser } from "@fortawesome/free-solid-svg-icons"
+import Select from "react-select"
 
 // Header layout
 
@@ -41,6 +42,15 @@ const Header = ({ siteTitle, currentUser }) => (
     </div>
 
     <div className="flex justify-center">
+      <Select
+        type="button"
+        className="px-4 text-gray-500 focus:outline-none md:hidden"
+        // onClick={() => setSidebarOpen(true)}
+      >
+        <span className="">{"menu"}</span>
+        <FontAwesomeIcon className="h-6 w-6" icon={faBurger} />
+      </Select>
+
       <div className="mr-6">
         <Link to="/new" className="w-5 h-5 text-black header-button mr-4">
           + Nouvelle annonce

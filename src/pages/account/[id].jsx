@@ -24,6 +24,14 @@ const fakeUserPlants = [
     id_plante: 4,
     image: "https://picsum.photos/800/600?random=4",
   },
+  {
+    id_plante: 5,
+    image: "https://picsum.photos/800/600?random=5",
+  },
+  {
+    id_plante: 6,
+    image: "https://picsum.photos/800/600?random=6",
+  },
 ]
 
 // Account page
@@ -90,9 +98,8 @@ const AccountPage = () => {
                         width="100%"
                         src={plant.image}
                         alt={plant.id_plante}
-                        className="drop-shadow-md pb-1 cursor-pointer
-              max-w-[411px]
-              "
+                        className="drop-shadow-md pb-1 cursor-pointer max-w-[411px]"
+                        onClick={() => navigate(`/plant/${plant.id_plante}/`)}
                       />
                     </div>
                   ))

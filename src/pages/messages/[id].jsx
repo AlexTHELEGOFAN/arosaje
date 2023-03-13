@@ -5,44 +5,42 @@ import React, { useEffect, useState } from "react"
 import Layout from "../../components/layout"
 
 const Messages = () => {
-  // const { currentUser, setCurrentUser } = useContext(UserContext);
+  const [message, setMessage] = useState("")
+  const [chatHistory, setChatHistory] = useState([])
+
+  useEffect(() => {
+    // Listen for new messages from server
+    // socket.on("message", newMessage => {
+    //   setChatHistory(prevChatHistory => [...prevChatHistory, newMessage])
+    // })
+  }, [])
+
+  const handleMessageSend = event => {
+    event.preventDefault() // Prevent page refresh on submit
+    // socket.emit("message", message) // Send message to server
+    setMessage("") // Clear input field
+  }
+
+  const handleInputChange = event => {
+    setMessage(event.target.value)
+  }
 
   return (
     <Layout>
-      <div className="flex justify-center">
-        {/* <div className="pr-4">
-          <img
-            width="80%"
-            src={fakeAds[0].image_annonce}
-            alt={fakeAds[0].nom_plante}
-            className="drop-shadow-md pb-1"
-          />
-        </div>
-
+      <div className="flex justify-center bg-secondGreen px-8 py-5 rounded-md drop-shadow-md">
         <div>
-          <p>{fakeAds[0].prix_annonce} €</p>
-          <h1 className="text-xl font-semibold mb-[40px]">
-            {fakeAds[0].titre_annonce}
-          </h1>
-          <div className="pb-4">
-            <p>Nom de la plante : {fakeAds[0].nom_plante}</p>
-            <p>Espèce de la plante : {fakeAds[0].espece_plante}</p>
-            <p>Adresse de la plante : {fakeAds[0].adresse_plante}</p>
-          </div>
-          <div className="pb-4">
-            <button>Acheter</button>
-            <button>Envoyer un message</button>
-          </div>
+          <ul>
+            {/* Display chat messages */}
+            {chatHistory.map((message, index) => (
+              <li key={index}>{message}</li>
+            ))}
+          </ul>
 
-          <div>
-            {fakeAds[0].nom_proprio} {fakeAds[0].prenom_proprio}
-            {fakeAds[0].absent && (
-              <p>
-                La personne qui possède cette plante est actuellement absente.
-              </p>
-            )}
-          </div>
-        </div> */}
+          <form onSubmit={handleMessageSend}>
+            <input type="text" value={message} onChange={handleInputChange} />
+            <button type="submit">Send</button>
+          </form>
+        </div>
       </div>
     </Layout>
   )

@@ -11,7 +11,7 @@ import { faUser } from "@fortawesome/free-solid-svg-icons"
 function AdCard({ advert }) {
   return (
     <div
-      className="bg-green-100 min-h-[400px] py-4 pl-7 pr-5
+      className="bg-green-100 h-[460px] py-4 pl-7 pr-5
     border-2 border-solid border-lightgrey-200 rounded-2xl mb-5 "
     >
       <div className="flex justify-between items-center align-center">

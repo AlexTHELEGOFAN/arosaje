@@ -10,15 +10,13 @@ import { UserContext } from "../context/UserContext"
 import { navigate } from "gatsby"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons"
-// import { REACT_APP_BASE_URL } from '../CONF';
 
 // ** Login page
 
 function Login() {
-  const [inputType, setInputType] = useState("password")
   const { setCurrentUser } = useContext(UserContext)
+  const [inputType, setInputType] = useState("password")
 
-  //   const UrlAPI = REACT_APP_BASE_URL;
   const config = {
     "Access-Control-Allow-Origin": "*",
   }
@@ -51,7 +49,6 @@ function Login() {
     navigate("/home")
     //   })
     //   .catch((err) => {
-    //     console.error(err);
     //     toast.error("Nom d'utilisateur ou mot de passe incorrect", {
     //       position: 'bottom-right',
     //     });

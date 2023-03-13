@@ -4,6 +4,7 @@ import { navigate } from "gatsby"
 import Layout from "../components/layout"
 import * as React from "react"
 import { ErrorMessage, Field, Form, Formik } from "formik"
+import { toast } from "react-toastify"
 
 function newAdvert() {
   //   const { setCurrentUser } = useContext(UserContext)
@@ -11,28 +12,19 @@ function newAdvert() {
   // Handle login Formik
   const handleSubmit = values => {
     // axios
-    //   .get(
+    //   .post(
     //     `${UrlAPI}/api/Token?password=${values.username}&username=${values.password}`,
     //     {
     //       headers: config,
     //     }
     //   )
     //   .then((res) => {
-    //     // Create and set browser cookies
-    //     const cookies = new Cookies();
-    //     cookies.set('jwt', res.data);
-    //     localStorage.setItem('jwt', res.data);
 
-    //     // Get and decode jwt token
-    //     const jwt = cookies.get('jwt');
-    //     const decodedToken = jwtDecode(jwt);
-    //     setCurrentUser(decodedToken.unique_name);
-    //     localStorage.setItem('user', decodedToken.unique_name);
     navigate("/home")
     //   })
     //   .catch((err) => {
     //     console.error(err);
-    //     toast.error("Nom d'utilisateur ou mot de passe incorrect", {
+    //     toast.error("Erreur lors de la création de l'annonce", {
     //       position: 'bottom-right',
     //     });
     //   });

@@ -232,7 +232,7 @@ const Advert = () => {
   return (
     <Layout>
       <button
-        className="flex text-center items-center"
+        className="flex text-center items-center pb-6"
         onClick={() => navigate(-1)}
       >
         <FontAwesomeIcon
@@ -243,7 +243,7 @@ const Advert = () => {
         Retour
       </button>
 
-      <div className="flex justify-center pb-40">
+      <div className="flex justify-between pb-20">
         <div className="pr-4">
           <img
             width="80%"
@@ -255,11 +255,12 @@ const Advert = () => {
               fakeAds[0].nom_plante
               // currentAd.nom_plante
             }
-            className="drop-shadow-md pb-1"
+            className="drop-shadow-md pb-1 cursor-pointer"
+            onClick={() => navigate(`/plant/${fakeAds[0].id_plante}/`)}
           />
         </div>
 
-        <div className="w-[20%]">
+        <div className="w-[30%] bg-secondGreen px-8 py-5 rounded-md drop-shadow-md">
           <h1 className="text-xl font-semibold mb-[40px]">
             {fakeAds[0].titre_annonce}
           </h1>

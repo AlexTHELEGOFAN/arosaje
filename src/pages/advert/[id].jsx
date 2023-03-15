@@ -274,9 +274,8 @@ const Advert = () => {
             </div>
             <div>Adresse de la plante : {fakeAds[0].adresse_plante}</div>
           </div>
-          <div className="pb-4 flex justify-between">
+          <div className="pb-4 flex">
             <button className="header-button">Garder</button>
-            <button className="header-button">Conseiller</button>
           </div>
 
           <div

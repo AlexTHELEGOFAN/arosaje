@@ -46,10 +46,10 @@ const HomeCarousel = ({ advert }) => {
           <Carousel.Item>
             <div
               className="pl-[2.5rem] pt-5 pr-0 mr-0
-              w-auto
-              sm:w-[50%]
-              md:w-[50%]
-              lg:w-[50%]
+              w-[30%]
+              sm:w-[30%]
+              md:w-[40%]
+              lg:w-[40%]
          xl:w-[50%]
          2xl:w-[75%]
             "

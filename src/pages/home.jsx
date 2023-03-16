@@ -14,6 +14,7 @@ import Select from "react-select"
 import Layout from "../components/layout"
 import HomeCarousel from "../components/HomeCarousel"
 import AdCard from "../components/AdCard"
+import axios from "axios"
 
 const fakeAds = [
   {
@@ -187,17 +188,18 @@ const HomePage = () => {
   const fetchAds = async () => {
     try {
       // Get all events
-      // const resAds = await axios.get(`${UrlAPI}/api/route`, {
-      //   params: param,
-      // });
+      const resAds = await axios(
+        `https://localhost:7099/api/Annonce/GetAnnonces`
+      )
+      console.log(resAds)
       // const ads = resAds.data.map((advert) => {
       //   return {
       //     ...advert,
       //   };
       // });
-      setAdverts(fakeAds)
+      // setAdverts(ads)
     } catch {
-      toast.error("Erreur", {
+      toast.error("Erreur lors du chargement des données", {
         position: "bottom-right",
       })
     }
@@ -209,8 +211,7 @@ const HomePage = () => {
   }
 
   useEffect(() => {
-    // fetchEventsCards();
-    // fetchAds()
+    fetchAds()
     setAdverts(fakeAds)
     setFilterAds(items)
   }, [])

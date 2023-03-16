@@ -2,6 +2,7 @@
 
 import { faArrowLeft, faUser } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import axios from "axios"
 import { navigate } from "gatsby"
 import React, { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
@@ -189,28 +190,32 @@ const otherFakeAds = [
 ]
 
 const Advert = () => {
-  const param = window.location.href.slice(-2, -1)
+  const id = window.location.href.slice(-2, -1)
   // const { currentUser, setCurrentUser } = useContext(UserContext);
   const { currentAd, setCurrentAd } = useState()
   const [adverts, setAdverts] = useState([])
 
   const fetchCurrentAd = async () => {
-    // try {
-    //   const resCurrentAd = await axios.get()
-    //   setCurrentAd(resCurrentAd.data);
-    // } catch {
-    //   toast.error("Erreur", {
-    //     position: "bottom-right",
-    //   })
-    // }
+    try {
+      const resCurrentAd = await axios.get(
+        `https://localhost:7099/api/Annonce/GetAnnonce/${id}`
+      )
+      console.log(resCurrentAd)
+      // setCurrentAd(resCurrentAd.data);
+    } catch {
+      toast.error("Erreur lors du chargement des données", {
+        position: "bottom-right",
+      })
+    }
   }
 
   const fetchAds = async () => {
     try {
       // Get all events
-      // const resAds = await axios.get(`${UrlAPI}/api/route`, {
-      //   params: param,
-      // });
+      const resAds = await axios.get(
+        `https://localhost:7099/api/Annonce/GetAnnonces`
+      )
+      console.log(resAds)
       // const ads = resAds.data.map((advert) => {
       //   return {
       //     ...advert,
@@ -226,7 +231,7 @@ const Advert = () => {
 
   useEffect(() => {
     setAdverts(otherFakeAds)
-    // fetchCurrentAd()
+    fetchCurrentAd()
   }, [])
 
   return (

@@ -6,40 +6,58 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faArrowLeft, faUser } from "@fortawesome/free-solid-svg-icons"
 import { useEffect } from "react"
 import { useState } from "react"
+import { toast } from "react-toastify"
+import axios from "axios"
 
-const fakeUserPlants = [
+const fakeAds = [
   {
+    image_plante:
+      "https://i1.wp.com/bklynorchids.com/wp-content/uploads/2012/04/img_1559.jpg",
     id_plante: 1,
-    image: "https://picsum.photos/800/600?random=1",
   },
   {
+    image_plante:
+      "https://th.bing.com/th/id/R.9b19622279c69776101ad2ae895d2538?rik=fzS25nnLDFJ9YA&pid=ImgRaw&r=0",
     id_plante: 2,
-    image: "https://picsum.photos/800/600?random=2",
   },
   {
+    image_plante: "https://garden.org/pics/2016-05-30/NMay/40d016.jpg",
     id_plante: 3,
-    image: "https://picsum.photos/800/600?random=3",
   },
   {
+    image_plante:
+      "https://th.bing.com/th/id/R.f576cd881ec4a9bc85a1416c061ff8cf?rik=5mZFuorNYx4f5A&pid=ImgRaw&r=0",
     id_plante: 4,
-    image: "https://picsum.photos/800/600?random=4",
   },
   {
+    image_plante:
+      "https://th.bing.com/th/id/OIP.K_yewd255RL3bxp3ThBYsQHaKI?pid=ImgDet&rs=1",
     id_plante: 5,
-    image: "https://picsum.photos/800/600?random=5",
   },
   {
+    image_plante:
+      "https://jardipartage.b-cdn.net/wp-content/uploads/2018/02/oiseau-du-paradis-en-pot.jpg",
     id_plante: 6,
-    image: "https://picsum.photos/800/600?random=6",
   },
 ]
 
 // Account page
 const AccountPage = () => {
-  const [userPlants, setUserPlants] = useState([])
+  const [userPlants, setUserPlants] = useState()
 
-  useEffect(() => {
-    setUserPlants(fakeUserPlants)
+  const fetchCurrentPlant = async () => {
+    try {
+      const res = await axios(`https://localhost:7099/api/Plante/GetPlantes`)
+      setUserPlants(res.data)
+    } catch {
+      toast.error("Erreur", {
+        position: "bottom-right",
+      })
+    }
+  }
+
+  useEffect(async () => {
+    await fetchCurrentPlant()
   }, [])
 
   return (
@@ -64,14 +82,13 @@ const AccountPage = () => {
               size="2xl"
               className="w-5 h-5 pr-4"
             />
-            <p>Account username</p>
+            <p>Alexandre Pozzi</p>
           </div>
           <div className="pb-6">
-            <p>Statut : </p>
-            <p>Adresse : </p>
-            <p>Adresse email :</p>
-            <p>Numéro de téléphone :</p>
-            <p>is absent</p>
+            <p>Statut : Présent</p>
+            <p>Adresse : 1 Rue de la technologie</p>
+            <p>Adresse email : alexandre.pozzi69@gmail.com</p>
+            <p>Numéro de téléphone : 06 28 79 52 47</p>
           </div>
 
           <div className="">
@@ -93,11 +110,12 @@ const AccountPage = () => {
               >
                 {userPlants ? (
                   userPlants.map(plant => (
-                    <div key={plant.id}>
+                    <div key={plant.id_plante}>
+                      {console.log(plant)}
                       <img
                         width="100%"
-                        src={plant.image}
-                        alt={plant.id_plante}
+                        src={fakeAds[0].image_plante}
+                        alt={plant.nom_plante + " " + plant.espece_plante}
                         className="drop-shadow-md pb-1 cursor-pointer max-w-[411px]"
                         onClick={() => navigate(`/plant/${plant.id_plante}/`)}
                       />

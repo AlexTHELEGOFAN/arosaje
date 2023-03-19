@@ -6,36 +6,65 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faArrowLeft, faUser } from "@fortawesome/free-solid-svg-icons"
 import { useEffect } from "react"
 import { useState } from "react"
+import axios from "axios"
+import { toast } from "react-toastify"
 
-const fakeUserPlants = [
+const fakeAds = [
   {
+    image_plante:
+      "https://i1.wp.com/bklynorchids.com/wp-content/uploads/2012/04/img_1559.jpg",
     id_plante: 1,
-    image: "https://picsum.photos/800/600?random=1",
-    nom_plante: "nom de la plante",
-    espece_plante: "espece de la plante",
-    adresse_plante: "adresse de la plante",
+  },
+  {
+    image_plante:
+      "https://th.bing.com/th/id/R.9b19622279c69776101ad2ae895d2538?rik=fzS25nnLDFJ9YA&pid=ImgRaw&r=0",
+    id_plante: 2,
+  },
+  {
+    image_plante: "https://garden.org/pics/2016-05-30/NMay/40d016.jpg",
+    id_plante: 3,
+  },
+  {
+    image_plante:
+      "https://th.bing.com/th/id/R.f576cd881ec4a9bc85a1416c061ff8cf?rik=5mZFuorNYx4f5A&pid=ImgRaw&r=0",
+    id_plante: 4,
+  },
+  {
+    image_plante:
+      "https://th.bing.com/th/id/OIP.K_yewd255RL3bxp3ThBYsQHaKI?pid=ImgDet&rs=1",
+    id_plante: 5,
+  },
+  {
+    image_plante:
+      "https://jardipartage.b-cdn.net/wp-content/uploads/2018/02/oiseau-du-paradis-en-pot.jpg",
+    id_plante: 6,
   },
 ]
 
-// Account page
+// Plant page
+
 const PlantPage = () => {
-  const param = window.location.href.slice(-2, -1)
+  const id = window.location.href.slice(-2, -1)
 
   const [currentPlant, setCurrentPlant] = useState([])
 
+  const finder = fakeAds.find(e => e.id_plante == id)
+
   const fetchCurrentPlant = async () => {
-    // try {
-    //   const res = await axios.get()
-    //   setCurrentPlant(res.data);
-    // } catch {
-    //   toast.error("Erreur", {
-    //     position: "bottom-right",
-    //   })
-    // }
+    try {
+      const res = await axios(
+        `https://localhost:7099/api/Plante/GetPlante/${id}`
+      )
+      setCurrentPlant(res.data)
+    } catch {
+      toast.error("Erreur", {
+        position: "bottom-right",
+      })
+    }
   }
 
-  useEffect(() => {
-    setCurrentPlant(fakeUserPlants)
+  useEffect(async () => {
+    await fetchCurrentPlant()
   }, [])
 
   return (
@@ -55,18 +84,18 @@ const PlantPage = () => {
       <div className="flex justify-center items-center">
         <div className="mt-2 bg-secondGreen px-8 py-5 w-[70%] rounded-md drop-shadow-md">
           <div className="pb-4">
-            {fakeUserPlants[0].nom_plante}, {fakeUserPlants[0].espece_plante}
+            {currentPlant.nom_plante}, {currentPlant.espece_plante}
           </div>
           <div className="flex justify-center pb-6">
             <img
               width="100%"
-              src={fakeUserPlants[0].image}
-              alt={fakeUserPlants[0].id_plante}
-              className="drop-shadow-md pb-1 cursor-pointer max-w-[411px]"
+              src={finder.image_plante}
+              alt={currentPlant.id_plante}
+              className="drop-shadow-md pb-1 max-w-[411px]"
             />
           </div>
           <div className="pb-6">
-            <p>Adresse : {fakeUserPlants[0].adresse_plante}</p>
+            <p>Adresse : {currentPlant.adresse_plante}</p>
           </div>
         </div>
       </div>

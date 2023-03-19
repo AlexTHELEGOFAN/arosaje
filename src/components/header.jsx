@@ -1,90 +1,120 @@
-import * as React from "react"
-
+import React, { useContext } from "react"
 import { Link, navigate } from "gatsby"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faBurger, faSearch, faUser } from "@fortawesome/free-solid-svg-icons"
+
 import Select from "react-select"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faBars, faSearch, faUser } from "@fortawesome/free-solid-svg-icons"
+
+import logo from "../assets/images/icone.jpg"
+import { SearchContext } from "../context/SearchContext"
 
 // Header layout
 
-const Header = ({ siteTitle, currentUser }) => (
-  <header
-    className="bg-headerGreen px-4 py-6 flex justify-between items-center sticky top-0 z-50"
-    // style={{
-    //   margin: `0 auto`,
-    //   padding: `var(--space-4) var(--size-gutter)`,
-    //   display: `flex`,
-    //   alignItems: `center`,
-    //   justifyContent: `space-between`,
-    // }}
-  >
-    <div>
-      <Link to="/home" className="text-sm">
-        Logo Arosa'je
-      </Link>
-    </div>
+const Header = ({ currentUser }) => {
+  const { setSearch } = useContext(SearchContext)
 
-    <div className="flex justify-between items-center relative">
-      <input
-        className="w-52 bg-white border border-solid border-gray-400 text-gray-700 text-sm rounded p-2"
-        type="text"
-        id="searchParticipant"
-        name="searchParticipant"
-        placeholder="Que recherchez vous ?"
-        // onChange={(e) => setSearchValue(e.target.value)}
-      />
-      <FontAwesomeIcon
-        icon={faSearch}
-        size="2xl"
-        className="absolute w-4 h-4 right-4 cursor-pointer"
-        // onClick={window.scrollTo(500, 0)}
-      />
-    </div>
+  const optionLinks = [
+    { value: "/new", label: "+ Nouvelle annonce" },
+    { value: "/account/1", label: "Mon compte" },
+    { value: "/messages/1", label: "Messages" },
+  ]
 
-    <div className="flex items-center">
-      <Select
-        type="button"
-        className="px-4 text-gray-500 focus:outline-none md:hidden"
-        // onClick={() => setSidebarOpen(true)}
-      >
-        <span className="">{"menu"}</span>
-        <FontAwesomeIcon className="h-6 w-6" icon={faBurger} />
-      </Select>
+  // { value: "/register", label: "Créer un compte" },
+  // { value: "/login", label: "Se connecter" },
 
-      <div className="mr-6">
-        <Link to="/new" className="w-5 h-5 text-black header-button mr-4">
-          + Nouvelle annonce
-        </Link>
+  const OptionLink = ({ data }) => {
+    const handleClick = () => {
+      window.location.href = data.value
+    }
 
-        <Link to="/register" className="w-5 h-5 text-black header-button mr-4">
-          Créer un compte
-        </Link>
+    return <div onClick={handleClick}>{data.label}</div>
+  }
 
-        <Link to="/login" className="w-5 h-5 text-black header-button">
-          Se connecter
+  return (
+    <header className="bg-headerGreen px-4 py-6 flex justify-between items-center sticky top-0 z-50">
+      <div>
+        <Link to="/home" className="flex text-lg font-bold">
+          <img
+            width="100%"
+            src={logo}
+            alt="Arosa'je"
+            className="cursor-pointer max-w-[40px] pr-2"
+          />
+          <p>Arosa'je</p>
         </Link>
       </div>
 
-      {/* <Select
-            options={filterAds}
-            defaultValue={"2"}
-            onChange={handleFilterChange}
-            placeholder={"Filtres"}
-            className="w-[250px]"
-            components={{ Option: IconOption }}
-          /> */}
-      {/* <Link to="/account/${advert?.id_annonce}/" className="text-black"> */}
-      <div className="cursor-pointer">
+      <div className="flex justify-between items-center relative">
+        <input
+          className="w-52 bg-white border border-solid border-gray-400 text-gray-700 text-sm rounded p-2"
+          type="text"
+          id="searchParticipant"
+          name="searchParticipant"
+          placeholder="Que recherchez vous ?"
+          onChange={e => setSearch(e.target.value)}
+        />
         <FontAwesomeIcon
-          icon={faUser}
+          icon={faSearch}
           size="2xl"
-          className="w-5 h-5 text-black"
-          onClick={() => navigate(`/account/${currentUser?.id}/`)}
+          className="absolute w-4 h-4 right-4 cursor-pointer"
         />
       </div>
-      {/* </Link> */}
-    </div>
-  </header>
-)
+
+      <div className="flex items-center">
+        <div
+          className="hidden fixed
+          md:relative md:flex md:p-0 md:bg-transparent md:flex-row md:space-x-6"
+        >
+          <Link
+            to="/new"
+            className="w-[170px] h-8 text-black header-button mr-4 text-center"
+          >
+            + Nouvelle annonce
+          </Link>
+
+          <Link
+            to="/messages/1"
+            className="w-[100px] h-8 text-black header-button mr-4 text-center"
+          >
+            Messages
+          </Link>
+
+          {/* <Link
+            to="/register"
+            className="w-[150px] h-8 text-black header-button mr-4 text-center"
+          >
+            Créer un compte
+          </Link>
+
+          <Link
+            to="/login"
+            className="w-[120px] h-8 text-black header-button text-center"
+          >
+            Se connecter
+          </Link> */}
+
+          <div className="cursor-pointer text-black">
+            <FontAwesomeIcon
+              icon={faUser}
+              size="2xl"
+              className="w-5 h-5 text-black"
+              // onClick={() => navigate(`/account/${currentUser?.id}/`)}
+              onClick={() => navigate(`/account/1`)}
+            />
+          </div>
+        </div>
+
+        <div className="flex items-center md:hidden">
+          <Select
+            className="px-4 w-[150px] focus:outline-none md:hidden cursor-pointer"
+            options={optionLinks}
+            placeholder={<FontAwesomeIcon icon={faBars} />}
+            components={{ Option: OptionLink }}
+          />
+        </div>
+      </div>
+    </header>
+  )
+}
 
 export default Header

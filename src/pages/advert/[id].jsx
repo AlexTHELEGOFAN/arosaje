@@ -5,203 +5,61 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import axios from "axios"
 import { navigate } from "gatsby"
 import React, { useEffect, useState } from "react"
-import { useParams } from "react-router-dom"
 import { toast } from "react-toastify"
-import { useQueryParams } from "use-query-params"
 import AdCard from "../../components/AdCard"
 
 import Layout from "../../components/layout"
 
 const fakeAds = [
   {
-    // I only need the id
     id_annonce: 1,
-    titre_annonce: "Nourrir Groot",
-    description_annonce:
-      "J'ai besoin que quelqu'un s'occupe de Groot pendant mon absence svp. J'ai besoin que quelqu'un s'occupe de Groot pendant mon absence svp.",
     image_annonce:
-      "https://static.onecms.io/wp-content/uploads/sites/13/2016/08/15/guardians-of-the-galaxy-baby-groot-scene.jpg",
-    prix_annonce: 20,
+      "https://jardipartage.b-cdn.net/wp-content/uploads/2018/02/oiseau-du-paradis-en-pot.jpg",
 
-    // I only need the id
     id_plante: 1,
-    nom_plante: "Groot",
-    espece_plante: "Homme arbre",
-    adresse_plante: "Xandar",
-
-    // I only need the id
-    id_proprio: 1,
-    nom_proprio: "Rocket",
-    prenom_proprio: "Raccoon",
-    absent: false,
-  },
-]
-
-const otherFakeAds = [
-  {
-    // I only need the id
-    id_annonce: 1,
-    titre_annonce: "Nourrir Groot",
-    description_annonce:
-      "J'ai besoin que quelqu'un s'occupe de Groot pendant mon absence svp. J'ai besoin que quelqu'un s'occupe de Groot pendant mon absence svp.",
-    image_annonce:
-      "https://static.onecms.io/wp-content/uploads/sites/13/2016/08/15/guardians-of-the-galaxy-baby-groot-scene.jpg",
-    prix_annonce: 20,
-    type_annonce: "Garde",
-
-    // I only need the id
-    id_plante: 1,
-    nom_plante: "Homme arbre",
-    espece_plante: "Groot",
-    adresse_plante: "Xandar",
-
-    // I only need the id
-    id_proprio: 1,
-    nom_proprio: "Rocket",
-    prenom_proprio: "Raccoon",
-    absent: false,
+    nom_plante: "Oiseau de paradis",
+    espece_plante: "Strelitzia",
+    adresse_plante: "2 Bd Marius Vivier Merle",
+    nom_proprio: "Paul",
+    prenom_proprio: "Smith",
   },
   {
-    // I only need the id
     id_annonce: 2,
-    titre_annonce: "Titre annonce",
-    description_annonce: "Description annonce",
-    image_annonce: "https://picsum.photos/800/600?random=2",
-    prix_annonce: 20,
-    type_annonce: "Conseil",
+    image_annonce:
+      "https://th.bing.com/th/id/R.9b19622279c69776101ad2ae895d2538?rik=fzS25nnLDFJ9YA&pid=ImgRaw&r=0",
 
-    // I only need the id
     id_plante: 2,
-    nom_plante: "nom plante",
-    espece_plante: "espece plante",
-    adresse_plante: "adresse plante",
-
-    // I only need the id
-    id_proprio: 2,
-    nom_proprio: "nom",
-    prenom_proprio: "prenom",
-    absent: false,
+    nom_plante: "Bonsaï",
+    espece_plante: "Nain",
+    adresse_plante: "1 Bd Marius Vivier Merle",
+    nom_proprio: "Jean",
+    prenom_proprio: "Dupont",
   },
   {
-    // I only need the id
     id_annonce: 3,
-    titre_annonce: "Annonce 3",
-    description_annonce: "Description 3",
-    image_annonce: "https://picsum.photos/800/600?random=3",
-    prix_annonce: 30,
-    type_annonce: "Garde",
+    image_annonce:
+      "https://th.bing.com/th/id/R.f292873ce1bfec1f32711e8eeb4d3f82?rik=ilJiQDQ3uRqa7g&pid=ImgRaw&r=0",
 
-    // I only need the id
     id_plante: 3,
-    nom_plante: "nom plante 3",
-    espece_plante: "espece plante 3",
-    adresse_plante: "location plante 3",
-
-    // I only need the id
-    id_proprio: 3,
-    nom_proprio: "nom proprio 3",
-    prenom_proprio: "prenom proprio 3",
-    absent: false,
-  },
-  {
-    // I only need the id
-    id_annonce: 4,
-    titre_annonce: "Annonce 4",
-    description_annonce: "Description 4",
-    image_annonce: "https://picsum.photos/800/600?random=4",
-    prix_annonce: 40,
-    type_annonce: "Conseil",
-
-    // I only need the id
-    id_plante: 4,
-    nom_plante: "nom plante 4",
-    espece_plante: "espece plante 4",
-    adresse_plante: "location plante 4",
-
-    // I only need the id
-    id_proprio: 4,
-    nom_proprio: "nom proprio 4",
-    prenom_proprio: "prenom proprio 4",
-    absent: false,
-  },
-  {
-    // I only need the id
-    id_annonce: 5,
-    titre_annonce: "Annonce 5",
-    description_annonce: "Description 5",
-    image_annonce: "https://picsum.photos/800/600?random=5",
-    prix_annonce: 50,
-    type_annonce: "Conseil",
-
-    // I only need the id
-    id_plante: 5,
-    nom_plante: "nom plante 5",
-    espece_plante: "espece plante 5",
-    adresse_plante: "location plante 5",
-
-    // I only need the id
-    id_proprio: 5,
-    nom_proprio: "nom proprio 5",
-    prenom_proprio: "prenom proprio 5",
-    absent: false,
-  },
-  {
-    // I only need the id
-    id_annonce: 5,
-    titre_annonce: "Annonce 5",
-    description_annonce: "Description 5",
-    image_annonce: "https://picsum.photos/800/600?random=5",
-    prix_annonce: 50,
-    type_annonce: "Conseil",
-
-    // I only need the id
-    id_plante: 5,
-    nom_plante: "nom plante 5",
-    espece_plante: "espece plante 5",
-    adresse_plante: "location plante 5",
-
-    // I only need the id
-    id_proprio: 5,
-    nom_proprio: "nom proprio 5",
-    prenom_proprio: "prenom proprio 5",
-    absent: false,
-  },
-  {
-    // I only need the id
-    id_annonce: 5,
-    titre_annonce: "Annonce 5",
-    description_annonce: "Description 5",
-    image_annonce: "https://picsum.photos/800/600?random=5",
-    prix_annonce: 50,
-    type_annonce: "Conseil",
-
-    // I only need the id
-    id_plante: 5,
-    nom_plante: "nom plante 5",
-    espece_plante: "espece plante 5",
-    adresse_plante: "location plante 5",
-
-    // I only need the id
-    id_proprio: 5,
-    nom_proprio: "nom proprio 5",
-    prenom_proprio: "prenom proprio 5",
-    absent: false,
+    nom_plante: "Pivoine",
+    espece_plante: "Rose",
+    adresse_plante: "3 Bd Marius Vivier Merle",
+    nom_proprio: "Marc",
+    prenom_proprio: "Dulac",
   },
 ]
 
 const Advert = () => {
   const id = window.location.href.slice(-2, -1)
-  // const { currentUser, setCurrentUser } = useContext(UserContext);
-  const { currentAd, setCurrentAd } = useState()
+  const [currentAd, setCurrentAd] = useState()
   const [adverts, setAdverts] = useState([])
 
   const fetchCurrentAd = async () => {
     try {
-      const resCurrentAd = await axios.get(
+      const resCurrentAd = await axios(
         `https://localhost:7099/api/Annonce/GetAnnonce/${id}`
       )
-      console.log(resCurrentAd)
-      // setCurrentAd(resCurrentAd.data);
+      setCurrentAd(resCurrentAd.data)
     } catch {
       toast.error("Erreur lors du chargement des données", {
         position: "bottom-right",
@@ -212,26 +70,27 @@ const Advert = () => {
   const fetchAds = async () => {
     try {
       // Get all events
-      const resAds = await axios.get(
+      const resAds = await axios(
         `https://localhost:7099/api/Annonce/GetAnnonces`
       )
-      console.log(resAds)
-      // const ads = resAds.data.map((advert) => {
-      //   return {
-      //     ...advert,
-      //   };
-      // });
-      setAdverts(otherFakeAds)
+      const ads = resAds.data.map(advert => {
+        return {
+          ...advert,
+        }
+      })
+      setAdverts(ads.filter(e => e.id_annonce != id))
     } catch {
-      toast.error("Erreur", {
+      toast.error("Erreur lors du chargement des données", {
         position: "bottom-right",
       })
     }
   }
 
-  useEffect(() => {
-    setAdverts(otherFakeAds)
-    fetchCurrentAd()
+  const finder = fakeAds.find(e => e.id_annonce === currentAd?.id_annonce)
+
+  useEffect(async () => {
+    await fetchCurrentAd()
+    await fetchAds()
   }, [])
 
   return (
@@ -249,28 +108,31 @@ const Advert = () => {
       </button>
 
       <div className="flex justify-between pb-20">
-        <div className="pr-4">
+        <div className="pr-2">
           <img
             width="80%"
-            src={
-              fakeAds[0].image_annonce
-              // currentAd.image_annonce
-            }
-            alt={
-              fakeAds[0].nom_plante
-              // currentAd.nom_plante
-            }
+            src={finder?.image_annonce}
+            alt={finder?.nom_plante}
             className="drop-shadow-md pb-1 cursor-pointer"
-            onClick={() => navigate(`/plant/${fakeAds[0].id_plante}/`)}
+            onClick={() => navigate(`/plant/${finder?.id_plante}/`)}
           />
         </div>
 
-        <div className="w-[30%] bg-secondGreen px-8 py-5 rounded-md drop-shadow-md">
+        <div
+          className="
+        sm:min-w-[200px]
+        md:min-w-[250px]
+        lg:min-w-[300px]
+        xl:min-w-[350px]
+        2xl:min-w-[400px]
+        
+        bg-secondGreen px-8 py-5 rounded-md drop-shadow-md"
+        >
           <h1 className="text-xl font-semibold mb-[40px]">
-            {fakeAds[0].titre_annonce}
+            {currentAd?.titre_annonce}
           </h1>
           <div className="pb-4">
-            <div className="pb-2">{fakeAds[0].description_annonce}</div>
+            <div className="pb-2">{currentAd?.description_annonce}</div>
             <div className="pb-2">
               Nom de la plante : {fakeAds[0].nom_plante}
             </div>
@@ -278,9 +140,6 @@ const Advert = () => {
               Espèce de la plante : {fakeAds[0].espece_plante}
             </div>
             <div>Adresse de la plante : {fakeAds[0].adresse_plante}</div>
-          </div>
-          <div className="pb-4 flex">
-            <button className="header-button">Garder</button>
           </div>
 
           <div
@@ -297,7 +156,12 @@ const Advert = () => {
             </div>
           </div>
 
-          <button className="header-button">Contacter</button>
+          <button
+            className="header-button"
+            onClick={() => navigate(`/messages/1`)}
+          >
+            Contacter
+          </button>
 
           <div>
             {fakeAds[0].absent ? (

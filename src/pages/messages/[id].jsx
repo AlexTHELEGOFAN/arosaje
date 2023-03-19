@@ -38,7 +38,9 @@ const Messages = () => {
 
           <form onSubmit={handleMessageSend}>
             <input type="text" value={message} onChange={handleInputChange} />
-            <button type="submit">Send</button>
+            <button type="submit" className="pl-4">
+              Envoyer
+            </button>
           </form>
         </div>
       </div>

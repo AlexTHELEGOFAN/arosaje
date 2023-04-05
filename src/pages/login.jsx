@@ -18,7 +18,7 @@ function Login() {
   const [inputType, setInputType] = useState("password")
 
   const config = {
-    "Access-Control-Allow-Origin": "*",
+    // "Access-Control-Allow-Origin": "*",
   }
 
   // Toggle show or hide password

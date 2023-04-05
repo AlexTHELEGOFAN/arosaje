@@ -25,30 +25,61 @@ const items = [
 // ** Accueil
 
 const HomePage = () => {
-  const { search } = useContext(SearchContext)
-
-  const [adverts, setAdverts] = useState([])
-  const [filterAds, setFilterAds] = useState()
+  // const { search } = useContext(SearchContext)
+  const [filtersAds, setFiltersAds] = useState()
 
   const config = {
     // "Access-Control-Allow-Origin": "*",
   }
+  const [adverts, setAdverts] = useState([])
 
-  const fetchAds = async () => {
+  const fetchPlants = async () => {
     try {
-      // Get all events
       const resAds = await axios(
-        `https://localhost:7099/api/Annonce/GetAnnonces`,
+        `https://localhost:7083/api/Annonce/GetAnnonces`,
         {
           headers: config,
         }
       )
-      const ads = resAds.data.map(advert => {
-        return {
-          ...advert,
-        }
-      })
-      setAdverts(ads)
+
+      const updatedAdverts = await Promise.all(
+        resAds.data.map(async advert => {
+          try {
+            const [userRes, imageRes] = await Promise.all([
+              axios.get(
+                `https://localhost:7083/api/User/GetUser/${advert.userId}`,
+                {
+                  headers: config,
+                }
+              ),
+              axios.get(
+                `https://localhost:7083/api/PlantImage/GetAnnonce/${advert.plantId}`,
+                {
+                  headers: config,
+                }
+              ),
+            ])
+
+            // create a new advert object that includes the user and image data
+            return {
+              ...advert,
+              user: userRes.data,
+              image: imageRes.data,
+            }
+          } catch (err) {
+            console.error(err)
+            toast.error("Erreur lors de la récupération des données", {
+              position: "bottom-right",
+            })
+
+            // return an empty object to avoid undefined values in the resulting array
+            return {}
+          }
+        })
+      )
+
+      // update the state with the new array of adverts
+      setAdverts(updatedAdverts)
     } catch {
       toast.error("Erreur lors du chargement des données", {
         position: "bottom-right",
@@ -57,12 +88,12 @@ const HomePage = () => {
   }
 
   const handleFilterChange = e => {
-    setFilterAds(adverts)
+    setFiltersAds(adverts)
   }
 
-  useEffect(() => {
-    fetchAds()
-    setFilterAds(items)
+  useEffect(async () => {
+    await fetchPlants()
+    setFiltersAds(items)
   }, [])
 
   return (
@@ -80,10 +111,10 @@ const HomePage = () => {
         <div className="flex justify-between items-center  py-[20px] mb-[40px]">
           <h1 className="text-xl font-semibold ">Annonces de plantes</h1>
           <Select
-            options={filterAds}
+            options={filtersAds}
             defaultValue={"2"}
             onChange={handleFilterChange}
-            placeholder={"Filtres"}
+            placeholder={"Trier par"}
             className="w-[250px]"
           />
         </div>
@@ -96,9 +127,9 @@ const HomePage = () => {
         xl:gap-6 xl:grid-cols-3
         2xl:gap-6 2xl:grid-cols-4"
         >
-          {adverts ? (
+          {adverts.length ? (
             adverts.map(advert => (
-              <div key={advert.id}>
+              <div key={advert?.plantId}>
                 <AdCard advert={advert} />
               </div>
             ))
@@ -110,7 +141,5 @@ const HomePage = () => {
     </Layout>
   )
 }
-
-// export const Head = () => <Seo title="Home" />
 
 export default HomePage

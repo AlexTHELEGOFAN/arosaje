@@ -6,7 +6,7 @@ import React, { useContext, useState } from "react"
 
 import { Formik, Form, ErrorMessage, Field } from "formik"
 import "react-toastify/dist/ReactToastify.css"
-import { UserContext } from "../context/UserContext"
+// import { UserContext } from "../context/UserContext"
 import { navigate } from "gatsby"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons"

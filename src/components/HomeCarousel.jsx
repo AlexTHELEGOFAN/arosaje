@@ -52,9 +52,7 @@ const fakeAds = [
   },
 ]
 
-const HomeCarousel = ({ advert }) => {
-  const finder = fakeAds.find(e => e.id_annonce === advert.id_annonce)
-
+const HomeCarousel = ({ adverts }) => {
   return (
     <Carousel
       cols={3}
@@ -89,8 +87,8 @@ const HomeCarousel = ({ advert }) => {
         },
       ]}
     >
-      {advert ? (
-        advert.map(advert => (
+      {adverts ? (
+        Object.values(adverts).map(advert => (
           <Carousel.Item>
             <div
               className="pl-[2.5rem] pt-5 pr-0 mr-0
@@ -101,16 +99,17 @@ const HomeCarousel = ({ advert }) => {
          xl:w-[50%]
          2xl:w-[75%]
             "
+              key={advert.ads.plantId}
             >
-              <div className="pb-2">
+              {/* <div className="pb-2">
                 <img
                   width="100%"
-                  src={finder?.image_annonce}
+                  src={advert.ads.image_annonce}
                   alt={advert.titre_annonce}
                   className="drop-shadow-md pb-1 cursor-pointer
                   max-w-[411px]
                   "
-                  onClick={() => navigate(`/advert/${advert?.id_annonce}/`)}
+                  // onClick={() => navigate(`/advert/${advert?.id_annonce}/`)}
                 />
               </div>
 
@@ -153,7 +152,7 @@ const HomeCarousel = ({ advert }) => {
                     />
                   </div>
                 </div>
-              </div>
+              </div> */}
             </div>
           </Carousel.Item>
         ))

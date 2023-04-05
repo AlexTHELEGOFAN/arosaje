@@ -1,9 +1,9 @@
 import * as React from "react"
-import { Link, navigate } from "gatsby"
+import { navigate } from "gatsby"
 
 import Layout from "../../components/layout"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faArrowLeft, faUser } from "@fortawesome/free-solid-svg-icons"
+import { faArrowLeft } from "@fortawesome/free-solid-svg-icons"
 import { useEffect } from "react"
 import { useState } from "react"
 import axios from "axios"
@@ -48,7 +48,7 @@ const PlantPage = () => {
 
   const [currentPlant, setCurrentPlant] = useState([])
 
-  const finder = fakeAds.find(e => e.id_plante == id)
+  // const finder = fakeAds.find(e => e.id_plante === id)
 
   const fetchCurrentPlant = async () => {
     try {
@@ -84,15 +84,16 @@ const PlantPage = () => {
       <div className="flex justify-center items-center">
         <div className="mt-2 bg-secondGreen px-8 py-5 w-[70%] rounded-md drop-shadow-md">
           <div className="pb-4">
-            {currentPlant.nom_plante}, {currentPlant.espece_plante}
+            {/* {currentPlant.nom_plante}, {currentPlant.espece_plante} */}
           </div>
           <div className="flex justify-center pb-6">
             <img
               width="100%"
-              src={finder.image_plante}
+              // src={finder.image_plante}
               alt={currentPlant.id_plante}
               className="drop-shadow-md pb-1 max-w-[411px]"
             />
+            <p> Image_plante</p>
           </div>
           <div className="pb-6">
             <p>Adresse : {currentPlant.adresse_plante}</p>

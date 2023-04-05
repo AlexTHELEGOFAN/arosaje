@@ -67,7 +67,7 @@ const Header = ({ currentUser }) => {
         >
           <Link
             to="/new"
-            className="w-[170px] h-8 text-black header-button mr-4 text-center"
+            className="w-[170px] h-8 header-button mr-4 text-center"
           >
             + Nouvelle annonce
           </Link>

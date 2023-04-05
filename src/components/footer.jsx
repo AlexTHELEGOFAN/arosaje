@@ -1,7 +1,7 @@
 import * as React from "react"
 
 const Footer = ({ siteTitle }) => (
-  <footer className="flex justify-between bg-green-500 px-4 py-6 fixed bottom-0 w-full">
+  <footer className="flex justify-between bg-headerGreen px-4 py-6 fixed bottom-0 w-full font-semibold">
     <div>
       © {new Date().getFullYear()} &middot; Fait avec
       {` `}

@@ -11,6 +11,7 @@ module.exports = {
         secondGreen: "#dcfce7",
         threeGreen: "#27bc5b",
         fourGreen: "#58b97a",
+        darkGreen: "#14480e",
         disabledButton: "#bcb2b2",
       },
     },

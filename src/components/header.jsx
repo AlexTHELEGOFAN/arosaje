@@ -5,7 +5,7 @@ import Select from "react-select"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faBars, faSearch, faUser } from "@fortawesome/free-solid-svg-icons"
 
-import logo from "../assets/images/icone.jpg"
+import logo from "@assets/icons/icone.jpg"
 import { SearchContext } from "../context/SearchContext"
 
 // Header layout
@@ -65,17 +65,11 @@ const Header = ({ currentUser }) => {
           className="hidden fixed
           md:relative md:flex md:p-0 md:bg-transparent md:flex-row md:space-x-6"
         >
-          <Link
-            to="/new"
-            className="w-[170px] h-8 header-button mr-4 text-center"
-          >
+          <Link to="/new" className="w-[170px] header-button mr-4">
             + Nouvelle annonce
           </Link>
 
-          <Link
-            to="/messages/1"
-            className="w-[100px] h-8 text-black header-button mr-4 text-center"
-          >
+          <Link to="/messages/1" className="w-[100px] header-button mr-4">
             Messages
           </Link>
 

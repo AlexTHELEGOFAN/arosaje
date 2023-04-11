@@ -78,7 +78,7 @@ const Advert = () => {
           ...advert,
         }
       })
-      setAdverts(ads.filter(e => e.id_annonce != id))
+      setAdverts(ads.filter(e => e.id_annonce !== id))
     } catch {
       toast.error("Erreur lors du chargement des données", {
         position: "bottom-right",

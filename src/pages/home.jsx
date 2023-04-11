@@ -98,14 +98,14 @@ const HomePage = () => {
 
   return (
     <Layout>
-      <div>
+      <div className="">
         <h1 className="text-xl font-semibold mb-[40px]">
           Des milliers d'annonces de plantes
         </h1>
 
         {/* <div className="grid justify-center"> */}
-        <div className="flex items-center bg-secondGreen px-5 pb-8 max-h-[536px]">
-          <HomeCarousel advert={adverts} />
+        <div className="flex justify-center bg-green-200 pb-8 max-h-[536px]">
+          <HomeCarousel adverts={adverts} />
         </div>
 
         <div className="flex justify-between items-center  py-[20px] mb-[40px]">

@@ -31,19 +31,27 @@
 }
 
 .header-button {
+  display: flex;
+  justify-content: center;
   text-align: center;
-  font-weight: 500;
-  background-color: #1a6a10;
-  padding-left: 6px;
-  padding-right: 6px;
+
   padding-top: 4px;
   padding-bottom: 4px;
+  padding-left: 4px;
+  padding-right: 4px;
+
+  font-weight: 500;
+  background-color: #14480e;
   color: white;
-  border-color: rgb(156 163 175);
-  border-radius: 4px;
-  border-width: 2px;
+  border-color: rgb(0, 0, 0);
+  border-radius: 6px;
 }
 
-.header-button :hover {
-  background-color: #dcfce7;
+.header-button:hover {
+  background-color: #1d6915;
+}
+
+.header-button:active {
+  background-color: white;
+  color: black;
 }

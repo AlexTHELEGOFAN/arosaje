@@ -23,6 +23,19 @@ module.exports = {
         path: `${__dirname}/src/assets/images`,
       },
     },
+    {
+      resolve: `gatsby-plugin-alias-imports`,
+      options: {
+        alias: {
+          "@src": "src",
+          "@assets": "src/assets",
+          "@components": "src/components",
+          "@pages": "src/pages",
+        },
+        extensions: [],
+      },
+    },
+
     `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`,
     {
@@ -36,7 +49,7 @@ module.exports = {
         // https://css-tricks.com/meta-theme-color-and-trickery/
         // theme_color: `#663399`,
         display: `minimal-ui`,
-        icon: `src/assets/images/icone.jpg`, // This path is relative to the root of the site.
+        icon: `src/assets/icons/icone.jpg`, // This path is relative to the root of the site.
       },
     },
   ],

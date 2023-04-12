@@ -9,55 +9,91 @@ import { useState } from "react"
 import { toast } from "react-toastify"
 import axios from "axios"
 
-const fakeAds = [
-  {
-    image_plante:
-      "https://i1.wp.com/bklynorchids.com/wp-content/uploads/2012/04/img_1559.jpg",
-    id_plante: 1,
-  },
-  {
-    image_plante:
-      "https://th.bing.com/th/id/R.9b19622279c69776101ad2ae895d2538?rik=fzS25nnLDFJ9YA&pid=ImgRaw&r=0",
-    id_plante: 2,
-  },
-  {
-    image_plante: "https://garden.org/pics/2016-05-30/NMay/40d016.jpg",
-    id_plante: 3,
-  },
-  {
-    image_plante:
-      "https://th.bing.com/th/id/R.f576cd881ec4a9bc85a1416c061ff8cf?rik=5mZFuorNYx4f5A&pid=ImgRaw&r=0",
-    id_plante: 4,
-  },
-  {
-    image_plante:
-      "https://th.bing.com/th/id/OIP.K_yewd255RL3bxp3ThBYsQHaKI?pid=ImgDet&rs=1",
-    id_plante: 5,
-  },
-  {
-    image_plante:
-      "https://jardipartage.b-cdn.net/wp-content/uploads/2018/02/oiseau-du-paradis-en-pot.jpg",
-    id_plante: 6,
-  },
-]
-
 // Account page
 const AccountPage = () => {
+  const id = parseInt(window.location.href.slice(-2, -1))
+
+  const [user, setUser] = useState()
   const [userPlants, setUserPlants] = useState()
 
-  const fetchCurrentPlant = async () => {
+  const config = {
+    // "Access-Control-Allow-Origin": "*",
+  }
+
+  const fetchUser = async () => {
     try {
-      const res = await axios(`https://localhost:7099/api/Plante/GetPlantes`)
-      setUserPlants(res.data)
+      const res = await axios(`https://localhost:7083/api/User/GetUser/${id}`, {
+        headers: config,
+      })
+
+      setUser(res.data)
     } catch {
-      toast.error("Erreur", {
+      toast.error("Erreur lors du chargement des données", {
+        position: "bottom-right",
+      })
+    }
+  }
+
+  console.log("user", user)
+  console.log("userPlants", userPlants)
+
+  const fetchUserPlants = async () => {
+    try {
+      const resAds = await axios(
+        `https://localhost:7083/api/Annonce/GetAnnonces`,
+        {
+          headers: config,
+        }
+      )
+
+      const updatedAdverts = await Promise.all(
+        resAds.data.map(async advert => {
+          try {
+            const [userRes, imageRes] = await Promise.all([
+              axios.get(
+                `https://localhost:7083/api/User/GetUser/${advert.userId}`,
+                {
+                  headers: config,
+                }
+              ),
+              axios.get(
+                `https://localhost:7083/api/PlantImage/GetAnnonce/${advert.plantId}`,
+                {
+                  headers: config,
+                }
+              ),
+            ])
+
+            // create a new advert object that includes the user and image data
+            return {
+              ...advert,
+              user: userRes.data,
+              image: imageRes.data,
+            }
+          } catch (err) {
+            console.error(err)
+            toast.error("Erreur lors de la récupération des données", {
+              position: "bottom-right",
+            })
+
+            // return an empty object to avoid undefined values in the resulting array
+            return {}
+          }
+        })
+      )
+
+      // update the state with the new array of adverts
+      setUserPlants(updatedAdverts.filter(e => e.userId === id))
+    } catch {
+      toast.error("Erreur lors du chargement des données", {
         position: "bottom-right",
       })
     }
   }
 
   useEffect(async () => {
-    await fetchCurrentPlant()
+    await fetchUser()
+    await fetchUserPlants()
   }, [])
 
   return (
@@ -82,18 +118,32 @@ const AccountPage = () => {
               size="2xl"
               className="w-5 h-5 pr-4"
             />
-            <p>Alexandre Pozzi</p>
+            <div className="font-medium text-lg">
+              {user?.firstName} {user?.lastName}
+            </div>
           </div>
           <div className="pb-6">
-            <p>Statut : Présent</p>
-            <p>Adresse : 1 Rue de la technologie</p>
-            <p>Adresse email : alexandre.pozzi69@gmail.com</p>
-            <p>Numéro de téléphone : 06 28 79 52 47</p>
+            <div className="flex text-center">
+              <p className="font-medium pr-2">Statut :</p>
+              {user?.status === 0 ? "Inactif" : "Actif"}
+            </div>
+            <div className="flex text-center">
+              <p className="font-medium pr-2">Adresse :</p>
+              {user?.userAddress}
+            </div>
+            <div className="flex text-center">
+              <p className="font-medium pr-2">Adresse email :</p>
+              {user?.email}
+            </div>
+            <div className="flex text-center">
+              <p className="font-medium pr-2">Numéro de téléphone :</p>
+              {user?.phone}
+            </div>
           </div>
 
           <div className="">
             <div className="pb-6">
-              <Link to="/" className="w-5 h-5 text-black header-button">
+              <Link to="/" className="w-[100px] header-button mr-4">
                 Contacter
               </Link>
             </div>
@@ -110,15 +160,18 @@ const AccountPage = () => {
               >
                 {userPlants ? (
                   userPlants.map(plant => (
-                    <div key={plant.id_plante}>
-                      {console.log(plant)}
-                      <img
-                        width="100%"
-                        src={fakeAds[0].image_plante}
-                        alt={plant.nom_plante + " " + plant.espece_plante}
-                        className="drop-shadow-md pb-1 cursor-pointer max-w-[411px]"
-                        onClick={() => navigate(`/plant/${plant.id_plante}/`)}
-                      />
+                    <div className="pt-5 pr-0 pl-[15%]" key={plant?.plantId}>
+                      <div className="pb-2">
+                        <img
+                          src={
+                            require(`@assets/images/${plant.image.image}.jpg`)
+                              .default
+                          }
+                          alt={plant.name + " " + plant.species}
+                          className="drop-shadow-md pb-1 cursor-pointer max-w-[300px]"
+                          onClick={() => navigate(`/plant/${plant.plantId}/`)}
+                        />
+                      </div>
                     </div>
                   ))
                 ) : (

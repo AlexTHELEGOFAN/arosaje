@@ -9,51 +9,18 @@ import { useState } from "react"
 import axios from "axios"
 import { toast } from "react-toastify"
 
-const fakeAds = [
-  {
-    image_plante:
-      "https://i1.wp.com/bklynorchids.com/wp-content/uploads/2012/04/img_1559.jpg",
-    id_plante: 1,
-  },
-  {
-    image_plante:
-      "https://th.bing.com/th/id/R.9b19622279c69776101ad2ae895d2538?rik=fzS25nnLDFJ9YA&pid=ImgRaw&r=0",
-    id_plante: 2,
-  },
-  {
-    image_plante: "https://garden.org/pics/2016-05-30/NMay/40d016.jpg",
-    id_plante: 3,
-  },
-  {
-    image_plante:
-      "https://th.bing.com/th/id/R.f576cd881ec4a9bc85a1416c061ff8cf?rik=5mZFuorNYx4f5A&pid=ImgRaw&r=0",
-    id_plante: 4,
-  },
-  {
-    image_plante:
-      "https://th.bing.com/th/id/OIP.K_yewd255RL3bxp3ThBYsQHaKI?pid=ImgDet&rs=1",
-    id_plante: 5,
-  },
-  {
-    image_plante:
-      "https://jardipartage.b-cdn.net/wp-content/uploads/2018/02/oiseau-du-paradis-en-pot.jpg",
-    id_plante: 6,
-  },
-]
-
 // Plant page
 
 const PlantPage = () => {
-  const id = window.location.href.slice(-2, -1)
+  const id = parseInt(window.location.href.slice(-2, -1))
 
   const [currentPlant, setCurrentPlant] = useState([])
+  const [plantImage, setPlantImage] = useState()
 
-  // const finder = fakeAds.find(e => e.id_plante === id)
-
-  const fetchCurrentPlant = async () => {
+  const fetchCurrentPlantInfos = async () => {
     try {
-      const res = await axios(
-        `https://localhost:7099/api/Plante/GetPlante/${id}`
+      const res = await axios.get(
+        `https://localhost:7083/api/Annonce/GetAnnonce/${id}`
       )
       setCurrentPlant(res.data)
     } catch {
@@ -63,8 +30,25 @@ const PlantPage = () => {
     }
   }
 
+  const fetchCurrentPlant = async () => {
+    try {
+      const res = await axios.get(
+        `https://localhost:7083/api/PlantImage/GetAnnonce/${id}`
+      )
+      console.log(res)
+      setPlantImage(res)
+    } catch {
+      toast.error("Erreur", {
+        position: "bottom-right",
+      })
+    }
+  }
+
+  console.log("currentPlant", currentPlant)
+
   useEffect(async () => {
     await fetchCurrentPlant()
+    await fetchCurrentPlantInfos()
   }, [])
 
   return (
@@ -86,17 +70,24 @@ const PlantPage = () => {
           <div className="pb-4">
             {/* {currentPlant.nom_plante}, {currentPlant.espece_plante} */}
           </div>
-          <div className="flex justify-center pb-6">
-            <img
-              width="100%"
-              // src={finder.image_plante}
-              alt={currentPlant.id_plante}
-              className="drop-shadow-md pb-1 max-w-[411px]"
-            />
-            <p> Image_plante</p>
-          </div>
-          <div className="pb-6">
-            <p>Adresse : {currentPlant.adresse_plante}</p>
+
+          {/* <div className="flex justify-center pb-6">
+            <div className="pb-2">
+              <img
+                src={
+                  require(`@assets/images/${plantImage?.image?.image}.jpg`)
+                    .default
+                }
+                alt={currentPlant.name + " " + currentPlant.species}
+                className="drop-shadow-md pb-1 cursor-pointer max-w-[300px]"
+                onClick={() => navigate(`/plant/${currentPlant.plantId}/`)}
+              />
+            </div>
+          </div> */}
+
+          <div className="flex text-center pb-6">
+            <p className="font-medium pr-2">Adresse :</p>{" "}
+            {currentPlant.plantAddress}
           </div>
         </div>
       </div>

@@ -40,18 +40,10 @@ const HomeCarousel = ({ adverts }) => {
       ]}
     >
       {adverts.length ? (
-        adverts.slice(0, 9).map(advert => (
+        adverts.slice(3, 12).map(advert => (
           <Carousel.Item>
-            <div
-              className="pt-5 pr-0 pl-[15%] bg-headerGreen"
-              key={advert?.plantId}
-            >
-              <div
-                className="pb-2
-              pl-[20%]
-              
-              "
-              >
+            <div className="pt-5 pr-0 pl-[15%]" key={advert?.plantId}>
+              <div className="pb-2 pl-[20%]">
                 <img
                   src={
                     require(`@assets/images/${advert.image.image}.jpg`).default

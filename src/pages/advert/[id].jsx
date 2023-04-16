@@ -1,77 +1,76 @@
 // ** React imports
 
-import { faArrowLeft, faUser } from "@fortawesome/free-solid-svg-icons"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import axios from "axios"
-import { navigate } from "gatsby"
-import React, { useEffect, useState } from "react"
-import { toast } from "react-toastify"
-import AdCard from "../../components/AdCard"
+import { faArrowLeft, faUser } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import axios from 'axios'
+import { navigate } from 'gatsby'
+import React, { useEffect, useState } from 'react'
+import { toast } from 'react-toastify'
+import AdCard from '../../components/AdCard'
 
-import Layout from "../../components/layout"
+import Layout from '../../components/layout'
 
-const fakeAds = [
-  {
-    id_annonce: 1,
-    image_annonce:
-      "https://jardipartage.b-cdn.net/wp-content/uploads/2018/02/oiseau-du-paradis-en-pot.jpg",
-
-    id_plante: 1,
-    nom_plante: "Oiseau de paradis",
-    espece_plante: "Strelitzia",
-    adresse_plante: "2 Bd Marius Vivier Merle",
-    nom_proprio: "Paul",
-    prenom_proprio: "Smith",
-  },
-  {
-    id_annonce: 2,
-    image_annonce:
-      "https://th.bing.com/th/id/R.9b19622279c69776101ad2ae895d2538?rik=fzS25nnLDFJ9YA&pid=ImgRaw&r=0",
-
-    id_plante: 2,
-    nom_plante: "Bonsaï",
-    espece_plante: "Nain",
-    adresse_plante: "1 Bd Marius Vivier Merle",
-    nom_proprio: "Jean",
-    prenom_proprio: "Dupont",
-  },
-  {
-    id_annonce: 3,
-    image_annonce:
-      "https://th.bing.com/th/id/R.f292873ce1bfec1f32711e8eeb4d3f82?rik=ilJiQDQ3uRqa7g&pid=ImgRaw&r=0",
-
-    id_plante: 3,
-    nom_plante: "Pivoine",
-    espece_plante: "Rose",
-    adresse_plante: "3 Bd Marius Vivier Merle",
-    nom_proprio: "Marc",
-    prenom_proprio: "Dulac",
-  },
-]
+// Plant advert page
 
 const Advert = () => {
   const id = window.location.href.slice(-2, -1)
   const [currentAd, setCurrentAd] = useState()
   const [adverts, setAdverts] = useState([])
 
-  const fetchCurrentAd = async () => {
-    try {
-      const resCurrentAd = await axios(
-        `https://localhost:7099/api/Annonce/GetAnnonce/${id}`
-      )
-      setCurrentAd(resCurrentAd.data)
-    } catch {
-      toast.error("Erreur lors du chargement des données", {
-        position: "bottom-right",
-      })
-    }
+  const config = {
+    // "Access-Control-Allow-Origin": "*",
+    // "Access-Control-Allow-Headers": "*",
+    // "Access-Control-Allow-Methods": "*",
   }
+
+  const fetchCurrentAd = async () => {
+    await axios
+      .get(`https://localhost:7083/api/Annonce/GetAnnonce/${id}`, {
+        headers: config,
+      })
+      .then(resAdvert => {
+        // console.log('fullAdverts', resAdvert.data.userId)
+        try {
+          const advertUser = axios.get(
+            `https://localhost:7083/api/User/GetUser/${resAdvert.data.userId}`,
+            {
+              headers: config,
+            }
+          )
+          // setAdvertUser(advertUser.data)
+        } catch {
+          toast.error('Erreur lors du chargement des données', {
+            position: 'bottom-right',
+          })
+        }
+
+        try {
+          const advertImage = axios.get(
+            `https://localhost:7083/api/PlantImage/GetAnnonce/${resAdvert.data.plantId}`,
+            {
+              headers: config,
+            }
+          )
+        } catch {
+          toast.error('Erreur lors du chargement des données', {
+            position: 'bottom-right',
+          })
+        }
+
+        console.log('fullAdverts', fullAdverts)
+
+        // update the state with the new array of advert
+        setCurrentAd(fullAdverts)
+      })
+  }
+
+  console.log('currentAd', currentAd)
 
   const fetchAds = async () => {
     try {
       // Get all events
       const resAds = await axios(
-        `https://localhost:7099/api/Annonce/GetAnnonces`
+        `https://localhost:7083/api/Annonce/GetAnnonces`
       )
       const ads = resAds.data.map(advert => {
         return {
@@ -80,13 +79,11 @@ const Advert = () => {
       })
       setAdverts(ads.filter(e => e.id_annonce !== id))
     } catch {
-      toast.error("Erreur lors du chargement des données", {
-        position: "bottom-right",
+      toast.error('Erreur lors du chargement des données', {
+        position: 'bottom-right',
       })
     }
   }
-
-  const finder = fakeAds.find(e => e.id_annonce === currentAd?.id_annonce)
 
   useEffect(async () => {
     await fetchCurrentAd()
@@ -109,13 +106,13 @@ const Advert = () => {
 
       <div className="flex justify-between pb-20">
         <div className="pr-2">
-          <img
+          {/* <img
             width="80%"
             src={finder?.image_annonce}
             alt={finder?.nom_plante}
             className="drop-shadow-md pb-1 cursor-pointer"
             onClick={() => navigate(`/plant/${finder?.id_plante}/`)}
-          />
+          /> */}
         </div>
 
         <div
@@ -133,18 +130,14 @@ const Advert = () => {
           </h1>
           <div className="pb-4">
             <div className="pb-2">{currentAd?.description_annonce}</div>
-            <div className="pb-2">
-              Nom de la plante : {fakeAds[0].nom_plante}
-            </div>
-            <div className="pb-2">
-              Espèce de la plante : {fakeAds[0].espece_plante}
-            </div>
-            <div>Adresse de la plante : {fakeAds[0].adresse_plante}</div>
+            <div className="pb-2">Nom de la plante :</div>
+            <div className="pb-2">Espèce de la plante :</div>
+            <div>Adresse de la plante : </div>
           </div>
 
           <div
             className="flex items-center pb-6 cursor-pointer"
-            onClick={() => navigate(`/account/${fakeAds[0].id_proprio}/`)}
+            // onClick={() => navigate(`/account/${}/`)}
           >
             <FontAwesomeIcon
               icon={faUser}
@@ -152,7 +145,7 @@ const Advert = () => {
               className="w-5 h-5 pr-2"
             />
             <div>
-              {fakeAds[0].nom_proprio} {fakeAds[0].prenom_proprio}
+              {/* {fakeAds[0].nom_proprio} {fakeAds[0].prenom_proprio} */}
             </div>
           </div>
 
@@ -164,13 +157,13 @@ const Advert = () => {
           </button>
 
           <div>
-            {fakeAds[0].absent ? (
+            {/* {fakeAds[0].absent ? (
               <p>
                 La personne qui possède cette plante est actuellement absente.
               </p>
             ) : (
               <></>
-            )}
+            )} */}
           </div>
         </div>
       </div>
@@ -184,15 +177,15 @@ const Advert = () => {
         xl:gap-6 xl:grid-cols-3
         2xl:gap-6 2xl:grid-cols-4"
       >
-        {adverts ? (
+        {/* {adverts.length ? (
           adverts.map(advert => (
-            <div key={advert.id}>
+            <div key={advert?.plantId}>
               <AdCard advert={advert} />
             </div>
           ))
         ) : (
           <p className="text-center">Aucune annonce</p>
-        )}
+        )} */}
       </div>
     </Layout>
   )

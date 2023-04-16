@@ -1,61 +1,52 @@
 // ** Default import
 
-import React, { useContext, useState } from "react"
+import React, { useContext, useState } from 'react'
 
 // ** Utils
 
-import { Formik, Form, ErrorMessage, Field } from "formik"
-import "react-toastify/dist/ReactToastify.css"
+import { Formik, Form, ErrorMessage, Field } from 'formik'
+import 'react-toastify/dist/ReactToastify.css'
 // import { UserContext } from "../context/UserContext"
-import { navigate } from "gatsby"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faArrowLeft } from "@fortawesome/free-solid-svg-icons"
+import { navigate } from 'gatsby'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faArrowLeft } from '@fortawesome/free-solid-svg-icons'
+import axios from 'axios'
+import { toast } from 'react-toastify'
 // import { REACT_APP_BASE_URL } from '../CONF';
 
 // ** Register page
 
 function Register() {
-  const [inputType, setInputType] = useState("password")
+  const [inputType, setInputType] = useState('password')
   // const { setCurrentUser } = useContext(UserContext)
 
-  //   const UrlAPI = REACT_APP_BASE_URL;
-  // const config = {
-  //   "Access-Control-Allow-Origin": "*",
-  // }
+  const config = {
+    // 'Access-Control-Allow-Origin': '*',
+    // 'Access-Control-Allow-Headers': '*',
+    // 'Access-Control-Allow-Methods': 'Get, post, put, delete',
+  }
 
   // Toggle show or hide password
   const toggleVisibility = () => {
-    setInputType(inputType === "password" ? "text" : "password")
+    setInputType(inputType === 'password' ? 'text' : 'password')
   }
 
   // Handle register Formik
   const handleRegister = values => {
-    // axios
-    //   .get(
-    //     `${UrlAPI}/api/Token?password=${values.username}&username=${values.password}`,
-    //     {
-    //       headers: config,
-    //     }
-    //   )
-    //   .then((res) => {
-    //     // Create and set browser cookies
-    //     const cookies = new Cookies();
-    //     cookies.set('jwt', res.data);
-    //     localStorage.setItem('jwt', res.data);
-
-    //     // Get and decode jwt token
-    //     const jwt = cookies.get('jwt');
-    //     const decodedToken = jwtDecode(jwt);
-    //     setCurrentUser(decodedToken.unique_name);
-    //     localStorage.setItem('user', decodedToken.unique_name);
-    navigate("/login")
-    //   })
-    //   .catch((err) => {
-    //     console.error(err);
-    //     toast.error("Nom d'utilisateur ou mot de passe incorrect", {
-    //       position: 'bottom-right',
-    //     });
-    //   });
+    axios
+      .post(`https://localhost:7083/api/User/InsertUser`, {
+        headers: config,
+        body: values,
+      })
+      .then(res => {
+        navigate('/login')
+      })
+      .catch(err => {
+        console.error(err)
+        toast.error('Oups ! Une erreur est survenue.', {
+          position: 'bottom-right',
+        })
+      })
   }
 
   return (
@@ -72,49 +63,60 @@ function Register() {
         Retour
       </button>
       <div className="flex justify-center items-center">
-        <div className="bg-secondGreen px-8 py-5  rounded-md drop-shadow-md">
+        <div className="bg-green-200 px-8 py-5  rounded-md drop-shadow-md">
           <h1 className="text-center text-2xl font-medium my-4">
             Nouveau compte
           </h1>
 
           <Formik
             initialValues={{
-              username: "",
-              name: "",
-              email: "",
-              tel: "",
-              address: "",
-              password: "",
-              confirmPassword: "",
+              username: '',
+              firstName: '',
+              lastName: '',
+              age: '',
+              email: '',
+              phone: '',
+              address: '',
+              password: '',
+              confirmPassword: '',
+              cityId: 1,
+              typeId: 1,
+              status: 1,
             }}
             validateOnChange={false}
             validate={values => {
               let errors = {}
               if (!values.username) {
-                errors.username = "Ce champ est requis"
+                errors.username = 'Ce champ est requis'
+              }
+              if (!values.firstName) {
+                errors.firstName = 'Ce champ est requis'
+              }
+              if (!values.lastName) {
+                errors.lastName = 'Ce champ est requis'
               }
               if (!values.email) {
-                errors.email = "Ce champ est requis"
+                errors.email = 'Ce champ est requis'
               }
               if (
                 !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)
               ) {
-                errors.email = "Adresse email invalide"
+                errors.email = 'Adresse email invalide'
               }
-              if (!values.tel) {
-                errors.tel = "Ce champ est requis"
+              if (!values.phone) {
+                errors.phone = 'Ce champ est requis'
               }
               if (!values.address) {
-                errors.address = "Ce champ est requis"
+                errors.address = 'Ce champ est requis'
               }
               if (!values.password) {
-                errors.password = "Ce champ est requis"
+                errors.password = 'Ce champ est requis'
               }
               if (!values.confirmPassword) {
-                errors.confirmPassword = "Ce champ est requis"
+                errors.confirmPassword = 'Ce champ est requis'
               }
               if (values.password !== values.confirmPassword) {
-                errors.confirmPassword = "Le mot de passe est différent"
+                errors.confirmPassword = 'Le mot de passe est différent'
               }
               return errors
             }}
@@ -136,6 +138,38 @@ function Register() {
                     className="w-[250px] md:w-full justify-center login-field"
                   />
                   <ErrorMessage name="username" component="div" />
+                </div>
+
+                <div className="pb-4">
+                  <label
+                    className="flex text-left text-black text-sm mb-1"
+                    htmlFor="text"
+                  >
+                    Nom *
+                  </label>
+                  <Field
+                    type="text"
+                    name="firstName"
+                    placeholder="Nom"
+                    className="w-[250px] md:w-full justify-center login-field"
+                  />
+                  <ErrorMessage name="firstName" component="div" />
+                </div>
+
+                <div className="pb-4">
+                  <label
+                    className="flex text-left text-black text-sm mb-1"
+                    htmlFor="text"
+                  >
+                    Prénom *
+                  </label>
+                  <Field
+                    type="text"
+                    name="lastName"
+                    placeholder="Prénom"
+                    className="w-[250px] md:w-full justify-center login-field"
+                  />
+                  <ErrorMessage name="lastName" component="div" />
                 </div>
 
                 <div className="pb-4">
@@ -163,11 +197,11 @@ function Register() {
                   </label>
                   <Field
                     type="text"
-                    name="tel"
+                    name="phone"
                     placeholder="Numéro de téléphone"
                     className="w-[250px] md:w-full justify-center login-field"
                   />
-                  <ErrorMessage name="tel" component="div" />
+                  <ErrorMessage name="phone" component="div" />
                 </div>
 
                 <div className="pb-4">

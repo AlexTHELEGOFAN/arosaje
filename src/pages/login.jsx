@@ -1,58 +1,63 @@
 // ** Default import
 
-import React, { useContext, useState } from "react"
+import React, { useContext, useState } from 'react'
 
 // ** Utils
 
-import { Formik, Form, ErrorMessage, Field } from "formik"
-import "react-toastify/dist/ReactToastify.css"
-import { UserContext } from "../context/UserContext"
-import { navigate } from "gatsby"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faArrowLeft } from "@fortawesome/free-solid-svg-icons"
+import Cookies from 'universal-cookie'
+import axios from 'axios'
+import { navigate } from 'gatsby'
+import { Formik, Form, ErrorMessage, Field } from 'formik'
+import { toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+import { UserContext } from '../context/UserContext'
+import jwtDecode from 'jwt-decode'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faArrowLeft } from '@fortawesome/free-solid-svg-icons'
 
 // ** Login page
 
 function Login() {
   const { setCurrentUser } = useContext(UserContext)
-  const [inputType, setInputType] = useState("password")
+
+  const [inputType, setInputType] = useState('password')
 
   const config = {
-    // "Access-Control-Allow-Origin": "*",
+    // 'Access-Control-Allow-Origin': '*',
+    // 'Access-Control-Allow-Headers': '*',
+    // 'Access-Control-Allow-Methods': 'Get, post, put, delete',
   }
 
   // Toggle show or hide password
   const toggleVisibility = () => {
-    setInputType(inputType === "password" ? "text" : "password")
+    setInputType(inputType === 'password' ? 'text' : 'password')
   }
 
   // Handle login Formik
   const handleLogin = values => {
-    // axios
-    //   .get(
-    //     `${UrlAPI}/api/Token?password=${values.username}&username=${values.password}`,
-    //     {
-    //       headers: config,
-    //     }
-    //   )
-    //   .then((res) => {
-    //     // Create and set browser cookies
-    //     const cookies = new Cookies();
-    //     cookies.set('jwt', res.data);
-    //     localStorage.setItem('jwt', res.data);
+    console.log(values)
+    axios
+      .get(`https://localhost:7083/api/User/GetUser/1`, {
+        headers: config,
+      })
+      .then(res => {
+        // Create and set browser cookies
+        const cookies = new Cookies()
+        // cookies.set('jwt', res.data);
+        // localStorage.setItem('jwt', res.data);
 
-    //     // Get and decode jwt token
-    //     const jwt = cookies.get('jwt');
-    //     const decodedToken = jwtDecode(jwt);
-    //     setCurrentUser(decodedToken.unique_name);
-    //     localStorage.setItem('user', decodedToken.unique_name);
-    navigate("/home")
-    //   })
-    //   .catch((err) => {
-    //     toast.error("Nom d'utilisateur ou mot de passe incorrect", {
-    //       position: 'bottom-right',
-    //     });
-    //   });
+        // Get and decode jwt token
+        // const jwt = cookies.get('jwt');
+        // const decodedToken = jwtDecode(jwt);
+        // setCurrentUser(decodedToken.unique_name);
+        // localStorage.setItem('user', decodedToken.unique_name);
+        navigate('/home')
+      })
+      .catch(err => {
+        toast.error("Nom d'utilisateur ou mot de passe incorrect", {
+          position: 'bottom-right',
+        })
+      })
   }
 
   return (
@@ -69,22 +74,22 @@ function Login() {
         Retour
       </button>
       <div className="flex justify-center items-center">
-        <div className="bg-secondGreen px-8 py-5 rounded-md drop-shadow-md">
+        <div className="bg-green-200 px-8 py-5 rounded-md drop-shadow-md">
           <h1 className="text-center text-2xl font-medium my-4">Connexion</h1>
 
           <Formik
             initialValues={{
-              username: "",
-              password: "",
+              username: '',
+              password: '',
             }}
             validateOnChange={false}
             validate={values => {
               let errors = {}
               if (!values.username) {
-                errors.username = "Ce champ est requis"
+                errors.username = 'Ce champ est requis'
               }
               if (!values.password) {
-                errors.password = "Ce champ est requis"
+                errors.password = 'Ce champ est requis'
               }
               return errors
             }}

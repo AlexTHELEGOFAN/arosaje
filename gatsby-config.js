@@ -7,6 +7,9 @@
 /**
  * @type {import('gatsby').GatsbyConfig}
  */
+const { createProxyMiddleware } = require("http-proxy-middleware")
+const cors = require("cors")
+
 module.exports = {
   siteMetadata: {
     title: `Arosa'je`,
@@ -14,6 +17,24 @@ module.exports = {
     author: `Alexandre`,
     siteUrl: `https://arosaje.com/`,
   },
+  developMiddleware: app => {
+    app.use(
+      "/api",
+      cors({
+        origin: "*",
+        methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+        allowedHeaders: "*",
+      }),
+      createProxyMiddleware({
+        target: "https://localhost:7083",
+        changeOrigin: true,
+      })
+    )
+  },
+  // proxy: {
+  //   prefix: "/api",
+  //   url: "https://localhost:7083/api/",
+  // },
   plugins: [
     `gatsby-plugin-image`,
     {

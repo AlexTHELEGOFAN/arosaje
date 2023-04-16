@@ -1,13 +1,13 @@
-import * as React from "react"
-import { Link, navigate } from "gatsby"
+import * as React from 'react'
+import { Link, navigate } from 'gatsby'
 
-import Layout from "../../components/layout"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faArrowLeft, faUser } from "@fortawesome/free-solid-svg-icons"
-import { useEffect } from "react"
-import { useState } from "react"
-import { toast } from "react-toastify"
-import axios from "axios"
+import Layout from '../../components/layout'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faArrowLeft, faUser } from '@fortawesome/free-solid-svg-icons'
+import { useEffect } from 'react'
+import { useState } from 'react'
+import { toast } from 'react-toastify'
+import axios from 'axios'
 
 // Account page
 const AccountPage = () => {
@@ -18,24 +18,21 @@ const AccountPage = () => {
 
   const config = {
     // "Access-Control-Allow-Origin": "*",
+    // "Access-Control-Allow-Headers": "*",
+    // "Access-Control-Allow-Methods": "*",
   }
 
   const fetchUser = async () => {
     try {
-      const res = await axios(`https://localhost:7083/api/User/GetUser/${id}`, {
-        headers: config,
-      })
+      const res = await axios(`https://localhost:7083/api/User/GetUser/${id}`)
 
       setUser(res.data)
     } catch {
-      toast.error("Erreur lors du chargement des données", {
-        position: "bottom-right",
+      toast.error('Erreur lors du chargement des données', {
+        position: 'bottom-right',
       })
     }
   }
-
-  console.log("user", user)
-  console.log("userPlants", userPlants)
 
   const fetchUserPlants = async () => {
     try {
@@ -72,8 +69,8 @@ const AccountPage = () => {
             }
           } catch (err) {
             console.error(err)
-            toast.error("Erreur lors de la récupération des données", {
-              position: "bottom-right",
+            toast.error('Erreur lors de la récupération des données', {
+              position: 'bottom-right',
             })
 
             // return an empty object to avoid undefined values in the resulting array
@@ -85,8 +82,8 @@ const AccountPage = () => {
       // update the state with the new array of adverts
       setUserPlants(updatedAdverts.filter(e => e.userId === id))
     } catch {
-      toast.error("Erreur lors du chargement des données", {
-        position: "bottom-right",
+      toast.error('Erreur lors du chargement des données', {
+        position: 'bottom-right',
       })
     }
   }
@@ -125,7 +122,7 @@ const AccountPage = () => {
           <div className="pb-6">
             <div className="flex text-center">
               <p className="font-medium pr-2">Statut :</p>
-              {user?.status === 0 ? "Inactif" : "Actif"}
+              {user?.status === 0 ? 'Inactif' : 'Actif'}
             </div>
             <div className="flex text-center">
               <p className="font-medium pr-2">Adresse :</p>
@@ -167,7 +164,7 @@ const AccountPage = () => {
                             require(`@assets/images/${plant.image.image}.jpg`)
                               .default
                           }
-                          alt={plant.name + " " + plant.species}
+                          alt={plant.name + ' ' + plant.species}
                           className="drop-shadow-md pb-1 cursor-pointer max-w-[300px]"
                           onClick={() => navigate(`/plant/${plant.plantId}/`)}
                         />

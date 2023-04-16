@@ -1,41 +1,44 @@
 // ** React imports
 
-import React, { useContext, useEffect, useState } from "react"
+import React, { useContext, useEffect, useState } from 'react'
 
 // ** Gatsby imports
 
 // ** Packages
 
-import { toast } from "react-toastify"
-import Select from "react-select"
+import { toast } from 'react-toastify'
+import Select from 'react-select'
 
 // ** Components
 
-import Layout from "../components/layout"
-import HomeCarousel from "../components/HomeCarousel"
-import AdCard from "../components/AdCard"
-import axios from "axios"
-import { SearchContext } from "../context/SearchContext"
+import Layout from '../components/layout'
+import HomeCarousel from '../components/HomeCarousel'
+import AdCard from '../components/AdCard'
+import axios from 'axios'
+import { SearchContext } from '../context/SearchContext'
 
 const items = [
-  { value: "1", label: "Pertinence" },
-  { value: "2", label: "Date de mise en ligne" },
+  { value: '1', label: 'Pertinence' },
+  { value: '2', label: 'Date de mise en ligne' },
 ]
 
 // ** Accueil
 
 const HomePage = () => {
-  // const { search } = useContext(SearchContext)
+  const { search } = useContext(SearchContext)
   const [filtersAds, setFiltersAds] = useState()
 
   const config = {
     // "Access-Control-Allow-Origin": "*",
+    // "Access-Control-Allow-Headers": "*",
+    // "Access-Control-Allow-Methods": "Get, post, put, delete",
   }
+
   const [adverts, setAdverts] = useState([])
 
   const fetchPlants = async () => {
     try {
-      const resAds = await axios(
+      const resAds = await axios.get(
         `https://localhost:7083/api/Annonce/GetAnnonces`,
         {
           headers: config,
@@ -68,8 +71,8 @@ const HomePage = () => {
             }
           } catch (err) {
             console.error(err)
-            toast.error("Erreur lors de la récupération des données", {
-              position: "bottom-right",
+            toast.error('Erreur lors de la récupération des données', {
+              position: 'bottom-right',
             })
 
             // return an empty object to avoid undefined values in the resulting array
@@ -81,8 +84,8 @@ const HomePage = () => {
       // update the state with the new array of adverts
       setAdverts(updatedAdverts)
     } catch {
-      toast.error("Erreur lors du chargement des données", {
-        position: "bottom-right",
+      toast.error('Erreur lors du chargement des données', {
+        position: 'bottom-right',
       })
     }
   }
@@ -95,6 +98,10 @@ const HomePage = () => {
     await fetchPlants()
     setFiltersAds(items)
   }, [])
+
+  // useEffect(() => {
+  //   fetchPlants()
+  // }, [searchValue, orderBy])
 
   return (
     <Layout>
@@ -112,9 +119,9 @@ const HomePage = () => {
           <h1 className="text-xl font-semibold ">Annonces de plantes</h1>
           <Select
             options={filtersAds}
-            defaultValue={"2"}
+            defaultValue={'2'}
             onChange={handleFilterChange}
-            placeholder={"Trier par"}
+            placeholder={'Trier par'}
             className="w-[250px]"
           />
         </div>

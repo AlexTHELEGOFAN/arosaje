@@ -35,7 +35,6 @@ function Login() {
 
   // Handle login Formik
   const handleLogin = values => {
-    console.log(values)
     axios
       .get(`https://localhost:7083/api/User/GetUser/1`, {
         headers: config,

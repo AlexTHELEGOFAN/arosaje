@@ -19,6 +19,8 @@ const Advert = () => {
   const [currentAdUser, setCurrentAdUser] = useState([])
   const [adverts, setAdverts] = useState([])
 
+  // const imageSrc = require(`@assets/images/${currentAdImage?.image}.jpg`).default
+
   const config = {
     // "Access-Control-Allow-Origin": "*",
     // "Access-Control-Allow-Headers": "*",
@@ -63,39 +65,41 @@ const Advert = () => {
       )
 
       const updatedAdverts = await Promise.all(
-        resAds.data.map(async advert => {
-          try {
-            const [userRes, imageRes] = await Promise.all([
-              axios.get(
-                `https://localhost:7083/api/User/GetUser/${advert.userId}`,
-                {
-                  headers: config,
-                }
-              ),
-              axios.get(
-                `https://localhost:7083/api/PlantImage/GetAnnonce/${advert.plantId}`,
-                {
-                  headers: config,
-                }
-              ),
-            ])
+        resAds.data
+          .filter(advert => advert.plantId !== currentAd?.plantId)
+          .map(async advert => {
+            try {
+              const [userRes, imageRes] = await Promise.all([
+                axios.get(
+                  `https://localhost:7083/api/User/GetUser/${advert.userId}`,
+                  {
+                    headers: config,
+                  }
+                ),
+                axios.get(
+                  `https://localhost:7083/api/PlantImage/GetAnnonce/${advert.plantId}`,
+                  {
+                    headers: config,
+                  }
+                ),
+              ])
 
-            // create a new advert object that includes the user and image data
-            return {
-              ...advert,
-              user: userRes.data,
-              image: imageRes.data,
+              // create a new advert object that includes the user and image data
+              return {
+                ...advert,
+                user: userRes.data,
+                image: imageRes.data,
+              }
+            } catch (err) {
+              console.error(err)
+              toast.error('Erreur lors de la récupération des données', {
+                position: 'bottom-right',
+              })
+
+              // return an empty object to avoid undefined values in the resulting array
+              return {}
             }
-          } catch (err) {
-            console.error(err)
-            toast.error('Erreur lors de la récupération des données', {
-              position: 'bottom-right',
-            })
-
-            // return an empty object to avoid undefined values in the resulting array
-            return {}
-          }
-        })
+          })
       )
 
       // update the state with the new array of adverts
@@ -128,13 +132,17 @@ const Advert = () => {
 
       <div className="flex justify-between pb-20">
         <div className="pr-2">
-          {/* <img
-            width="80%"
-            src={require(`@assets/images/${currentAdImage?.image}.jpg`).default}
-            alt={currentAdImage?.image}
-            className="drop-shadow-md pb-1 cursor-pointer"
-            onClick={() => navigate(`/plant/${currentAdImage?.plantId}/`)}
-          /> */}
+          {currentAdImage.image && (
+            <img
+              width="80%"
+              src={
+                require(`@assets/images/${currentAdImage?.image}.jpg`).default
+              }
+              alt={currentAdImage.image}
+              className="drop-shadow-md pb-1 cursor-pointer"
+              onClick={() => navigate(`/plant/${currentAdImage?.plantId}/`)}
+            />
+          )}
         </div>
 
         <div

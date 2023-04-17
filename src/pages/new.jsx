@@ -5,29 +5,58 @@ import Layout from '../components/layout'
 import * as React from 'react'
 import { ErrorMessage, Field, Form, Formik } from 'formik'
 import { toast } from 'react-toastify'
+import { UserContext } from '../context/UserContext'
+import { useContext } from 'react'
+import axios from 'axios'
 
-function newAdvert() {
-  //   const { setCurrentUser } = useContext(UserContext)
+const newAdvert = () => {
+  // const { currentUser } = useContext(UserContext)
 
   // Handle login Formik
-  const handleSubmit = values => {
-    // axios
-    //   .post(
-    //     `${UrlAPI}/api/Token?password=${values.username}&username=${values.password}`,
-    //     {
-    //       headers: config,
-    //     }
-    //   )
-    //   .then((res) => {
+  const handleSubmit = async values => {
+    const fileName = values.picture.match(/[^\\]+$/)[0]
 
-    navigate('/home')
-    //   })
-    //   .catch((err) => {
-    //     console.error(err);
-    //     toast.error("Erreur lors de la création de l'annonce", {
-    //       position: 'bottom-right',
-    //     });
-    //   });
+    const config = {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Headers': '*',
+      'Access-Control-Allow-Methods': 'Get, post, put, delete',
+    }
+
+    await Promise.all([
+      axios.post(`https://localhost:7083/api/PlantImage/InsertAnnonce`, {
+        headers: config,
+        body: {
+          name: values.plantName,
+          species: values.plantSpecies,
+          plantDescription: values.desc,
+          plantAddress: values.address,
+          userId: 1,
+          // currentUser?.id
+        },
+      }),
+
+      // axios.post(
+      //   `https://localhost:7083/api/Annonce/InsertAnnonce`,
+      //   {
+      //     headers: config,
+      //     body: {
+      //       "image": "test",
+      //       "imageDate": "2023-04-17T20:29:10.070Z",
+      //       // "plantId": 5
+      //     }
+      //   }
+      // ),
+    ])
+
+      .then(res => {
+        // navigate('/home')
+      })
+      .catch(err => {
+        console.error(err)
+        toast.error("Erreur lors de la création de l'annonce", {
+          position: 'bottom-right',
+        })
+      })
   }
 
   return (

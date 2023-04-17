@@ -35,7 +35,6 @@ const PlantPage = () => {
       const res = await axios.get(
         `https://localhost:7083/api/PlantImage/GetAnnonce/${id}`
       )
-      console.log(res)
       setPlantImage(res)
     } catch {
       toast.error('Erreur', {
@@ -43,8 +42,6 @@ const PlantPage = () => {
       })
     }
   }
-
-  console.log('currentPlant', currentPlant)
 
   useEffect(async () => {
     await fetchCurrentPlant()

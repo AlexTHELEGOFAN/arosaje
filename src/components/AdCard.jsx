@@ -1,15 +1,16 @@
-import React from "react"
+import React from 'react'
 
 // ** Utils
 
-import { navigate } from "gatsby"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faUser } from "@fortawesome/free-solid-svg-icons"
+import { navigate } from 'gatsby'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faUser } from '@fortawesome/free-solid-svg-icons'
 
 // ** Event card
 
 function AdCard({ advert }) {
-  const imageSrc = require(`../assets/images/${advert.image.image}.jpg`).default
+  // An ad without image won't work
+  const imageSrc = require(`@assets/images/${advert.image.image}.jpg`).default
 
   return (
     <div className="bg-green-200 h-[520px] rounded-2xl mb-5">
@@ -25,7 +26,7 @@ function AdCard({ advert }) {
       <div className="flex my-2 py-4 pl-7 pr-5">
         <div className="w-full">
           <div className="flex pb-2">
-            {advert.plantDescription?.substring(0, 50).concat("...")}
+            {advert.plantDescription?.substring(0, 50).concat('...')}
           </div>
 
           <div className="flex pb-2 font-medium">

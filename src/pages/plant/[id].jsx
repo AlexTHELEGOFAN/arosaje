@@ -1,13 +1,13 @@
-import * as React from "react"
-import { navigate } from "gatsby"
+import * as React from 'react'
+import { navigate } from 'gatsby'
 
-import Layout from "../../components/layout"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faArrowLeft } from "@fortawesome/free-solid-svg-icons"
-import { useEffect } from "react"
-import { useState } from "react"
-import axios from "axios"
-import { toast } from "react-toastify"
+import Layout from '../../components/layout'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faArrowLeft } from '@fortawesome/free-solid-svg-icons'
+import { useEffect } from 'react'
+import { useState } from 'react'
+import axios from 'axios'
+import { toast } from 'react-toastify'
 
 // Plant page
 
@@ -24,8 +24,8 @@ const PlantPage = () => {
       )
       setCurrentPlant(res.data)
     } catch {
-      toast.error("Erreur", {
-        position: "bottom-right",
+      toast.error('Erreur', {
+        position: 'bottom-right',
       })
     }
   }
@@ -38,13 +38,13 @@ const PlantPage = () => {
       console.log(res)
       setPlantImage(res)
     } catch {
-      toast.error("Erreur", {
-        position: "bottom-right",
+      toast.error('Erreur', {
+        position: 'bottom-right',
       })
     }
   }
 
-  console.log("currentPlant", currentPlant)
+  console.log('currentPlant', currentPlant)
 
   useEffect(async () => {
     await fetchCurrentPlant()
@@ -66,7 +66,7 @@ const PlantPage = () => {
       </button>
 
       <div className="flex justify-center items-center">
-        <div className="mt-2 bg-secondGreen px-8 py-5 w-[70%] rounded-md drop-shadow-md">
+        <div className="mt-2 bg-green-200 px-8 py-5 w-[70%] rounded-md drop-shadow-md">
           <div className="pb-4">
             {/* {currentPlant.nom_plante}, {currentPlant.espece_plante} */}
           </div>
@@ -86,7 +86,7 @@ const PlantPage = () => {
           </div> */}
 
           <div className="flex text-center pb-6">
-            <p className="font-medium pr-2">Adresse :</p>{" "}
+            <p className="font-medium pr-2">Adresse :</p>{' '}
             {currentPlant.plantAddress}
           </div>
         </div>

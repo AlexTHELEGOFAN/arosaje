@@ -108,7 +108,7 @@ const AccountPage = () => {
       </button>
 
       <div className="flex justify-center items-center">
-        <div className="mt-2 bg-secondGreen px-8 py-5 w-[70%] rounded-md drop-shadow-md">
+        <div className="mt-2 bg-green-200 px-8 py-5 w-[70%] rounded-md drop-shadow-md">
           <div className="flex items-center pb-6">
             <FontAwesomeIcon
               icon={faUser}

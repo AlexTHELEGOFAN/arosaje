@@ -1,10 +1,10 @@
-import { faArrowLeft } from "@fortawesome/free-solid-svg-icons"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { navigate } from "gatsby"
-import Layout from "../components/layout"
-import * as React from "react"
-import { ErrorMessage, Field, Form, Formik } from "formik"
-import { toast } from "react-toastify"
+import { faArrowLeft } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { navigate } from 'gatsby'
+import Layout from '../components/layout'
+import * as React from 'react'
+import { ErrorMessage, Field, Form, Formik } from 'formik'
+import { toast } from 'react-toastify'
 
 function newAdvert() {
   //   const { setCurrentUser } = useContext(UserContext)
@@ -20,7 +20,7 @@ function newAdvert() {
     //   )
     //   .then((res) => {
 
-    navigate("/home")
+    navigate('/home')
     //   })
     //   .catch((err) => {
     //     console.error(err);
@@ -45,40 +45,37 @@ function newAdvert() {
           Retour
         </button>
         <div className="flex justify-center items-center">
-          <div className="bg-secondGreen px-8 py-5 rounded-md drop-shadow-md">
+          <div className="bg-green-200 px-8 py-5 rounded-md drop-shadow-md">
             <h1 className="text-center text-2xl font-medium my-4">
               Nouvelle annonce
             </h1>
 
             <Formik
               initialValues={{
-                title: "",
-                desc: "",
-                picture: "",
-                plantName: "",
-                plantSpecies: "",
-                address: "",
+                desc: '',
+                picture: '',
+                plantName: '',
+                plantSpecies: '',
+                address: '',
               }}
               validateOnChange={false}
               validate={values => {
                 let errors = {}
-                if (!values.title) {
-                  errors.title = "Ce champ est requis"
-                }
+
                 if (!values.desc) {
-                  errors.desc = "Ce champ est requis"
+                  errors.desc = 'Ce champ est requis'
                 }
                 if (!values.picture) {
-                  errors.picture = "Ce champ est requis"
+                  errors.picture = 'Ce champ est requis'
                 }
                 if (!values.plantName) {
-                  errors.plantName = "Ce champ est requis"
+                  errors.plantName = 'Ce champ est requis'
                 }
                 if (!values.plantSpecies) {
-                  errors.plantSpecies = "Ce champ est requis"
+                  errors.plantSpecies = 'Ce champ est requis'
                 }
                 if (!values.address) {
-                  errors.address = "Ce champ est requis"
+                  errors.address = 'Ce champ est requis'
                 }
                 return errors
               }}
@@ -86,57 +83,6 @@ function newAdvert() {
             >
               {({ isSubmitting }) => (
                 <Form>
-                  {/* Titre ---------------------------------- */}
-                  <div className="pb-8">
-                    <label
-                      className="flex text-left text-black text-sm mb-1"
-                      htmlFor="title"
-                    >
-                      Titre *
-                    </label>
-                    <Field
-                      type="text"
-                      name="title"
-                      placeholder="Titre *"
-                      className="w-[250px] md:w-full justify-center login-field"
-                    />
-                    <ErrorMessage name="title" component="div" />
-                  </div>
-
-                  {/* Description ---------------------------------- */}
-                  <div className="pb-8 text-left relative">
-                    <label
-                      className="flex text-left text-black text-sm mb-1"
-                      htmlFor="desc"
-                    >
-                      Description *
-                    </label>
-                    <Field
-                      type="text"
-                      name="desc"
-                      placeholder="Description"
-                      className="w-[250px] md:w-full justify-center login-field"
-                    />
-                    <ErrorMessage name="desc" component="div" />
-                  </div>
-
-                  {/* Image ---------------------------------- */}
-                  <div className="pb-8 text-left relative">
-                    <label
-                      className="flex text-left text-black text-sm mb-1"
-                      htmlFor="picture"
-                    >
-                      Image *
-                    </label>
-                    <Field
-                      type="file"
-                      name="picture"
-                      placeholder=""
-                      className="w-[250px] md:w-full justify-center login-field"
-                    />
-                    <ErrorMessage name="picture" component="div" />
-                  </div>
-
                   {/* Nom de la plante ---------------------------------- */}
                   <div className="pb-8 text-left relative">
                     <label
@@ -171,6 +117,23 @@ function newAdvert() {
                     <ErrorMessage name="plantSpecies" component="div" />
                   </div>
 
+                  {/* Description ---------------------------------- */}
+                  <div className="pb-8 text-left relative">
+                    <label
+                      className="flex text-left text-black text-sm mb-1"
+                      htmlFor="desc"
+                    >
+                      Description *
+                    </label>
+                    <Field
+                      type="text"
+                      name="desc"
+                      placeholder="Description"
+                      className="w-[250px] md:w-full justify-center login-field"
+                    />
+                    <ErrorMessage name="desc" component="div" />
+                  </div>
+
                   {/* Adresse ---------------------------------- */}
                   <div className="pb-8 text-left relative">
                     <label
@@ -186,6 +149,23 @@ function newAdvert() {
                       className="w-[250px] md:w-full justify-center login-field"
                     />
                     <ErrorMessage name="address" component="div" />
+                  </div>
+
+                  {/* Image ---------------------------------- */}
+                  <div className="pb-8 text-left relative">
+                    <label
+                      className="flex text-left text-black text-sm mb-1"
+                      htmlFor="picture"
+                    >
+                      Image *
+                    </label>
+                    <Field
+                      type="file"
+                      name="picture"
+                      placeholder=""
+                      className="w-[250px] md:w-full justify-center login-field"
+                    />
+                    <ErrorMessage name="picture" component="div" />
                   </div>
 
                   <div className="flex justify-center">

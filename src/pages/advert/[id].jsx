@@ -13,8 +13,10 @@ import Layout from '../../components/layout'
 // Plant advert page
 
 const Advert = () => {
-  const id = window.location.href.slice(-2, -1)
-  const [currentAd, setCurrentAd] = useState()
+  const id = window.location.href?.slice(-2, -1)
+  const [currentAd, setCurrentAd] = useState([])
+  const [currentAdImage, setCurrentAdImage] = useState([])
+  const [currentAdUser, setCurrentAdUser] = useState([])
   const [adverts, setAdverts] = useState([])
 
   const config = {
@@ -24,60 +26,80 @@ const Advert = () => {
   }
 
   const fetchCurrentAd = async () => {
-    await axios
-      .get(`https://localhost:7083/api/Annonce/GetAnnonce/${id}`, {
-        headers: config,
+    try {
+      const resAdvert = await axios.get(
+        `https://localhost:7083/api/Annonce/GetAnnonce/${id}`,
+        { headers: config }
+      )
+      setCurrentAd(resAdvert.data)
+
+      const [advertUser, advertImage] = await Promise.all([
+        axios.get(
+          `https://localhost:7083/api/User/GetUser/${resAdvert.data.userId}`,
+          { headers: config }
+        ),
+        axios.get(
+          `https://localhost:7083/api/PlantImage/GetAnnonce/${resAdvert.data.plantId}`,
+          { headers: config }
+        ),
+      ])
+
+      setCurrentAdUser(advertUser.data)
+      setCurrentAdImage(advertImage.data)
+    } catch (error) {
+      toast.error('Erreur lors du chargement des données', {
+        position: 'bottom-right',
       })
-      .then(resAdvert => {
-        // console.log('fullAdverts', resAdvert.data.userId)
-        try {
-          const advertUser = axios.get(
-            `https://localhost:7083/api/User/GetUser/${resAdvert.data.userId}`,
-            {
-              headers: config,
-            }
-          )
-          // setAdvertUser(advertUser.data)
-        } catch {
-          toast.error('Erreur lors du chargement des données', {
-            position: 'bottom-right',
-          })
-        }
-
-        try {
-          const advertImage = axios.get(
-            `https://localhost:7083/api/PlantImage/GetAnnonce/${resAdvert.data.plantId}`,
-            {
-              headers: config,
-            }
-          )
-        } catch {
-          toast.error('Erreur lors du chargement des données', {
-            position: 'bottom-right',
-          })
-        }
-
-        console.log('fullAdverts', fullAdverts)
-
-        // update the state with the new array of advert
-        setCurrentAd(fullAdverts)
-      })
+    }
   }
 
-  console.log('currentAd', currentAd)
-
-  const fetchAds = async () => {
+  const fetchPlants = async () => {
     try {
-      // Get all events
-      const resAds = await axios(
-        `https://localhost:7083/api/Annonce/GetAnnonces`
-      )
-      const ads = resAds.data.map(advert => {
-        return {
-          ...advert,
+      const resAds = await axios.get(
+        `https://localhost:7083/api/Annonce/GetAnnonces`,
+        {
+          headers: config,
         }
-      })
-      setAdverts(ads.filter(e => e.id_annonce !== id))
+      )
+
+      const updatedAdverts = await Promise.all(
+        resAds.data.map(async advert => {
+          try {
+            const [userRes, imageRes] = await Promise.all([
+              axios.get(
+                `https://localhost:7083/api/User/GetUser/${advert.userId}`,
+                {
+                  headers: config,
+                }
+              ),
+              axios.get(
+                `https://localhost:7083/api/PlantImage/GetAnnonce/${advert.plantId}`,
+                {
+                  headers: config,
+                }
+              ),
+            ])
+
+            // create a new advert object that includes the user and image data
+            return {
+              ...advert,
+              user: userRes.data,
+              image: imageRes.data,
+            }
+          } catch (err) {
+            console.error(err)
+            toast.error('Erreur lors de la récupération des données', {
+              position: 'bottom-right',
+            })
+
+            // return an empty object to avoid undefined values in the resulting array
+            return {}
+          }
+        })
+      )
+
+      // update the state with the new array of adverts
+      setAdverts(updatedAdverts)
     } catch {
       toast.error('Erreur lors du chargement des données', {
         position: 'bottom-right',
@@ -87,7 +109,7 @@ const Advert = () => {
 
   useEffect(async () => {
     await fetchCurrentAd()
-    await fetchAds()
+    await fetchPlants()
   }, [])
 
   return (
@@ -108,10 +130,10 @@ const Advert = () => {
         <div className="pr-2">
           {/* <img
             width="80%"
-            src={finder?.image_annonce}
-            alt={finder?.nom_plante}
+            src={require(`@assets/images/${currentAdImage?.image}.jpg`).default}
+            alt={currentAdImage?.image}
             className="drop-shadow-md pb-1 cursor-pointer"
-            onClick={() => navigate(`/plant/${finder?.id_plante}/`)}
+            onClick={() => navigate(`/plant/${currentAdImage?.plantId}/`)}
           /> */}
         </div>
 
@@ -126,18 +148,30 @@ const Advert = () => {
         bg-secondGreen px-8 py-5 rounded-md drop-shadow-md"
         >
           <h1 className="text-xl font-semibold mb-[40px]">
-            {currentAd?.titre_annonce}
+            {currentAd?.name}, {currentAd?.species}
           </h1>
           <div className="pb-4">
-            <div className="pb-2">{currentAd?.description_annonce}</div>
-            <div className="pb-2">Nom de la plante :</div>
-            <div className="pb-2">Espèce de la plante :</div>
-            <div>Adresse de la plante : </div>
+            <div className="pb-2">{currentAd?.plantDescription}</div>
+
+            <div className="flex text-center pb-2">
+              <p className="font-medium pr-2">Nom de la plante :</p>
+              {currentAd?.name}
+            </div>
+
+            <div className="flex text-center pb-2">
+              <p className="font-medium pr-2">Espèce de la plante :</p>
+              {currentAd?.species}
+            </div>
+
+            <div className="flex text-center pb-2">
+              <p className="font-medium pr-2">Adresse de la plante :</p>
+              {currentAd?.plantAddress}
+            </div>
           </div>
 
           <div
             className="flex items-center pb-6 cursor-pointer"
-            // onClick={() => navigate(`/account/${}/`)}
+            onClick={() => navigate(`/account/${currentAd.userId}/`)}
           >
             <FontAwesomeIcon
               icon={faUser}
@@ -145,7 +179,7 @@ const Advert = () => {
               className="w-5 h-5 pr-2"
             />
             <div>
-              {/* {fakeAds[0].nom_proprio} {fakeAds[0].prenom_proprio} */}
+              {currentAdUser.firstName} {currentAdUser.lastName}
             </div>
           </div>
 
@@ -157,13 +191,13 @@ const Advert = () => {
           </button>
 
           <div>
-            {/* {fakeAds[0].absent ? (
+            {currentAdUser.status === 0 ? (
               <p>
                 La personne qui possède cette plante est actuellement absente.
               </p>
             ) : (
               <></>
-            )} */}
+            )}
           </div>
         </div>
       </div>
@@ -177,7 +211,7 @@ const Advert = () => {
         xl:gap-6 xl:grid-cols-3
         2xl:gap-6 2xl:grid-cols-4"
       >
-        {/* {adverts.length ? (
+        {adverts.length ? (
           adverts.map(advert => (
             <div key={advert?.plantId}>
               <AdCard advert={advert} />
@@ -185,7 +219,7 @@ const Advert = () => {
           ))
         ) : (
           <p className="text-center">Aucune annonce</p>
-        )} */}
+        )}
       </div>
     </Layout>
   )

@@ -153,7 +153,7 @@ const Advert = () => {
         xl:min-w-[350px]
         2xl:min-w-[400px]
         
-        bg-secondGreen px-8 py-5 rounded-md drop-shadow-md"
+        bg-green-200 px-8 py-5 rounded-md drop-shadow-md"
         >
           <h1 className="text-xl font-semibold mb-[40px]">
             {currentAd?.name}, {currentAd?.species}

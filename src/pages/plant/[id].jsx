@@ -35,7 +35,7 @@ const PlantPage = () => {
       const res = await axios.get(
         `https://localhost:7083/api/PlantImage/GetAnnonce/${id}`
       )
-      setPlantImage(res)
+      setPlantImage(res.data)
     } catch {
       toast.error('Erreur', {
         position: 'bottom-right',
@@ -47,6 +47,8 @@ const PlantPage = () => {
     await fetchCurrentPlant()
     await fetchCurrentPlantInfos()
   }, [])
+
+  console.log('plantImage', plantImage?.image)
 
   return (
     <Layout>
@@ -63,24 +65,25 @@ const PlantPage = () => {
       </button>
 
       <div className="flex justify-center items-center">
-        <div className="mt-2 bg-green-200 px-8 py-5 w-[70%] rounded-md drop-shadow-md">
+        <div className="mt-2 mb-8 bg-green-200 px-8 py-5 w-[70%] rounded-md drop-shadow-md">
           <div className="pb-4">
-            {/* {currentPlant.nom_plante}, {currentPlant.espece_plante} */}
+            {currentPlant.name}, {currentPlant.species}
           </div>
 
-          {/* <div className="flex justify-center pb-6">
+          <div className="flex justify-center pb-6">
             <div className="pb-2">
-              <img
-                src={
-                  require(`@assets/images/${plantImage?.image?.image}.jpg`)
-                    .default
-                }
-                alt={currentPlant.name + " " + currentPlant.species}
-                className="drop-shadow-md pb-1 cursor-pointer max-w-[300px]"
-                onClick={() => navigate(`/plant/${currentPlant.plantId}/`)}
-              />
+              {plantImage?.image && (
+                <img
+                  width="100%"
+                  src={
+                    require(`@assets/images/${plantImage?.image}.jpg`).default
+                  }
+                  alt={plantImage?.image}
+                  className="drop-shadow-md pb-1 cursor-pointer"
+                />
+              )}
             </div>
-          </div> */}
+          </div>
 
           <div className="flex text-center pb-6">
             <p className="font-medium pr-2">Adresse :</p>{' '}

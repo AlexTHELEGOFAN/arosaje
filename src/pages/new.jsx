@@ -1,16 +1,20 @@
+// ** React imports
+
+import React, { useContext, useEffect, useState } from 'react'
+
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { navigate } from 'gatsby'
 import Layout from '../components/layout'
-import * as React from 'react'
 import { ErrorMessage, Field, Form, Formik } from 'formik'
 import { toast } from 'react-toastify'
 import { UserContext } from '../context/UserContext'
-import { useContext } from 'react'
 import axios from 'axios'
+import Spinner from '../components/Spinner'
 
-const newAdvert = () => {
+const NewAdvert = () => {
   // const { currentUser } = useContext(UserContext)
+  const [isLoading, setIsLoading] = useState(true)
 
   // Handle login Formik
   const handleSubmit = async values => {
@@ -59,7 +63,15 @@ const newAdvert = () => {
       })
   }
 
-  return (
+  useEffect(async () => {
+    // await fetchUser()
+    // await fetchUserPlants()
+    setIsLoading(false)
+  }, [])
+
+  return isLoading ? (
+    <Spinner />
+  ) : (
     <Layout>
       <div>
         <button
@@ -215,4 +227,4 @@ const newAdvert = () => {
   )
 }
 
-export default newAdvert
+export default NewAdvert

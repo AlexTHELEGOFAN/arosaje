@@ -14,12 +14,13 @@ import jwtDecode from 'jwt-decode'
 import Cookies from 'universal-cookie'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons'
+import Spinner from '../components/Spinner'
 
 // ** Login page
 
 function Login() {
   const { setCurrentUser } = useContext(UserContext)
-
+  const [isLoading, setIsLoading] = useState(true)
   const [inputType, setInputType] = useState('password')
 
   const config = {
@@ -59,7 +60,9 @@ function Login() {
       })
   }
 
-  return (
+  return isLoading ? (
+    <Spinner />
+  ) : (
     <div>
       <button
         className="flex text-center items-center ml-5 mt-5"

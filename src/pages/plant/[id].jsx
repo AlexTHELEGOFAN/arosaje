@@ -8,6 +8,7 @@ import { useEffect } from 'react'
 import { useState } from 'react'
 import axios from 'axios'
 import { toast } from 'react-toastify'
+import Spinner from '../../components/Spinner'
 
 // Plant page
 
@@ -16,6 +17,7 @@ const PlantPage = () => {
 
   const [currentPlant, setCurrentPlant] = useState([])
   const [plantImage, setPlantImage] = useState()
+  const [isLoading, setIsLoading] = useState(true)
 
   const fetchCurrentPlantInfos = async () => {
     try {
@@ -46,9 +48,12 @@ const PlantPage = () => {
   useEffect(async () => {
     await fetchCurrentPlant()
     await fetchCurrentPlantInfos()
+    setIsLoading(false)
   }, [])
 
-  return (
+  return isLoading ? (
+    <Spinner />
+  ) : (
     <Layout>
       <button
         className="flex text-center items-center"

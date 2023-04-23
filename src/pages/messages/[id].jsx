@@ -4,12 +4,15 @@ import React, { useEffect, useState } from 'react'
 
 import Layout from '../../components/layout'
 import { Formik, Form, ErrorMessage, Field } from 'formik'
+import Spinner from '../../components/Spinner'
 
 const Messages = () => {
   const [message, setMessage] = useState('')
-  const [chatHistory, setChatHistory] = useState([])
+  const [isLoading, setIsLoading] = useState(true)
 
-  useEffect(() => {}, [])
+  useEffect(() => {
+    setIsLoading(false)
+  }, [])
 
   const handleMessageSend = event => {
     event.preventDefault() // Prevent page refresh on submit
@@ -21,7 +24,9 @@ const Messages = () => {
     setMessage(event.target.value)
   }
 
-  return (
+  return isLoading ? (
+    <Spinner />
+  ) : (
     <Layout>
       {/* <div className="flex justify-center bg-secondGreen px-8 py-5 rounded-md drop-shadow-md">
         <div className="flex justify-center items-center"> */}
@@ -78,8 +83,6 @@ const Messages = () => {
           )}
         </Formik>
       </div>
-      {/* </div>
-      </div> */}
     </Layout>
   )
 }

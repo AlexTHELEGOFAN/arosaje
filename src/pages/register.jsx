@@ -1,6 +1,6 @@
 // ** Default import
 
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 
 // ** Utils
 
@@ -12,12 +12,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons'
 import axios from 'axios'
 import { toast } from 'react-toastify'
+import Spinner from '../components/Spinner'
 // import { REACT_APP_BASE_URL } from '../CONF';
 
 // ** Register page
 
 function Register() {
   const [inputType, setInputType] = useState('password')
+  const [isLoading, setIsLoading] = useState(true)
   // const { setCurrentUser } = useContext(UserContext)
 
   const config = {
@@ -49,7 +51,15 @@ function Register() {
       })
   }
 
-  return (
+  useEffect(async () => {
+    // await fetchUser()
+    // await fetchUserPlants()
+    setIsLoading(false)
+  }, [])
+
+  return isLoading ? (
+    <Spinner />
+  ) : (
     <div>
       <button
         className="flex text-center items-center ml-5 mt-5"
@@ -71,11 +81,13 @@ function Register() {
           <Formik
             initialValues={{
               username: '',
+              // TODO: remove
               firstName: '',
               lastName: '',
               age: '',
               email: '',
               phone: '',
+              // TODO: remove
               address: '',
               password: '',
               confirmPassword: '',
@@ -89,6 +101,7 @@ function Register() {
               if (!values.username) {
                 errors.username = 'Ce champ est requis'
               }
+              // TODO: remove
               if (!values.firstName) {
                 errors.firstName = 'Ce champ est requis'
               }
@@ -106,6 +119,7 @@ function Register() {
               if (!values.phone) {
                 errors.phone = 'Ce champ est requis'
               }
+              // TODO: remove
               if (!values.address) {
                 errors.address = 'Ce champ est requis'
               }

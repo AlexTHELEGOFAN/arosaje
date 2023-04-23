@@ -8,6 +8,7 @@ import { useEffect } from 'react'
 import { useState } from 'react'
 import { toast } from 'react-toastify'
 import axios from 'axios'
+import Spinner from '../../components/Spinner'
 
 // Account page
 const AccountPage = () => {
@@ -15,12 +16,7 @@ const AccountPage = () => {
 
   const [user, setUser] = useState()
   const [userPlants, setUserPlants] = useState()
-
-  const config = {
-    // "Access-Control-Allow-Origin": "*",
-    // "Access-Control-Allow-Headers": "*",
-    // "Access-Control-Allow-Methods": "*",
-  }
+  const [isLoading, setIsLoading] = useState(true)
 
   const fetchUser = async () => {
     try {
@@ -37,10 +33,7 @@ const AccountPage = () => {
   const fetchUserPlants = async () => {
     try {
       const resAds = await axios(
-        `https://localhost:7083/api/Annonce/GetAnnonces`,
-        {
-          headers: config,
-        }
+        `https://localhost:7083/api/Annonce/GetAnnonces`
       )
 
       const updatedAdverts = await Promise.all(
@@ -48,16 +41,10 @@ const AccountPage = () => {
           try {
             const [userRes, imageRes] = await Promise.all([
               axios.get(
-                `https://localhost:7083/api/User/GetUser/${advert.userId}`,
-                {
-                  headers: config,
-                }
+                `https://localhost:7083/api/User/GetUser/${advert.userId}`
               ),
               axios.get(
-                `https://localhost:7083/api/PlantImage/GetAnnonce/${advert.plantId}`,
-                {
-                  headers: config,
-                }
+                `https://localhost:7083/api/PlantImage/GetAnnonce/${advert.plantId}`
               ),
             ])
 
@@ -91,9 +78,12 @@ const AccountPage = () => {
   useEffect(async () => {
     await fetchUser()
     await fetchUserPlants()
+    setIsLoading(false)
   }, [])
 
-  return (
+  return isLoading ? (
+    <Spinner />
+  ) : (
     <Layout>
       <button
         className="flex text-center items-center"
@@ -108,7 +98,7 @@ const AccountPage = () => {
       </button>
 
       <div className="flex justify-center items-center">
-        <div className="mt-2 bg-green-200 px-8 py-5 w-[70%] rounded-md drop-shadow-md">
+        <div className="mt-2 mb-8 bg-green-200 px-8 py-5 w-[70%] rounded-md drop-shadow-md">
           <div className="flex items-center pb-6">
             <FontAwesomeIcon
               icon={faUser}
@@ -124,10 +114,10 @@ const AccountPage = () => {
               <p className="font-medium pr-2">Statut :</p>
               {user?.status === 0 ? 'Inactif' : 'Actif'}
             </div>
-            <div className="flex text-center">
+            {/* <div className="flex text-center">
               <p className="font-medium pr-2">Adresse :</p>
               {user?.userAddress}
-            </div>
+            </div> */}
             <div className="flex text-center">
               <p className="font-medium pr-2">Adresse email :</p>
               {user?.email}
@@ -139,11 +129,12 @@ const AccountPage = () => {
           </div>
 
           <div className="">
-            <div className="pb-6">
-              <Link to="/" className="w-[100px] header-button mr-4">
-                Contacter
-              </Link>
-            </div>
+            <button
+              className="header-button mb-4"
+              onClick={() => navigate(`/messages/1`)}
+            >
+              Contacter
+            </button>
 
             <div className="overflow-hidden">
               <div className="pb-4">Plantes de l'utilisateur :</div>
@@ -153,11 +144,11 @@ const AccountPage = () => {
         md:gap-4 md:grid-cols-2
         lg:gap-5 lg:grid-cols-3
         xl:gap-6 xl:grid-cols-3
-        2xl:gap-6 2xl:grid-cols-4"
+        2xl:gap-10 2xl:grid-cols-3"
               >
                 {userPlants ? (
                   userPlants.map(plant => (
-                    <div className="pt-5 pr-0 pl-[15%]" key={plant?.plantId}>
+                    <div className="pt-5 pr-0 " key={plant?.plantId}>
                       <div className="pb-2">
                         <img
                           src={

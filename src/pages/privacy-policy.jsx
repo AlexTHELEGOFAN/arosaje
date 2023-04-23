@@ -1,6 +1,5 @@
-import * as React from 'react'
 import { navigate } from 'gatsby'
-
+import * as React from 'react'
 import Layout from '../components/layout'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons'

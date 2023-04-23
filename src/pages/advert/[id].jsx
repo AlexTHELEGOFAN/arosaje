@@ -9,6 +9,7 @@ import { toast } from 'react-toastify'
 import AdCard from '../../components/AdCard'
 
 import Layout from '../../components/layout'
+import Spinner from '../../components/Spinner'
 
 // Plant advert page
 
@@ -18,31 +19,21 @@ const Advert = () => {
   const [currentAdImage, setCurrentAdImage] = useState([])
   const [currentAdUser, setCurrentAdUser] = useState([])
   const [adverts, setAdverts] = useState([])
-
-  // const imageSrc = require(`@assets/images/${currentAdImage?.image}.jpg`).default
-
-  const config = {
-    // "Access-Control-Allow-Origin": "*",
-    // "Access-Control-Allow-Headers": "*",
-    // "Access-Control-Allow-Methods": "*",
-  }
+  const [isLoading, setIsLoading] = useState(true)
 
   const fetchCurrentAd = async () => {
     try {
       const resAdvert = await axios.get(
-        `https://localhost:7083/api/Annonce/GetAnnonce/${id}`,
-        { headers: config }
+        `https://localhost:7083/api/Annonce/GetAnnonce/${id}`
       )
       setCurrentAd(resAdvert.data)
 
       const [advertUser, advertImage] = await Promise.all([
         axios.get(
-          `https://localhost:7083/api/User/GetUser/${resAdvert.data.userId}`,
-          { headers: config }
+          `https://localhost:7083/api/User/GetUser/${resAdvert.data.userId}`
         ),
         axios.get(
-          `https://localhost:7083/api/PlantImage/GetAnnonce/${resAdvert.data.plantId}`,
-          { headers: config }
+          `https://localhost:7083/api/PlantImage/GetAnnonce/${resAdvert.data.plantId}`
         ),
       ])
 
@@ -58,10 +49,7 @@ const Advert = () => {
   const fetchPlants = async () => {
     try {
       const resAds = await axios.get(
-        `https://localhost:7083/api/Annonce/GetAnnonces`,
-        {
-          headers: config,
-        }
+        `https://localhost:7083/api/Annonce/GetAnnonces`
       )
 
       const updatedAdverts = await Promise.all(
@@ -71,16 +59,10 @@ const Advert = () => {
             try {
               const [userRes, imageRes] = await Promise.all([
                 axios.get(
-                  `https://localhost:7083/api/User/GetUser/${advert.userId}`,
-                  {
-                    headers: config,
-                  }
+                  `https://localhost:7083/api/User/GetUser/${advert.userId}`
                 ),
                 axios.get(
-                  `https://localhost:7083/api/PlantImage/GetAnnonce/${advert.plantId}`,
-                  {
-                    headers: config,
-                  }
+                  `https://localhost:7083/api/PlantImage/GetAnnonce/${advert.plantId}`
                 ),
               ])
 
@@ -114,9 +96,12 @@ const Advert = () => {
   useEffect(async () => {
     await fetchCurrentAd()
     await fetchPlants()
+    setIsLoading(false)
   }, [])
 
-  return (
+  return isLoading ? (
+    <Spinner />
+  ) : (
     <Layout>
       <button
         className="flex text-center items-center pb-6"
@@ -155,7 +140,7 @@ const Advert = () => {
         
         bg-green-200 px-8 py-5 rounded-md drop-shadow-md"
         >
-          <h1 className="text-xl font-semibold mb-[40px]">
+          <h1 className="text-xl font-semibold mb-[20px]">
             {currentAd?.name}, {currentAd?.species}
           </h1>
           <div className="pb-4">
@@ -192,7 +177,7 @@ const Advert = () => {
           </div>
 
           <button
-            className="header-button"
+            className="header-button mb-4"
             onClick={() => navigate(`/messages/1`)}
           >
             Contacter

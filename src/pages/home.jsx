@@ -27,22 +27,13 @@ const HomePage = () => {
   const { search } = useContext(SearchContext)
   const [filtersAds, setFiltersAds] = useState()
 
-  const config = {
-    // "Access-Control-Allow-Origin": "*",
-    // "Access-Control-Allow-Headers": "*",
-    // "Access-Control-Allow-Methods": "Get, post, put, delete",
-  }
-
   const [adverts, setAdverts] = useState([])
   const [isLoading, setIsLoading] = useState(true)
 
   const fetchPlants = async () => {
     try {
       const resAds = await axios.get(
-        `https://localhost:7083/api/Annonce/GetAnnonces`,
-        {
-          headers: config,
-        }
+        `https://localhost:7083/api/Annonce/GetAnnonces`
       )
 
       const updatedAdverts = await Promise.all(
@@ -50,16 +41,10 @@ const HomePage = () => {
           try {
             const [userRes, imageRes] = await Promise.all([
               axios.get(
-                `https://localhost:7083/api/User/GetUser/${advert.userId}`,
-                {
-                  headers: config,
-                }
+                `https://localhost:7083/api/User/GetUser/${advert.userId}`
               ),
               axios.get(
-                `https://localhost:7083/api/PlantImage/GetAnnonce/${advert.plantId}`,
-                {
-                  headers: config,
-                }
+                `https://localhost:7083/api/PlantImage/GetAnnonce/${advert.plantId}`
               ),
             ])
 

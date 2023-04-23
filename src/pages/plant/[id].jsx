@@ -48,8 +48,6 @@ const PlantPage = () => {
     await fetchCurrentPlantInfos()
   }, [])
 
-  console.log('plantImage', plantImage?.image)
-
   return (
     <Layout>
       <button

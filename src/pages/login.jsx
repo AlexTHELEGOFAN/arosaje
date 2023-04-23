@@ -4,7 +4,6 @@ import React, { useContext, useState } from 'react'
 
 // ** Utils
 
-import Cookies from 'universal-cookie'
 import axios from 'axios'
 import { navigate } from 'gatsby'
 import { Formik, Form, ErrorMessage, Field } from 'formik'
@@ -12,6 +11,7 @@ import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { UserContext } from '../context/UserContext'
 import jwtDecode from 'jwt-decode'
+import Cookies from 'universal-cookie'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons'
 

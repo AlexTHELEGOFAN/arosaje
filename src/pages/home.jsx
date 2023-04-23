@@ -2,8 +2,6 @@
 
 import React, { useContext, useEffect, useState } from 'react'
 
-// ** Gatsby imports
-
 // ** Packages
 
 import { toast } from 'react-toastify'
@@ -16,6 +14,7 @@ import HomeCarousel from '../components/HomeCarousel'
 import AdCard from '../components/AdCard'
 import axios from 'axios'
 import { SearchContext } from '../context/SearchContext'
+import Spinner from '../components/Spinner'
 
 const items = [
   { value: '1', label: 'Pertinence' },
@@ -35,6 +34,7 @@ const HomePage = () => {
   }
 
   const [adverts, setAdverts] = useState([])
+  const [isLoading, setIsLoading] = useState(true)
 
   const fetchPlants = async () => {
     try {
@@ -97,13 +97,16 @@ const HomePage = () => {
   useEffect(async () => {
     await fetchPlants()
     setFiltersAds(items)
+    setIsLoading(false)
   }, [])
 
   // useEffect(() => {
   //   fetchPlants()
   // }, [searchValue, orderBy])
 
-  return (
+  return isLoading ? (
+    <Spinner />
+  ) : (
     <Layout>
       <div className="">
         <h1 className="text-xl font-semibold mb-[40px]">

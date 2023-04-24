@@ -1,26 +1,22 @@
-// ** Default import
+import React, { createContext, useState } from 'react'
 
-import React, { createContext, useState } from "react"
-
-// ** Auth context
-
-const defaultContext = {
-  search: {},
-  setSearch: () => {},
-}
-
-const SearchContext = createContext(defaultContext)
-
-// ** Auth provider
+export const SearchContext = createContext({
+  searchQuery: '',
+  setSearchQuery: () => {},
+})
 
 const SearchContextProvider = ({ children }) => {
-  const [search, setSearch] = useState({})
+  const [searchQuery, setSearchQuery] = useState('')
+
+  const handleSearch = () => {
+    setSearchQuery(searchQuery)
+  }
 
   return (
-    <SearchContext.Provider value={{ search, setSearch }}>
+    <SearchContext.Provider value={{ searchQuery, setSearchQuery }}>
       {children}
     </SearchContext.Provider>
   )
 }
 
-export { SearchContext, SearchContextProvider }
+export default SearchContextProvider

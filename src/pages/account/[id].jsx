@@ -17,12 +17,13 @@ const AccountPage = () => {
   const [user, setUser] = useState()
   const [userPlants, setUserPlants] = useState()
   const [isLoading, setIsLoading] = useState(true)
+  const [userType, setUserType] = useState()
 
   const fetchUser = async () => {
     try {
-      const res = await axios(`https://localhost:7083/api/User/GetUser/${id}`)
-
-      setUser(res.data)
+      await axios(`https://localhost:7083/api/User/GetUser/${id}`).then(
+        response => setUser(response.data)
+      )
     } catch {
       toast.error('Erreur lors du chargement des données', {
         position: 'bottom-right',
@@ -105,9 +106,8 @@ const AccountPage = () => {
               size="2xl"
               className="w-5 h-5 pr-4"
             />
-            <div className="font-medium text-lg">
-              {user?.firstName} {user?.lastName}
-            </div>
+            <div className="font-medium text-lg">{user?.username}</div>
+            <div className=""></div>
           </div>
           <div className="pb-6">
             <div className="flex text-center">
@@ -118,14 +118,14 @@ const AccountPage = () => {
               <p className="font-medium pr-2">Adresse :</p>
               {user?.userAddress}
             </div> */}
-            <div className="flex text-center">
+            {/* <div className="flex text-center">
               <p className="font-medium pr-2">Adresse email :</p>
               {user?.email}
-            </div>
-            <div className="flex text-center">
+            </div> */}
+            {/* <div className="flex text-center">
               <p className="font-medium pr-2">Numéro de téléphone :</p>
               {user?.phone}
-            </div>
+            </div> */}
           </div>
 
           <div className="">

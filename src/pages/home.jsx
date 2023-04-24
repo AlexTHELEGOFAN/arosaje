@@ -13,22 +13,25 @@ import Layout from '../components/layout'
 import HomeCarousel from '../components/HomeCarousel'
 import AdCard from '../components/AdCard'
 import axios from 'axios'
-import { SearchContext } from '../context/SearchContext'
 import Spinner from '../components/Spinner'
+import { SearchContext } from '../context/SearchContext'
 
 const items = [
-  { value: '1', label: 'Pertinence' },
-  { value: '2', label: 'Date de mise en ligne' },
+  { value: 1, label: 'Pertinence' },
+  { value: 2, label: 'Ordre alphabétique' },
 ]
 
 // ** Accueil
 
 const HomePage = () => {
-  const { search } = useContext(SearchContext)
-  const [filtersAds, setFiltersAds] = useState()
+  const { searchQuery } = useContext(SearchContext)
 
   const [adverts, setAdverts] = useState([])
+  const [filteredAdverts, setFilteredAdverts] = useState([])
+
+  const [filtersAds, setFiltersAds] = useState([])
   const [isLoading, setIsLoading] = useState(true)
+  const [orderBy, setOrderBy] = useState('Pertinence')
 
   const fetchPlants = async () => {
     try {
@@ -68,6 +71,7 @@ const HomePage = () => {
 
       // update the state with the new array of adverts
       setAdverts(updatedAdverts)
+      setFilteredAdverts(updatedAdverts)
     } catch {
       toast.error('Erreur lors du chargement des données', {
         position: 'bottom-right',
@@ -75,8 +79,28 @@ const HomePage = () => {
     }
   }
 
-  const handleFilterChange = e => {
-    setFiltersAds(adverts)
+  const sortPlants = () => {
+    let sortedAdverts = [...filteredAdverts]
+
+    if (searchQuery) {
+      sortedAdverts = sortedAdverts.filter(
+        advert =>
+          advert.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          advert.species.toLowerCase().includes(searchQuery.toLowerCase())
+      )
+    }
+
+    if (orderBy) {
+      if (orderBy === 1) {
+        sortedAdverts = sortedAdverts.sort((a, b) =>
+          a.name.localeCompare(b.name)
+        )
+      } else if (orderBy === 2) {
+        sortedAdverts = sortedAdverts.sort((a, b) => b.plantId - a.plantId)
+      }
+    }
+
+    setFilteredAdverts(sortedAdverts)
   }
 
   useEffect(async () => {
@@ -85,9 +109,9 @@ const HomePage = () => {
     setIsLoading(false)
   }, [])
 
-  // useEffect(() => {
-  //   fetchPlants()
-  // }, [searchValue, orderBy])
+  useEffect(() => {
+    sortPlants()
+  }, [searchQuery, orderBy])
 
   return isLoading ? (
     <Spinner />
@@ -104,11 +128,13 @@ const HomePage = () => {
         </div>
 
         <div className="flex justify-between items-center  py-[20px] mb-[40px]">
-          <h1 className="text-xl font-semibold ">Annonces de plantes</h1>
+          <h1 className="text-xl font-semibold">Annonces de plantes</h1>
           <Select
             options={filtersAds}
-            defaultValue={'2'}
-            onChange={handleFilterChange}
+            defaultValue={'Pertinence'}
+            onChange={e => {
+              setOrderBy(e.value)
+            }}
             placeholder={'Trier par'}
             className="w-[250px]"
           />
@@ -116,20 +142,20 @@ const HomePage = () => {
 
         <div
           className="grid
-        sm:gap-3 sm:grid-cols-1
-        md:gap-4 md:grid-cols-2
-        lg:gap-5 lg:grid-cols-3
-        xl:gap-6 xl:grid-cols-3
-        2xl:gap-6 2xl:grid-cols-4"
+            sm:gap-1 sm:grid-cols-1
+            md:gap-4 md:grid-cols-2
+            lg:gap-5 lg:grid-cols-3
+            xl:gap-6 xl:grid-cols-3
+            2xl:gap-6 2xl:grid-cols-4"
         >
-          {adverts.length ? (
-            adverts.map(advert => (
+          {filteredAdverts.length ? (
+            filteredAdverts.map(advert => (
               <div key={advert?.plantId}>
                 <AdCard advert={advert} />
               </div>
             ))
           ) : (
-            <p className="text-center">Aucune annonce</p>
+            <div className="flex pb-8 font-medium text-lg">Aucune annonce</div>
           )}
         </div>
       </div>

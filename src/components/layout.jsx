@@ -1,29 +1,11 @@
-import React, { useContext, useState } from "react"
-import { useStaticQuery, graphql } from "gatsby"
-import { ToastContainer } from "react-toastify"
-
-import Header from "./header"
-import "./global.css"
-import { UserContext } from "../context/UserContext"
-import Footer from "./footer"
+import React, { useContext, useState } from 'react'
+import { useStaticQuery, graphql } from 'gatsby'
+import { ToastContainer } from 'react-toastify'
+import Header from './header'
+import './global.css'
+import Footer from './footer'
 
 const Layout = ({ children }) => {
-  const { setCurrentUser, currentUser } = useContext(UserContext)
-  const { filteredAds, setFilteredAds } = useState("")
-
-  // useEffect(() => {
-  //   setFilteredAds(
-  //     participants.filter(participantToShow =>
-  //       participantToShow.fullname
-  //         .toLowerCase()
-  //         // .replace(/[\u0300-\u036f]/g, '')
-  //         .includes(searchValue.toLowerCase())
-  //     )
-  //   )
-  // }, [searchValue])
-
-  // window.scrollTo(0, 500)
-
   const data = useStaticQuery(graphql`
     query SiteTitleQuery {
       site {
@@ -36,10 +18,7 @@ const Layout = ({ children }) => {
 
   return (
     <>
-      <Header
-        siteTitle={data.site.siteMetadata?.title || `Title`}
-        currentUser={currentUser}
-      />
+      <Header siteTitle={data.site.siteMetadata?.title || `Title`} />
       <ToastContainer />
       <div
         style={{

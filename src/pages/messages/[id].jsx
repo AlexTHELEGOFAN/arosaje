@@ -30,7 +30,7 @@ const Messages = () => {
     <Layout>
       {/* <div className="flex justify-center bg-secondGreen px-8 py-5 rounded-md drop-shadow-md">
         <div className="flex justify-center items-center"> */}
-      <div className="bg-green-200 px-8 py-5 rounded-md drop-shadow-md">
+      <div className="bg-green-200 px-8 py-5  rounded-md drop-shadow-md">
         <h1 className="text-center text-2xl font-medium my-4">
           Formulaire de contact
         </h1>
@@ -60,7 +60,39 @@ const Messages = () => {
                   className="flex text-left text-black text-sm mb-1"
                   htmlFor="username"
                 >
-                  Nom d'utilisateur *
+                  Objet
+                </label>
+                <Field
+                  type="text"
+                  name="username"
+                  placeholder="Nom d'utilisateur"
+                  className="w-[250px] md:w-full justify-center login-field"
+                />
+                <ErrorMessage name="username" component="div" />
+              </div>
+
+              <div className="pb-8">
+                <label
+                  className="flex text-left text-black text-sm mb-1"
+                  htmlFor="username"
+                >
+                  Message
+                </label>
+                <Field
+                  type="text"
+                  name="username"
+                  placeholder="Nom d'utilisateur"
+                  className="w-[250px] md:w-full justify-center login-field"
+                />
+                <ErrorMessage name="username" component="div" />
+              </div>
+
+              <div className="pb-8">
+                <label
+                  className="flex text-left text-black text-sm mb-1"
+                  htmlFor="username"
+                >
+                  Image
                 </label>
                 <Field
                   type="text"

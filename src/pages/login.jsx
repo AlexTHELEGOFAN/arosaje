@@ -23,12 +23,6 @@ function Login() {
   const [isLoading, setIsLoading] = useState(true)
   const [inputType, setInputType] = useState('password')
 
-  const config = {
-    // 'Access-Control-Allow-Origin': '*',
-    // 'Access-Control-Allow-Headers': '*',
-    // 'Access-Control-Allow-Methods': 'Get, post, put, delete',
-  }
-
   // Toggle show or hide password
   const toggleVisibility = () => {
     setInputType(inputType === 'password' ? 'text' : 'password')
@@ -37,14 +31,12 @@ function Login() {
   // Handle login Formik
   const handleLogin = values => {
     axios
-      .get(`https://localhost:7083/api/User/GetUser/1`, {
-        headers: config,
-      })
+      .get(`https://localhost:7083/api/User/GetUser/1`)
       .then(res => {
         // Create and set browser cookies
         const cookies = new Cookies()
-        // cookies.set('jwt', res.data);
-        // localStorage.setItem('jwt', res.data);
+        cookies.set('jwt', 'res.data')
+        localStorage.setItem('jwt', 'res.data')
 
         // Get and decode jwt token
         // const jwt = cookies.get('jwt');

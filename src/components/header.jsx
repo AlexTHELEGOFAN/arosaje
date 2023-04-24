@@ -1,32 +1,32 @@
-import React, { useContext } from "react"
-import { Link, navigate } from "gatsby"
+import React, { useContext, useEffect, useState } from 'react'
+import { Link, navigate } from 'gatsby'
 
-import Select from "react-select"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faBars, faSearch, faUser } from "@fortawesome/free-solid-svg-icons"
+import Select from 'react-select'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faBars, faSearch, faUser } from '@fortawesome/free-solid-svg-icons'
 
-import logo from "@assets/icons/icone.jpg"
-import { SearchContext } from "../context/SearchContext"
+import logo from '@assets/icons/icone.jpg'
+import { SearchContext } from '../context/SearchContext'
 
 // Header layout
 
 const Header = ({ currentUser }) => {
-  const { setSearch } = useContext(SearchContext)
+  const { searchQuery, setSearchQuery } = useContext(SearchContext)
 
   const optionLinks = [
-    { value: "/new", label: "+ Nouvelle annonce" },
-    { value: "/account/1", label: "Mon compte" },
-    { value: "/messages/1", label: "Messages" },
+    { value: '/new', label: '+ Nouvelle annonce' },
+    { value: '/account/1', label: 'Mon compte' },
+    { value: '/messages/1', label: 'Messages' },
   ]
 
-  // { value: "/register", label: "Créer un compte" },
-  // { value: "/login", label: "Se connecter" },
+  const handleSearch = event => {
+    setSearchQuery(event.target.value)
+  }
 
   const OptionLink = ({ data }) => {
     const handleClick = () => {
       window.location.href = data.value
     }
-
     return <div onClick={handleClick}>{data.label}</div>
   }
 
@@ -48,10 +48,9 @@ const Header = ({ currentUser }) => {
         <input
           className="w-52 bg-white border border-solid border-gray-400 text-gray-700 text-sm rounded p-2"
           type="text"
-          id="searchParticipant"
-          name="searchParticipant"
           placeholder="Que recherchez vous ?"
-          onChange={e => setSearch(e.target.value)}
+          value={searchQuery}
+          onChange={handleSearch}
         />
         <FontAwesomeIcon
           icon={faSearch}

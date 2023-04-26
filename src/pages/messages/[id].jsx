@@ -43,11 +43,8 @@ const Messages = () => {
           validateOnChange={false}
           validate={values => {
             let errors = {}
-            if (!values.username) {
-              errors.username = 'Ce champ est requis'
-            }
-            if (!values.password) {
-              errors.password = 'Ce champ est requis'
+            if (!values.message) {
+              errors.message = 'Ce champ est requis'
             }
             return errors
           }}
@@ -58,49 +55,49 @@ const Messages = () => {
               <div className="pb-8">
                 <label
                   className="flex text-left text-black text-sm mb-1"
-                  htmlFor="username"
+                  htmlFor="object"
                 >
-                  Objet
+                  Objet du message
                 </label>
                 <Field
                   type="text"
-                  name="username"
-                  placeholder="Nom d'utilisateur"
+                  name="object"
+                  placeholder="Objet"
                   className="w-[250px] md:w-full justify-center login-field"
                 />
-                <ErrorMessage name="username" component="div" />
+                <ErrorMessage name="object" component="div" />
               </div>
 
               <div className="pb-8">
                 <label
                   className="flex text-left text-black text-sm mb-1"
-                  htmlFor="username"
+                  htmlFor="message"
                 >
-                  Message
+                  Message *
                 </label>
                 <Field
-                  type="text"
-                  name="username"
-                  placeholder="Nom d'utilisateur"
+                  type="textarea"
+                  name="message"
+                  placeholder="Message"
                   className="w-[250px] md:w-full justify-center login-field"
                 />
-                <ErrorMessage name="username" component="div" />
+                <ErrorMessage name="message" component="div" />
               </div>
 
-              <div className="pb-8">
+              <div className="pb-8 text-left relative">
                 <label
                   className="flex text-left text-black text-sm mb-1"
-                  htmlFor="username"
+                  htmlFor="picture"
                 >
                   Image
                 </label>
                 <Field
-                  type="text"
-                  name="username"
-                  placeholder="Nom d'utilisateur"
+                  type="file"
+                  name="picture"
+                  placeholder=""
                   className="w-[250px] md:w-full justify-center login-field"
                 />
-                <ErrorMessage name="username" component="div" />
+                <ErrorMessage name="picture" component="div" />
               </div>
 
               <div className="flex justify-center">
@@ -108,7 +105,7 @@ const Messages = () => {
                   type="submit"
                   className="form-button bg-white flex items-center bg-primary text-black uppercase hover:bg-threeGreen active:bg-fourGreen disabled:bg-disabledButton disabled:text-lightgrey-200 transition-all"
                 >
-                  Connexion
+                  Envoyer le message
                 </button>
               </div>
             </Form>

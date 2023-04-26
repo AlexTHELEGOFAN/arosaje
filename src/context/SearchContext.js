@@ -1,16 +1,18 @@
+// ** Default import
+
 import React, { createContext, useState } from 'react'
+
+// ** Search context
 
 export const SearchContext = createContext({
   searchQuery: '',
   setSearchQuery: () => {},
 })
 
-const SearchContextProvider = ({ children }) => {
-  const [searchQuery, setSearchQuery] = useState('')
+// ** Search provider
 
-  const handleSearch = () => {
-    setSearchQuery(searchQuery)
-  }
+const SearchContextProvider = ({ children }) => {
+  const [searchQuery, setSearchQuery] = useState()
 
   return (
     <SearchContext.Provider value={{ searchQuery, setSearchQuery }}>

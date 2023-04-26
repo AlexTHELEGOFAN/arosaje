@@ -12,7 +12,7 @@ import Spinner from '../../components/Spinner'
 
 // Account page
 const AccountPage = () => {
-  const id = parseInt(window.location.href.slice(-2, -1))
+  const id = localStorage.getItem('user')
 
   const [user, setUser] = useState()
   const [userPlants, setUserPlants] = useState()
@@ -82,6 +82,8 @@ const AccountPage = () => {
     setIsLoading(false)
   }, [])
 
+  console.log(userPlants)
+
   return isLoading ? (
     <Spinner />
   ) : (
@@ -117,15 +119,15 @@ const AccountPage = () => {
             {/* <div className="flex text-center">
               <p className="font-medium pr-2">Adresse :</p>
               {user?.userAddress}
-            </div> */}
-            {/* <div className="flex text-center">
+            </div>
+            <div className="flex text-center">
               <p className="font-medium pr-2">Adresse email :</p>
               {user?.email}
             </div> */}
-            {/* <div className="flex text-center">
+            <div className="flex text-center">
               <p className="font-medium pr-2">Numéro de téléphone :</p>
               {user?.phone}
-            </div> */}
+            </div>
           </div>
 
           <div className="">
@@ -146,7 +148,7 @@ const AccountPage = () => {
         xl:gap-6 xl:grid-cols-3
         2xl:gap-10 2xl:grid-cols-3"
               >
-                {userPlants ? (
+                {userPlants.length ? (
                   userPlants.map(plant => (
                     <div className="pt-5 pr-0 " key={plant?.plantId}>
                       <div className="pb-2">
@@ -163,7 +165,7 @@ const AccountPage = () => {
                     </div>
                   ))
                 ) : (
-                  <p className="text-center">
+                  <p className="flex text-center">
                     Cet utilisateur n'a aucune plante
                   </p>
                 )}

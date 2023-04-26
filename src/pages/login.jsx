@@ -7,7 +7,7 @@ import React, { useContext, useState } from 'react'
 import axios from 'axios'
 import { navigate } from 'gatsby'
 import { Formik, Form, ErrorMessage, Field } from 'formik'
-import { toast } from 'react-toastify'
+import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { UserContext } from '../context/UserContext'
 import jwtDecode from 'jwt-decode'
@@ -15,6 +15,7 @@ import Cookies from 'universal-cookie'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons'
 import Spinner from '../components/Spinner'
+import Layout from '../components/layout'
 
 // ** Login page
 
@@ -31,18 +32,21 @@ function Login() {
   // Handle login Formik
   const handleLogin = values => {
     axios
-      .get(`https://localhost:7083/api/User/GetUser/1`)
+      .post(
+        `https://localhost:7083/api/User/Authenticate?username=${values.username}&password=${values.password}`
+      )
       .then(res => {
         // Create and set browser cookies
         const cookies = new Cookies()
-        cookies.set('jwt', 'res.data')
-        localStorage.setItem('jwt', 'res.data')
+        cookies.set('jwt', res.data.token)
+        localStorage.setItem('jwt', res.data.token)
 
         // Get and decode jwt token
-        // const jwt = cookies.get('jwt');
-        // const decodedToken = jwtDecode(jwt);
-        // setCurrentUser(decodedToken.unique_name);
-        // localStorage.setItem('user', decodedToken.unique_name);
+        const jwt = cookies.get('jwt')
+        const decodedToken = jwtDecode(jwt)
+
+        setCurrentUser(decodedToken.unique_name)
+        localStorage.setItem('user', decodedToken.unique_name)
         navigate('/home')
       })
       .catch(err => {
@@ -52,9 +56,7 @@ function Login() {
       })
   }
 
-  return isLoading ? (
-    <Spinner />
-  ) : (
+  return (
     <div>
       <button
         className="flex text-center items-center ml-5 mt-5"
@@ -143,6 +145,7 @@ function Login() {
           </Formik>
         </div>
       </div>
+      <ToastContainer />
     </div>
   )
 }

@@ -20,13 +20,6 @@ import Spinner from '../components/Spinner'
 function Register() {
   const [inputType, setInputType] = useState('password')
   const [isLoading, setIsLoading] = useState(true)
-  // const { setCurrentUser } = useContext(UserContext)
-
-  const config = {
-    // 'Access-Control-Allow-Origin': '*',
-    // 'Access-Control-Allow-Headers': '*',
-    // 'Access-Control-Allow-Methods': 'Get, post, put, delete',
-  }
 
   // Toggle show or hide password
   const toggleVisibility = () => {
@@ -37,8 +30,16 @@ function Register() {
   const handleRegister = values => {
     axios
       .post(`https://localhost:7083/api/User/InsertUser`, {
-        headers: config,
-        body: values,
+        firstName: values.lastName,
+        lastName: values.firstName,
+        email: values.email,
+        phone: values.phone,
+        status: 1,
+        userAddress: values.address,
+        username: values.username,
+        password: values.password,
+        typeId: 1,
+        cityId: 1,
       })
       .then(res => {
         navigate('/login')
@@ -81,13 +82,11 @@ function Register() {
           <Formik
             initialValues={{
               username: '',
-              // TODO: remove
               firstName: '',
               lastName: '',
               age: '',
               email: '',
               phone: '',
-              // TODO: remove
               address: '',
               password: '',
               confirmPassword: '',

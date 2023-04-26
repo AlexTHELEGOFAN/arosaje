@@ -20,15 +20,8 @@ const NewAdvert = () => {
   const handleSubmit = async values => {
     const fileName = values.picture.match(/[^\\]+$/)[0]
 
-    const config = {
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Headers': '*',
-      'Access-Control-Allow-Methods': 'Get, post, put, delete',
-    }
-
     await Promise.all([
       axios.post(`https://localhost:7083/api/PlantImage/InsertAnnonce`, {
-        headers: config,
         body: {
           name: values.plantName,
           species: values.plantSpecies,
@@ -42,7 +35,6 @@ const NewAdvert = () => {
       // axios.post(
       //   `https://localhost:7083/api/Annonce/InsertAnnonce`,
       //   {
-      //     headers: config,
       //     body: {
       //       "image": "test",
       //       "imageDate": "2023-04-17T20:29:10.070Z",
@@ -64,8 +56,7 @@ const NewAdvert = () => {
   }
 
   useEffect(async () => {
-    // await fetchUser()
-    // await fetchUserPlants()
+    // await fetchPlants()
     setIsLoading(false)
   }, [])
 

@@ -31,7 +31,10 @@ const HomePage = () => {
 
   const [filtersAds, setFiltersAds] = useState([])
   const [isLoading, setIsLoading] = useState(true)
-  const [orderBy, setOrderBy] = useState('Pertinence')
+  const [orderBy, setOrderBy] = useState({
+    label: 'Pertinence',
+    value: 1,
+  })
 
   const fetchPlants = async () => {
     try {
@@ -90,13 +93,13 @@ const HomePage = () => {
       )
     }
 
-    if (orderBy) {
-      if (orderBy === 1) {
+    if (orderBy.value) {
+      if (orderBy.value === 1) {
+        sortedAdverts = sortedAdverts.sort((a, b) => b.plantId - a.plantId)
+      } else if (orderBy.value === 2) {
         sortedAdverts = sortedAdverts.sort((a, b) =>
           a.name.localeCompare(b.name)
         )
-      } else if (orderBy === 2) {
-        sortedAdverts = sortedAdverts.sort((a, b) => b.plantId - a.plantId)
       }
     }
 
@@ -111,7 +114,7 @@ const HomePage = () => {
 
   useEffect(() => {
     sortPlants()
-  }, [searchQuery, orderBy])
+  }, [searchQuery, orderBy.value])
 
   return isLoading ? (
     <Spinner />
@@ -133,10 +136,14 @@ const HomePage = () => {
             options={filtersAds}
             defaultValue={'Pertinence'}
             onChange={e => {
-              setOrderBy(e.value)
+              setOrderBy({
+                label: e.label,
+                value: e.value,
+              })
             }}
             placeholder={'Trier par'}
             className="w-[250px]"
+            value={orderBy}
           />
         </div>
 

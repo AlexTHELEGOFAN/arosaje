@@ -14,7 +14,7 @@ import Spinner from '../../components/Spinner'
 // Plant advert page
 
 const Advert = () => {
-  const id = window.location.href?.slice(-2, -1)
+  const id = parseInt(window.location.href?.slice(-2, -1))
   const [currentAd, setCurrentAd] = useState([])
   const [currentAdImage, setCurrentAdImage] = useState([])
   const [currentAdUser, setCurrentAdUser] = useState([])
@@ -146,17 +146,17 @@ const Advert = () => {
           <div className="pb-4">
             <div className="pb-2">{currentAd?.plantDescription}</div>
 
-            <div className="flex text-center pb-2">
+            <div className="block sm:block lg:text-center lg:flex pb-2">
               <p className="font-medium pr-2">Nom de la plante :</p>
               {currentAd?.name}
             </div>
 
-            <div className="flex text-center pb-2">
+            <div className="block sm:block lg:text-center lg:flex pb-2">
               <p className="font-medium pr-2">Espèce de la plante :</p>
               {currentAd?.species}
             </div>
 
-            <div className="flex text-center pb-2">
+            <div className="block sm:block lg:text-center lg:flex pb-2">
               <p className="font-medium pr-2">Adresse de la plante :</p>
               {currentAd?.plantAddress}
             </div>
@@ -205,11 +205,13 @@ const Advert = () => {
         2xl:gap-6 2xl:grid-cols-4"
       >
         {adverts.length ? (
-          adverts.map(advert => (
-            <div key={advert?.plantId}>
-              <AdCard advert={advert} />
-            </div>
-          ))
+          adverts
+            .filter(advert => advert.plantId !== id)
+            .map(advert => (
+              <div key={advert?.plantId}>
+                <AdCard advert={advert} />
+              </div>
+            ))
         ) : (
           <p className="text-center">Aucune annonce</p>
         )}

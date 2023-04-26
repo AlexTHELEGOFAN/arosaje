@@ -7,8 +7,8 @@
 /**
  * @type {import('gatsby').GatsbyConfig}
  */
-const { createProxyMiddleware } = require("http-proxy-middleware")
-const cors = require("cors")
+// const { createProxyMiddleware } = require("http-proxy-middleware")
+// const cors = require("cors")
 
 module.exports = {
   siteMetadata: {
@@ -17,20 +17,20 @@ module.exports = {
     author: `Alexandre`,
     siteUrl: `https://arosaje.com/`,
   },
-  developMiddleware: app => {
-    app.use(
-      "/api",
-      cors({
-        origin: "*",
-        methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-        allowedHeaders: "*",
-      }),
-      createProxyMiddleware({
-        target: "https://localhost:7083",
-        changeOrigin: true,
-      })
-    )
-  },
+  // developMiddleware: app => {
+  //   app.use(
+  //     "/api",
+  //     cors({
+  //       origin: "*",
+  //       methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+  //       allowedHeaders: "*",
+  //     }),
+  //     createProxyMiddleware({
+  //       target: "https://localhost:7083",
+  //       changeOrigin: true,
+  //     })
+  //   )
+  // },
   // proxy: {
   //   prefix: "/api",
   //   url: "https://localhost:7083/api/",
@@ -48,10 +48,10 @@ module.exports = {
       resolve: `gatsby-plugin-alias-imports`,
       options: {
         alias: {
-          "@src": "src",
-          "@assets": "src/assets",
-          "@components": "src/components",
-          "@pages": "src/pages",
+          '@src': 'src',
+          '@assets': 'src/assets',
+          '@components': 'src/components',
+          '@pages': 'src/pages',
         },
         extensions: [],
       },

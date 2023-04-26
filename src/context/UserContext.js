@@ -4,16 +4,14 @@ import React, { createContext, useState } from 'react'
 
 // ** Auth context
 
-const defaultContext = {
+export const UserContext = createContext({
   currentUser: {},
   setCurrentUser: () => {},
-}
-
-const UserContext = createContext(defaultContext)
+})
 
 // ** Auth provider
 
-export const UserContextProvider = ({ children }) => {
+const UserContextProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState({})
 
   return (
@@ -23,4 +21,4 @@ export const UserContextProvider = ({ children }) => {
   )
 }
 
-export default UserContext
+export default UserContextProvider

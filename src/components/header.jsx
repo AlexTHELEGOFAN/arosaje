@@ -3,14 +3,40 @@ import { Link, navigate } from 'gatsby'
 
 import Select from 'react-select'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faBars, faSearch, faUser } from '@fortawesome/free-solid-svg-icons'
+import {
+  faBars,
+  faSearch,
+  faUser,
+  faXmark,
+} from '@fortawesome/free-solid-svg-icons'
 
 import logo from '@assets/icons/icone.jpg'
 import { SearchContext } from '../context/SearchContext'
+import Cookies from 'universal-cookie'
+import jwtDecode from 'jwt-decode'
+import { UserContext } from '../context/UserContext'
 
 // Header layout
 
-const Header = ({ currentUser }) => {
+const Header = () => {
+  // const cookies = new Cookies()
+  // const jwt = cookies.get('jwt')
+  const jwt = localStorage.getItem('jwt')
+  const user = localStorage.getItem('user')
+
+  const { currentUser } = useContext(UserContext)
+
+  let decodedToken = ''
+  !jwt ?? (decodedToken = jwtDecode(jwt))
+
+  // console.log(decodedToken.exp ? 'exp' : 'nothing')
+
+  const currentTime = Math.round(new Date().getTime() / 1000)
+  let expired
+  currentTime > decodedToken.exp ? (expired = true) : (expired = false)
+
+  // console.log(expired, jwt === null, expired || jwt === null)
+
   const { searchQuery, setSearchQuery } = useContext(SearchContext)
 
   const optionLinks = [
@@ -20,7 +46,7 @@ const Header = ({ currentUser }) => {
   ]
 
   const handleSearch = event => {
-    setSearchQuery(event.target.value)
+    setSearchQuery(event)
   }
 
   const OptionLink = ({ data }) => {
@@ -50,8 +76,16 @@ const Header = ({ currentUser }) => {
           type="text"
           placeholder="Que recherchez vous ?"
           value={searchQuery}
-          onChange={handleSearch}
+          onChange={e => handleSearch(e.target.value)}
         />
+
+        {/* {searchQuery.length > 0 && (
+          <FontAwesomeIcon
+            icon={faXmark}
+            size="2xl"
+            className="absolute w-4 h-4 right-4 cursor-pointer pr-6"
+          />
+        )} */}
         <FontAwesomeIcon
           icon={faSearch}
           size="2xl"
@@ -64,37 +98,49 @@ const Header = ({ currentUser }) => {
           className="hidden fixed
           md:relative md:flex md:p-0 md:bg-transparent md:flex-row md:space-x-6"
         >
-          <Link to="/new" className="w-[170px] header-button mr-4">
-            + Nouvelle annonce
-          </Link>
+          {expired || jwt === null ? (
+            <>
+              <Link
+                to="/register"
+                className="w-[150px] h-8 text-black header-button mr-4 text-center"
+              >
+                Créer un compte
+              </Link>
+              <Link
+                to="/login"
+                className="w-[120px] h-8 text-black header-button text-center"
+              >
+                Se connecter
+              </Link>
+            </>
+          ) : (
+            <>
+              <div
+                className="w-[170px] header-button mr-4"
+                onClick={() => navigate('/new')}
+              >
+                + Nouvelle annonce
+              </div>
 
-          <Link to="/messages/1" className="w-[100px] header-button mr-4">
-            Messages
-          </Link>
-
-          {/* <Link
-            to="/register"
-            className="w-[150px] h-8 text-black header-button mr-4 text-center"
-          >
-            Créer un compte
-          </Link>
-
-          <Link
-            to="/login"
-            className="w-[120px] h-8 text-black header-button text-center"
-          >
-            Se connecter
-          </Link> */}
-
-          <div className="cursor-pointer text-black">
-            <FontAwesomeIcon
-              icon={faUser}
-              size="2xl"
-              className="w-5 h-5 text-black"
-              // onClick={() => navigate(`/account/${currentUser?.id}/`)}
-              onClick={() => navigate(`/account/1`)}
-            />
-          </div>
+              <div
+                className="w-[140px] header-button mr-4"
+                onClick={() => localStorage.clear()}
+              >
+                Se déconnecter
+              </div>
+              {/* <Link to="/messages/1" className="w-[100px] header-button mr-4">
+  Message
+</Link> */}
+              <div className="cursor-pointer text-black">
+                <FontAwesomeIcon
+                  icon={faUser}
+                  size="2xl"
+                  className="w-5 h-5 text-black"
+                  onClick={() => navigate(`/account/${user}/`)}
+                />
+              </div>
+            </>
+          )}
         </div>
 
         <div className="flex items-center md:hidden">

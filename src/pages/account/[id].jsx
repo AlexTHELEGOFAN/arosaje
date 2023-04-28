@@ -12,7 +12,7 @@ import Spinner from '../../components/Spinner'
 
 // Account page
 const AccountPage = () => {
-  const id = localStorage.getItem('user')
+  const id = parseInt(window.location.href.slice(-2, -1))
 
   const [user, setUser] = useState()
   const [userPlants, setUserPlants] = useState()
@@ -81,8 +81,6 @@ const AccountPage = () => {
     await fetchUserPlants()
     setIsLoading(false)
   }, [])
-
-  console.log(userPlants)
 
   return isLoading ? (
     <Spinner />

@@ -29,13 +29,9 @@ const Header = () => {
   let decodedToken = ''
   !jwt ?? (decodedToken = jwtDecode(jwt))
 
-  // console.log(decodedToken.exp ? 'exp' : 'nothing')
-
   const currentTime = Math.round(new Date().getTime() / 1000)
   let expired
   currentTime > decodedToken.exp ? (expired = true) : (expired = false)
-
-  // console.log(expired, jwt === null, expired || jwt === null)
 
   const { searchQuery, setSearchQuery } = useContext(SearchContext)
 

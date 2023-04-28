@@ -11,41 +11,40 @@ import { toast } from 'react-toastify'
 import { UserContext } from '../context/UserContext'
 import axios from 'axios'
 import Spinner from '../components/Spinner'
+import dayjs from 'dayjs'
 
 const NewAdvert = () => {
-  // const { currentUser } = useContext(UserContext)
+  const id = localStorage.getItem('user')
   const [isLoading, setIsLoading] = useState(true)
+
+  const fetchPlants = async () => {
+    try {
+      const res = await axios(`https://localhost:7083/api/Annonce/GetAnnonces`)
+
+      const lastObject = res.data[res.data.length - 1]
+      return lastObject.plantId
+    } catch (error) {
+      toast.error('Erreur lors du chargement des données', {
+        position: 'bottom-right',
+      })
+    }
+  }
 
   // Handle login Formik
   const handleSubmit = async values => {
     const fileName = values.picture.match(/[^\\]+$/)[0]
 
-    await Promise.all([
-      axios.post(`https://localhost:7083/api/PlantImage/InsertAnnonce`, {
-        body: {
-          name: values.plantName,
-          species: values.plantSpecies,
-          plantDescription: values.desc,
-          plantAddress: values.address,
-          userId: 1,
-          // currentUser?.id
-        },
-      }),
+    await axios
+      .post(`https://localhost:7083/api/Annonce/InsertAnnonce`, {
+        name: values.plantName,
+        species: values.plantSpecies,
+        plantDescription: values.desc,
+        plantAddress: values.address,
+        userId: id,
+      })
 
-      // axios.post(
-      //   `https://localhost:7083/api/Annonce/InsertAnnonce`,
-      //   {
-      //     body: {
-      //       "image": "test",
-      //       "imageDate": "2023-04-17T20:29:10.070Z",
-      //       // "plantId": 5
-      //     }
-      //   }
-      // ),
-    ])
-
-      .then(res => {
-        // navigate('/home')
+      .then(async res => {
+        await handleCreate(values.picture)
       })
       .catch(err => {
         console.error(err)
@@ -55,8 +54,36 @@ const NewAdvert = () => {
       })
   }
 
+  const handleCreate = async value => {
+    const createdPlant = await fetchPlants()
+    const creationDate = dayjs().format('YYYY-MM-DD HH:mm:ss')
+    const filename = value
+      .replace(/^.*[\\\/]/, '')
+      .split('.')
+      .slice(0, -1)
+      .join('.')
+
+    await axios
+      .post(`https://localhost:7083/api/PlantImage/InsertAnnonce`, {
+        image: filename,
+        imageDate: creationDate,
+        plantId: createdPlant,
+      })
+      .then(
+        toast.success('Annonce créée avec succès', {
+          position: 'bottom-right',
+        })
+
+        // navigate('/home'),
+      )
+      .catch(error => {
+        toast.error('Erreur lors du chargement des données', {
+          position: 'bottom-right',
+        })
+      })
+  }
+
   useEffect(async () => {
-    // await fetchPlants()
     setIsLoading(false)
   }, [])
 
@@ -158,7 +185,8 @@ const NewAdvert = () => {
                       Description *
                     </label>
                     <Field
-                      type="text"
+                      as="textarea"
+                      rows={5}
                       name="desc"
                       placeholder="Description"
                       className="w-[250px] md:w-full justify-center login-field"

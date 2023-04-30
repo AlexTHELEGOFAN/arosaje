@@ -12,10 +12,20 @@ import { UserContext } from '../context/UserContext'
 import axios from 'axios'
 import Spinner from '../components/Spinner'
 import dayjs from 'dayjs'
+import jwtDecode from 'jwt-decode'
 
 const NewAdvert = () => {
   const id = localStorage.getItem('user')
   const [isLoading, setIsLoading] = useState(true)
+  const jwt = localStorage.getItem('jwt')
+  const user = localStorage.getItem('user')
+
+  let decodedToken = ''
+  !jwt ?? (decodedToken = jwtDecode(jwt))
+
+  const currentTime = Math.round(new Date().getTime() / 1000)
+  let expired
+  currentTime > decodedToken.exp ? (expired = true) : (expired = false)
 
   const fetchPlants = async () => {
     try {
@@ -30,28 +40,32 @@ const NewAdvert = () => {
     }
   }
 
-  // Handle login Formik
   const handleSubmit = async values => {
     const fileName = values.picture.match(/[^\\]+$/)[0]
 
-    await axios
-      .post(`https://localhost:7083/api/Annonce/InsertAnnonce`, {
-        name: values.plantName,
-        species: values.plantSpecies,
-        plantDescription: values.desc,
-        plantAddress: values.address,
-        userId: id,
-      })
+    expired ||
+      (jwt === null
+        ? toast.error('Vous devez être connecté pour effectuer cette action', {
+            position: 'bottom-right',
+          })
+        : await axios
+            .post(`https://localhost:7083/api/Annonce/InsertAnnonce`, {
+              name: values.plantName,
+              species: values.plantSpecies,
+              plantDescription: values.desc,
+              plantAddress: values.address,
+              userId: id,
+            })
 
-      .then(async res => {
-        await handleCreate(values.picture)
-      })
-      .catch(err => {
-        console.error(err)
-        toast.error("Erreur lors de la création de l'annonce", {
-          position: 'bottom-right',
-        })
-      })
+            .then(async res => {
+              await handleCreate(values.picDture)
+            })
+            .catch(err => {
+              console.error(err)
+              toast.error("Erreur lors de la création de l'annonce", {
+                position: 'bottom-right',
+              })
+            }))
   }
 
   const handleCreate = async value => {
@@ -87,7 +101,7 @@ const NewAdvert = () => {
       })
   }
 
-  useEffect(async () => {
+  useEffect(() => {
     setIsLoading(false)
   }, [])
 
@@ -102,7 +116,7 @@ const NewAdvert = () => {
             navigate(-1),
             setTimeout(() => {
               window.location.reload()
-            }, 1000)
+            }, 10)
           )}
         >
           <FontAwesomeIcon

@@ -13,7 +13,7 @@ const AdCard = ({ advert }) => {
   const imageSrc = require(`@assets/images/${advert.image.image}.jpg`).default
 
   return (
-    <div className="bg-green-200 h-[520px] rounded-2xl mb-5">
+    <div className="bg-green-200 h-[560px] rounded-2xl mb-5">
       <div className="flex justify-between items-center align-center">
         <img
           src={imageSrc}

@@ -3,9 +3,24 @@ import * as React from 'react'
 import Layout from '../components/layout'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons'
+import { posthog } from 'posthog-js'
+import { toast } from 'react-toastify'
+import Cookies from 'universal-cookie'
 
 // Account page
 const PrivacyPolicy = () => {
+  const cookies = new Cookies()
+
+  console.log(cookies)
+
+  const handleCookieDelete = () => {
+    cookies.remove('age', { path: '/' })
+    cookies.remove('phone', { path: '/' })
+    toast.success('Vos cookies ont été supprimés', {
+      position: 'bottom-right',
+    })
+  }
+
   return (
     <Layout>
       <button
@@ -14,7 +29,7 @@ const PrivacyPolicy = () => {
           navigate(-1),
           setTimeout(() => {
             window.location.reload()
-          }, 1000)
+          }, 10)
         )}
       >
         <FontAwesomeIcon
@@ -164,7 +179,7 @@ const PrivacyPolicy = () => {
             -Soit par courrier postal à l'adresse suivante : Arosa'je 2507 av De
             L'europe 69140 Rillieux la pape
           </p>
-          <p className="pb-1">
+          <p className="pb-4">
             -Soit par courriel à l'adresse suivante: econtact@Arosa'je.fr.
           </p>
           Pour des raisons de sécurité et éviter toute demande frauduleuse,
@@ -173,7 +188,15 @@ const PrivacyPolicy = () => {
           information complémentaire ou réclamation, vous pouvez contacter la
           Commission Nationale de l'Informatique et des Libertés (plus
           d'informations sur www.cnil.fr).
-          <p className="pt-8">
+          <div>
+            <button
+              className="w-[180px] mt-4 h-8 text-black header-button text-center cursor-pointer"
+              onClick={handleCookieDelete}
+            >
+              Supprimer les cookies
+            </button>
+          </div>
+          <p className="pt-4">
             {' '}
             Arosa'je 2507 av De L'europe 69140 Rillieux la pape Tel: +33(0)5 58
             75 90 80{' '}

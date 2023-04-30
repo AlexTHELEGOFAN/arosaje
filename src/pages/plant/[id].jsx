@@ -13,7 +13,9 @@ import Spinner from '../../components/Spinner'
 // Plant page
 
 const PlantPage = () => {
-  const id = parseInt(window.location.href.slice(-2, -1))
+  const url = window.location.href
+  const parts = url.split('/')
+  const id = parts[4]
 
   const [currentPlant, setCurrentPlant] = useState([])
   const [plantImage, setPlantImage] = useState()
@@ -61,7 +63,7 @@ const PlantPage = () => {
           navigate(-1),
           setTimeout(() => {
             window.location.reload()
-          }, 1000)
+          }, 10)
         )}
       >
         <FontAwesomeIcon

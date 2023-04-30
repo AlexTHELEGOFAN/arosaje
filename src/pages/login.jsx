@@ -59,7 +59,7 @@ const Login = () => {
       })
   }
 
-  useEffect(async () => {
+  useEffect(() => {
     setIsLoading(false)
   }, [])
 
@@ -73,7 +73,7 @@ const Login = () => {
           navigate(-1),
           setTimeout(() => {
             window.location.reload()
-          }, 100)
+          }, 10)
         )}
       >
         <FontAwesomeIcon

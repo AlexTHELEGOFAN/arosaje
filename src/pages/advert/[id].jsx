@@ -14,7 +14,10 @@ import Spinner from '../../components/Spinner'
 // Plant advert page
 
 const Advert = () => {
-  const id = parseInt(window.location.href?.slice(-2, -1))
+  const url = window.location.href
+  const parts = url.split('/')
+  const id = parts[4]
+
   const [currentAd, setCurrentAd] = useState([])
   const [currentAdImage, setCurrentAdImage] = useState([])
   const [currentAdUser, setCurrentAdUser] = useState([])
@@ -99,12 +102,6 @@ const Advert = () => {
     await fetchPlants()
     setIsLoading(false)
   }, [])
-
-  // useEffect(async () => {
-  //   if (isReloading === false) {
-  //     window.location.reload(false)
-  //   }
-  // }, [isReloading])
 
   return isLoading ? (
     <Spinner />

@@ -53,7 +53,7 @@ const Register = () => {
       })
   }
 
-  useEffect(async () => {
+  useEffect(() => {
     setIsLoading(false)
   }, [])
 
@@ -67,7 +67,7 @@ const Register = () => {
           navigate(-1),
           setTimeout(() => {
             window.location.reload()
-          }, 100)
+          }, 10)
         )}
       >
         <FontAwesomeIcon

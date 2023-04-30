@@ -14,7 +14,7 @@ const LegalNotice = () => {
           navigate(-1),
           setTimeout(() => {
             window.location.reload()
-          }, 1000)
+          }, 10)
         )}
       >
         <FontAwesomeIcon

@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Link, navigate } from 'gatsby'
+import { navigate } from 'gatsby'
 
 import Layout from '../../components/layout'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -12,7 +12,9 @@ import Spinner from '../../components/Spinner'
 
 // Account page
 const AccountPage = () => {
-  const id = parseInt(window.location.href.slice(-2, -1))
+  const url = window.location.href
+  const parts = url.split('/')
+  const id = parts[4]
 
   const [user, setUser] = useState()
   const [userPlants, setUserPlants] = useState()
@@ -92,7 +94,7 @@ const AccountPage = () => {
           navigate(-1),
           setTimeout(() => {
             window.location.reload()
-          }, 1000)
+          }, 10)
         )}
       >
         <FontAwesomeIcon

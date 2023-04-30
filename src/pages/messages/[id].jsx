@@ -5,19 +5,20 @@ import React, { useEffect, useState } from 'react'
 import Layout from '../../components/layout'
 import { Formik, Form, ErrorMessage, Field } from 'formik'
 import Spinner from '../../components/Spinner'
+import { toast } from 'react-toastify'
 
 const Messages = () => {
   const [message, setMessage] = useState('')
   const [isLoading, setIsLoading] = useState(true)
 
-  useEffect(async () => {
+  useEffect(() => {
     setIsLoading(false)
   }, [])
 
   const handleMessageSend = event => {
-    event.preventDefault() // Prevent page refresh on submit
-    // socket.emit("message", message) // Send message to server
-    setMessage('') // Clear input field
+    toast.success('Votre message a été envoyé', {
+      position: 'bottom-right',
+    })
   }
 
   return isLoading ? (

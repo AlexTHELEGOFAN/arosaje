@@ -200,7 +200,12 @@ const Advert = () => {
 
           <button
             className="header-button mb-4"
-            onClick={() => navigate(`http:/localhost:8000/messages/1`)}
+            onClick={() => (
+              navigate(`/messages/1`),
+              setTimeout(() => {
+                window.location.reload()
+              }, 1000)
+            )}
           >
             Contacter
           </button>

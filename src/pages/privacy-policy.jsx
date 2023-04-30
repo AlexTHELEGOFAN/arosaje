@@ -10,7 +10,12 @@ const PrivacyPolicy = () => {
     <Layout>
       <button
         className="flex text-center items-center"
-        onClick={() => navigate(-1)}
+        onClick={() => (
+          navigate(-1),
+          setTimeout(() => {
+            window.location.reload()
+          }, 1000)
+        )}
       >
         <FontAwesomeIcon
           icon={faArrowLeft}

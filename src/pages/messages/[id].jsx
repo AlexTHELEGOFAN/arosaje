@@ -10,7 +10,7 @@ const Messages = () => {
   const [message, setMessage] = useState('')
   const [isLoading, setIsLoading] = useState(true)
 
-  useEffect(() => {
+  useEffect(async () => {
     setIsLoading(false)
   }, [])
 
@@ -18,10 +18,6 @@ const Messages = () => {
     event.preventDefault() // Prevent page refresh on submit
     // socket.emit("message", message) // Send message to server
     setMessage('') // Clear input field
-  }
-
-  const handleInputChange = event => {
-    setMessage(event.target.value)
   }
 
   return isLoading ? (

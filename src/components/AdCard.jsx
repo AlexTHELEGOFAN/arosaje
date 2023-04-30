@@ -8,7 +8,7 @@ import { faUser } from '@fortawesome/free-solid-svg-icons'
 
 // ** Event card
 
-function AdCard({ advert }) {
+const AdCard = ({ advert }) => {
   // An ad without image won't work
   const imageSrc = require(`@assets/images/${advert.image.image}.jpg`).default
 
@@ -19,7 +19,12 @@ function AdCard({ advert }) {
           src={imageSrc}
           alt={advert.image.image}
           className="bg-green-100 block ml-auto mr-auto w-full h-full rounded-t-2xl drop-shadow-md cursor-pointer"
-          onClick={() => navigate(`/advert/${advert.plantId}/`)}
+          onClick={() => (
+            navigate(`/advert/${advert.plantId}/`),
+            setTimeout(() => {
+              window.location.reload()
+            }, 1000)
+          )}
         />
       </div>
 
@@ -37,7 +42,12 @@ function AdCard({ advert }) {
 
             <div
               className="flex items-center pb-6 cursor-pointer"
-              onClick={() => navigate(`/account/${advert.userId}/`)}
+              onClick={() => (
+                navigate(`/account/${advert.userId}/`),
+                setTimeout(() => {
+                  window.location.reload()
+                }, 1000)
+              )}
             >
               <div>
                 {advert.user.firstName} {advert.user.lastName}

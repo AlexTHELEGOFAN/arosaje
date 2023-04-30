@@ -1,6 +1,6 @@
 // ** Default import
 
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 
 // ** Utils
 
@@ -15,14 +15,13 @@ import Cookies from 'universal-cookie'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons'
 import Spinner from '../components/Spinner'
-import Layout from '../components/layout'
 
 // ** Login page
 
-function Login() {
+const Login = () => {
   const { setCurrentUser } = useContext(UserContext)
-  const [isLoading, setIsLoading] = useState(true)
   const [inputType, setInputType] = useState('password')
+  const [isLoading, setIsLoading] = useState(true)
 
   // Toggle show or hide password
   const toggleVisibility = () => {
@@ -48,6 +47,10 @@ function Login() {
         setCurrentUser(decodedToken.unique_name)
         localStorage.setItem('user', decodedToken.unique_name)
         navigate('/home')
+
+        setTimeout(() => {
+          window.location.reload()
+        }, 1000)
       })
       .catch(err => {
         toast.error("Nom d'utilisateur ou mot de passe incorrect", {
@@ -56,11 +59,22 @@ function Login() {
       })
   }
 
-  return (
+  useEffect(async () => {
+    setIsLoading(false)
+  }, [])
+
+  return isLoading ? (
+    <Spinner />
+  ) : (
     <div>
       <button
         className="flex text-center items-center ml-5 mt-5"
-        onClick={() => navigate(-1)}
+        onClick={() => (
+          navigate(-1),
+          setTimeout(() => {
+            window.location.reload()
+          }, 100)
+        )}
       >
         <FontAwesomeIcon
           icon={faArrowLeft}

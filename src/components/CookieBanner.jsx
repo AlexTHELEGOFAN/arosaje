@@ -4,7 +4,7 @@ import posthog from 'posthog-js'
 import { useState } from 'react'
 import React from 'react'
 
-function CookieBanner() {
+const CookieBanner = () => {
   const [showBanner, setShowBanner] = useState(true)
 
   const acceptCookies = () => {

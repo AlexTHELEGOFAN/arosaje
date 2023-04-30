@@ -20,6 +20,7 @@ const Advert = () => {
   const [currentAdUser, setCurrentAdUser] = useState([])
   const [adverts, setAdverts] = useState([])
   const [isLoading, setIsLoading] = useState(true)
+  const [isReloading, setIsReloading] = useState(false)
 
   const fetchCurrentAd = async () => {
     try {
@@ -99,13 +100,24 @@ const Advert = () => {
     setIsLoading(false)
   }, [])
 
+  // useEffect(async () => {
+  //   if (isReloading === false) {
+  //     window.location.reload(false)
+  //   }
+  // }, [isReloading])
+
   return isLoading ? (
     <Spinner />
   ) : (
     <Layout>
       <button
         className="flex text-center items-center pb-6"
-        onClick={() => navigate(-1)}
+        onClick={() => (
+          navigate(-1),
+          setTimeout(() => {
+            window.location.reload()
+          }, 1000)
+        )}
       >
         <FontAwesomeIcon
           icon={faArrowLeft}
@@ -125,7 +137,12 @@ const Advert = () => {
               }
               alt={currentAdImage.image}
               className="drop-shadow-md pb-1 cursor-pointer"
-              onClick={() => navigate(`/plant/${currentAdImage?.plantId}/`)}
+              onClick={() => (
+                navigate(`/plant/${currentAdImage?.plantId}/`),
+                setTimeout(() => {
+                  window.location.reload()
+                }, 1000)
+              )}
             />
           )}
         </div>
@@ -164,7 +181,12 @@ const Advert = () => {
 
           <div
             className="flex items-center pb-6 cursor-pointer"
-            onClick={() => navigate(`/account/${currentAd.userId}/`)}
+            onClick={() => (
+              navigate(`/account/${currentAd.userId}/`),
+              setTimeout(() => {
+                window.location.reload()
+              }, 1000)
+            )}
           >
             <FontAwesomeIcon
               icon={faUser}
@@ -178,7 +200,7 @@ const Advert = () => {
 
           <button
             className="header-button mb-4"
-            onClick={() => navigate(`/messages/1`)}
+            onClick={() => navigate(`http:/localhost:8000/messages/1`)}
           >
             Contacter
           </button>

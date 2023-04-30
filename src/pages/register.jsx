@@ -1,23 +1,21 @@
 // ** Default import
 
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 // ** Utils
 
 import { Formik, Form, ErrorMessage, Field } from 'formik'
 import 'react-toastify/dist/ReactToastify.css'
-// import { UserContext } from "../context/UserContext"
 import { navigate } from 'gatsby'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons'
 import axios from 'axios'
 import { toast } from 'react-toastify'
 import Spinner from '../components/Spinner'
-// import { REACT_APP_BASE_URL } from '../CONF';
 
 // ** Register page
 
-function Register() {
+const Register = () => {
   const [inputType, setInputType] = useState('password')
   const [isLoading, setIsLoading] = useState(true)
 
@@ -43,6 +41,9 @@ function Register() {
       })
       .then(res => {
         navigate('/login')
+        setTimeout(() => {
+          window.location.reload()
+        }, 1000)
       })
       .catch(err => {
         console.error(err)
@@ -53,8 +54,6 @@ function Register() {
   }
 
   useEffect(async () => {
-    // await fetchUser()
-    // await fetchUserPlants()
     setIsLoading(false)
   }, [])
 
@@ -64,7 +63,12 @@ function Register() {
     <div>
       <button
         className="flex text-center items-center ml-5 mt-5"
-        onClick={() => navigate(-1)}
+        onClick={() => (
+          navigate(-1),
+          setTimeout(() => {
+            window.location.reload()
+          }, 100)
+        )}
       >
         <FontAwesomeIcon
           icon={faArrowLeft}

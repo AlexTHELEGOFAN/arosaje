@@ -72,9 +72,13 @@ const NewAdvert = () => {
       .then(
         toast.success('Annonce créée avec succès', {
           position: 'bottom-right',
-        })
+        }),
 
-        // navigate('/home'),
+        navigate('/home'),
+
+        setTimeout(() => {
+          window.location.reload()
+        }, 500)
       )
       .catch(error => {
         toast.error('Erreur lors du chargement des données', {
@@ -94,7 +98,12 @@ const NewAdvert = () => {
       <div>
         <button
           className="flex text-center items-center ml-5 mt-5"
-          onClick={() => navigate(-1)}
+          onClick={() => (
+            navigate(-1),
+            setTimeout(() => {
+              window.location.reload()
+            }, 1000)
+          )}
         >
           <FontAwesomeIcon
             icon={faArrowLeft}

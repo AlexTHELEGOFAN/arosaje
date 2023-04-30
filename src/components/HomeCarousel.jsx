@@ -60,7 +60,12 @@ const HomeCarousel = ({ adverts }) => {
                   lg:h-[320px]
          
                   "
-                    onClick={() => navigate(`/advert/${advert?.plantId}/`)}
+                    onClick={() => (
+                      navigate(`/advert/${advert?.plantId}/`),
+                      setTimeout(() => {
+                        window.location.reload()
+                      }, 1000)
+                    )}
                   />
                 </div>
                 <div className="pr-2">
@@ -74,7 +79,12 @@ const HomeCarousel = ({ adverts }) => {
                     <div className=" italic">{advert.plantAddress}</div>
                     <div
                       className="flex items-center pb-6 cursor-pointer"
-                      onClick={() => navigate(`/account/${advert?.userId}`)}
+                      onClick={() => (
+                        navigate(`/account/${advert?.userId}`),
+                        setTimeout(() => {
+                          window.location.reload()
+                        }, 1000)
+                      )}
                     >
                       <div>
                         {advert.user.firstName} {advert.user.lastName}

@@ -15,26 +15,8 @@ module.exports = {
     title: `Arosa'je`,
     description: `Avec Arosa'je, partagez vos plantes, demander la garde ou des conseils auprès de nos gardiens et botanistes.`,
     author: `Alexandre`,
-    siteUrl: `https://arosaje.com/`,
+    siteUrl: `http://localhost:8000`,
   },
-  // developMiddleware: app => {
-  //   app.use(
-  //     "/api",
-  //     cors({
-  //       origin: "*",
-  //       methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-  //       allowedHeaders: "*",
-  //     }),
-  //     createProxyMiddleware({
-  //       target: "https://localhost:7083",
-  //       changeOrigin: true,
-  //     })
-  //   )
-  // },
-  // proxy: {
-  //   prefix: "/api",
-  //   url: "https://localhost:7083/api/",
-  // },
   plugins: [
     `gatsby-plugin-image`,
     {

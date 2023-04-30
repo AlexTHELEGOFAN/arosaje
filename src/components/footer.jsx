@@ -18,19 +18,34 @@ const Footer = () => (
 
         <div
           className="pl-4 text-blue-800 cursor-pointer"
-          onClick={() => navigate(`/legal-notice/`)}
+          onClick={() => (
+            navigate(`/legal-notice/`),
+            setTimeout(() => {
+              window.location.reload()
+            }, 500)
+          )}
         >
           Mentions légales
         </div>
         <div
           className="pl-4 text-blue-800 cursor-pointer"
-          onClick={() => navigate(`/privacy-policy/`)}
+          onClick={() => (
+            navigate(`/privacy-policy/`),
+            setTimeout(() => {
+              window.location.reload()
+            }, 500)
+          )}
         >
           Politique de confidentialité
         </div>
         <div
           className="pl-4 text-blue-800 cursor-pointer"
-          onClick={() => navigate(`/terms-of-service/`)}
+          onClick={() => (
+            navigate(`/terms-of-service/`),
+            setTimeout(() => {
+              window.location.reload()
+            }, 500)
+          )}
         >
           Conditions générales
         </div>

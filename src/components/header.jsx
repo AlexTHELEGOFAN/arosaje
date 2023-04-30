@@ -1,30 +1,20 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext } from 'react'
 import { Link, navigate } from 'gatsby'
 
 import Select from 'react-select'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {
-  faBars,
-  faSearch,
-  faUser,
-  faXmark,
-} from '@fortawesome/free-solid-svg-icons'
+import { faBars, faSearch, faUser } from '@fortawesome/free-solid-svg-icons'
 
 import logo from '@assets/icons/icone.jpg'
 import { SearchContext } from '../context/SearchContext'
-import Cookies from 'universal-cookie'
 import jwtDecode from 'jwt-decode'
-import { UserContext } from '../context/UserContext'
+import { toast } from 'react-toastify'
 
-// Header layout
+// ** Header layout
 
 const Header = () => {
-  // const cookies = new Cookies()
-  // const jwt = cookies.get('jwt')
   const jwt = localStorage.getItem('jwt')
   const user = localStorage.getItem('user')
-
-  const { currentUser } = useContext(UserContext)
 
   let decodedToken = ''
   !jwt ?? (decodedToken = jwtDecode(jwt))
@@ -55,7 +45,16 @@ const Header = () => {
   return (
     <header className="bg-headerGreen px-4 py-6 flex justify-between items-center sticky top-0 z-50">
       <div>
-        <Link to="/home" className="flex text-lg font-bold">
+        <div
+          to="/home"
+          className="flex text-lg font-bold cursor-pointer"
+          onClick={() => (
+            navigate('/home'),
+            setTimeout(() => {
+              window.location.reload()
+            }, 1000)
+          )}
+        >
           <img
             width="100%"
             src={logo}
@@ -63,7 +62,7 @@ const Header = () => {
             className="cursor-pointer max-w-[40px] pr-2"
           />
           <p>Arosa'je</p>
-        </Link>
+        </div>
       </div>
 
       <div className="flex justify-between items-center relative">
@@ -75,13 +74,6 @@ const Header = () => {
           onChange={e => handleSearch(e.target.value)}
         />
 
-        {/* {searchQuery.length > 0 && (
-          <FontAwesomeIcon
-            icon={faXmark}
-            size="2xl"
-            className="absolute w-4 h-4 right-4 cursor-pointer pr-6"
-          />
-        )} */}
         <FontAwesomeIcon
           icon={faSearch}
           size="2xl"
@@ -96,43 +88,69 @@ const Header = () => {
         >
           {expired || jwt === null ? (
             <>
-              <Link
-                to="/register"
-                className="w-[150px] h-8 text-black header-button mr-4 text-center"
+              <div
+                className="w-[150px] h-8 text-black header-button mr-4 text-center cursor-pointer"
+                onClick={() => (
+                  navigate('/register'),
+                  setTimeout(() => {
+                    window.location.reload()
+                  }, 1000)
+                )}
               >
                 Créer un compte
-              </Link>
-              <Link
-                to="/login"
-                className="w-[120px] h-8 text-black header-button text-center"
+              </div>
+              <div
+                className="w-[120px] h-8 text-black header-button mr-4 text-center cursor-pointer"
+                onClick={() => (
+                  navigate('/login'),
+                  setTimeout(() => {
+                    window.location.reload()
+                  }, 1000)
+                )}
               >
                 Se connecter
-              </Link>
+              </div>
             </>
           ) : (
             <>
               <div
-                className="w-[170px] header-button mr-4"
-                onClick={() => navigate('/new')}
+                className="w-[170px] h-8 text-black header-button mr-4 text-center cursor-pointer"
+                onClick={() => (
+                  navigate('/new'),
+                  setTimeout(() => {
+                    window.location.reload()
+                  }, 1000)
+                )}
               >
                 + Nouvelle annonce
               </div>
 
               <div
-                className="w-[140px] header-button mr-4"
-                onClick={() => localStorage.clear()}
+                className="w-[140px] header-button mr-4 cursor-pointer"
+                onClick={() => (
+                  localStorage.clear(),
+                  toast.info('Vous êtes maintenant déconnecté', {
+                    position: 'bottom-right',
+                  }),
+                  setTimeout(() => {
+                    window.location.reload()
+                  }, 1000)
+                )}
               >
                 Se déconnecter
               </div>
-              {/* <Link to="/messages/1" className="w-[100px] header-button mr-4">
-  Message
-</Link> */}
+
               <div className="cursor-pointer text-black">
                 <FontAwesomeIcon
                   icon={faUser}
                   size="2xl"
                   className="w-5 h-5 text-black"
-                  onClick={() => navigate(`/account/${user}/`)}
+                  onClick={() => (
+                    navigate(`/account/${user}/`),
+                    setTimeout(() => {
+                      window.location.reload()
+                    }, 1000)
+                  )}
                 />
               </div>
             </>

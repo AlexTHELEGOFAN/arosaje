@@ -88,7 +88,12 @@ const AccountPage = () => {
     <Layout>
       <button
         className="flex text-center items-center"
-        onClick={() => navigate(-1)}
+        onClick={() => (
+          navigate(-1),
+          setTimeout(() => {
+            window.location.reload()
+          }, 1000)
+        )}
       >
         <FontAwesomeIcon
           icon={faArrowLeft}
@@ -131,7 +136,12 @@ const AccountPage = () => {
           <div className="">
             <button
               className="header-button mb-4"
-              onClick={() => navigate(`/messages/1`)}
+              onClick={() => (
+                navigate(`/messages/1`),
+                setTimeout(() => {
+                  window.location.reload()
+                }, 1000)
+              )}
             >
               Contacter
             </button>
@@ -157,7 +167,12 @@ const AccountPage = () => {
                           }
                           alt={plant.name + ' ' + plant.species}
                           className="drop-shadow-md pb-1 cursor-pointer max-w-[300px]"
-                          onClick={() => navigate(`/plant/${plant.plantId}/`)}
+                          onClick={() => (
+                            navigate(`/plant/${plant.plantId}/`),
+                            setTimeout(() => {
+                              window.location.reload()
+                            }, 1000)
+                          )}
                         />
                       </div>
                     </div>

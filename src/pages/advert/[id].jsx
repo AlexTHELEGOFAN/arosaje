@@ -10,6 +10,7 @@ import AdCard from '../../components/AdCard'
 
 import Layout from '../../components/layout'
 import Spinner from '../../components/Spinner'
+import jwtDecode from 'jwt-decode'
 
 // Plant advert page
 
@@ -23,7 +24,15 @@ const Advert = () => {
   const [currentAdUser, setCurrentAdUser] = useState([])
   const [adverts, setAdverts] = useState([])
   const [isLoading, setIsLoading] = useState(true)
-  const [isReloading, setIsReloading] = useState(false)
+
+  const jwt = localStorage.getItem('jwt')
+
+  let decodedToken = ''
+  !jwt ?? (decodedToken = jwtDecode(jwt))
+
+  const currentTime = Math.round(new Date().getTime() / 1000)
+  let expired = ''
+  currentTime > decodedToken.exp ? (expired = true) : (expired = false)
 
   const fetchCurrentAd = async () => {
     try {
@@ -126,7 +135,7 @@ const Advert = () => {
         <div className="pr-2">
           {currentAdImage.image && (
             <img
-              width="80%"
+              width="500px"
               src={
                 require(`@assets/images/${currentAdImage?.image}.jpg`).default
               }
@@ -185,7 +194,16 @@ const Advert = () => {
 
           <button
             className="header-button mb-4"
-            onClick={() => navigate(`/messages/1`)}
+            onClick={() =>
+              expired || jwt === null
+                ? toast.error(
+                    'Vous devez être connecté pour effectuer cette action',
+                    {
+                      position: 'bottom-right',
+                    }
+                  )
+                : navigate(`/messages/${currentAd.userId}`)
+            }
           >
             Contacter
           </button>

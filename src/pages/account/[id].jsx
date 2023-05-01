@@ -128,7 +128,7 @@ const AccountPage = () => {
           <div className="">
             <button
               className="header-button mb-4"
-              onClick={() => navigate(`/messages/1`)}
+              onClick={() => navigate(`/messages/${user.userId}`)}
             >
               Contacter
             </button>
@@ -138,22 +138,22 @@ const AccountPage = () => {
               <div
                 className="grid
         sm:gap-3 sm:grid-cols-1
-        md:gap-4 md:grid-cols-2
-        lg:gap-5 lg:grid-cols-3
-        xl:gap-6 xl:grid-cols-3
+        md:gap-4 md:grid-cols-1
+        lg:gap-5 lg:grid-cols-2
+        xl:gap-6 xl:grid-cols-2
         2xl:gap-10 2xl:grid-cols-3"
               >
                 {userPlants.length ? (
                   userPlants.map(plant => (
                     <div className="pt-5 pr-0 " key={plant?.plantId}>
-                      <div className="pb-2">
+                      <div className="pb-2 flex justify-center">
                         <img
                           src={
                             require(`@assets/images/${plant.image.image}.jpg`)
                               .default
                           }
                           alt={plant.name + ' ' + plant.species}
-                          className="drop-shadow-md pb-1 cursor-pointer max-w-[300px]"
+                          className="drop-shadow-md pb-1 cursor-pointer max-w-[290px]"
                           onClick={() => navigate(`/plant/${plant.plantId}/`)}
                         />
                       </div>

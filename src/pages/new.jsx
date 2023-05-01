@@ -17,7 +17,6 @@ const NewAdvert = () => {
   const id = localStorage.getItem('user')
   const [isLoading, setIsLoading] = useState(true)
   const jwt = localStorage.getItem('jwt')
-  const user = localStorage.getItem('user')
 
   let decodedToken = ''
   !jwt ?? (decodedToken = jwtDecode(jwt))

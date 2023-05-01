@@ -19,6 +19,7 @@
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md,css}\""
   },
   "dependencies": {
+    "@emailjs/browser": "^3.11.0",
     "@fortawesome/fontawesome-svg-core": "^6.4.0",
     "@fortawesome/free-regular-svg-icons": "^6.3.0",
     "@fortawesome/free-solid-svg-icons": "^6.3.0",
@@ -30,6 +31,7 @@
     "axios": "^1.4.0",
     "better-react-carousel": "^1.1.1",
     "dayjs": "^1.11.7",
+    "emailjs": "^4.0.1",
     "formik": "^2.2.9",
     "gatsby": "^5.9.0",
     "gatsby-cli": "^5.9.0",

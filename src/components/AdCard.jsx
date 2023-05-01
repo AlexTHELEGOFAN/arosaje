@@ -19,7 +19,12 @@ const AdCard = ({ advert }) => {
           src={imageSrc}
           alt={advert.image.image}
           className="bg-green-100 block ml-auto mr-auto w-full h-full rounded-t-2xl drop-shadow-md cursor-pointer"
-          onClick={() => navigate(`/advert/${advert.plantId}/`)}
+          onClick={() => (
+            navigate(`/advert/${advert.plantId}/`),
+            setTimeout(() => {
+              window.location.reload()
+            }, 400)
+          )}
         />
       </div>
 

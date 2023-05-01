@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { Link, navigate } from 'gatsby'
+import { navigate } from 'gatsby'
 
 import Select from 'react-select'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -112,7 +112,7 @@ const Header = () => {
                     navigate('/register'),
                     setTimeout(() => {
                       window.location.reload()
-                    }, 1000)
+                    }, 400)
                   )}
                 >
                   Créer un compte
@@ -123,7 +123,7 @@ const Header = () => {
                     navigate('/login'),
                     setTimeout(() => {
                       window.location.reload()
-                    }, 1000)
+                    }, 400)
                   )}
                 >
                   Se connecter
@@ -137,7 +137,7 @@ const Header = () => {
                     navigate('/new'),
                     setTimeout(() => {
                       window.location.reload()
-                    }, 1000)
+                    }, 500)
                   )}
                 >
                   + Nouvelle annonce
@@ -159,7 +159,7 @@ const Header = () => {
                       navigate(`/account/${user}/`),
                       setTimeout(() => {
                         window.location.reload()
-                      }, 1000)
+                      }, 600)
                     )}
                   />
                 </div>

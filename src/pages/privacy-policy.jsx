@@ -3,15 +3,12 @@ import * as React from 'react'
 import Layout from '../components/layout'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons'
-import { posthog } from 'posthog-js'
 import { toast } from 'react-toastify'
 import Cookies from 'universal-cookie'
 
 // Account page
 const PrivacyPolicy = () => {
   const cookies = new Cookies()
-
-  console.log(cookies)
 
   const handleCookieDelete = () => {
     cookies.remove('age', { path: '/' })

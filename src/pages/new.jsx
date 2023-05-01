@@ -1,6 +1,6 @@
 // ** React imports
 
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -8,7 +8,6 @@ import { navigate } from 'gatsby'
 import Layout from '../components/layout'
 import { ErrorMessage, Field, Form, Formik } from 'formik'
 import { toast } from 'react-toastify'
-import { UserContext } from '../context/UserContext'
 import axios from 'axios'
 import Spinner from '../components/Spinner'
 import dayjs from 'dayjs'
@@ -58,7 +57,7 @@ const NewAdvert = () => {
             })
 
             .then(async res => {
-              await handleCreate(values.picDture)
+              await handleCreate(values.picture)
             })
             .catch(err => {
               console.error(err)
@@ -70,7 +69,7 @@ const NewAdvert = () => {
 
   const handleCreate = async value => {
     const createdPlant = await fetchPlants()
-    const creationDate = dayjs().format('YYYY-MM-DD HH:mm:ss')
+    const creationDate = dayjs().format()
     const filename = value
       .replace(/^.*[\\\/]/, '')
       .split('.')
@@ -78,7 +77,8 @@ const NewAdvert = () => {
       .join('.')
 
     await axios
-      .post(`https://localhost:7083/api/PlantImage/InsertAnnonce`, {
+      .post('https://localhost:7083/api/PlantImage/InsertAnnonce', {
+        imageId: createdPlant,
         image: filename,
         imageDate: creationDate,
         plantId: createdPlant,

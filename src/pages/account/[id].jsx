@@ -14,7 +14,7 @@ import Spinner from '../../components/Spinner'
 const AccountPage = () => {
   const url = window.location.href
   const parts = url.split('/')
-  const id = parts[4]
+  const id = parseInt(parts[4])
 
   const [user, setUser] = useState()
   const [userPlants, setUserPlants] = useState()
@@ -40,33 +40,33 @@ const AccountPage = () => {
       )
 
       const updatedAdverts = await Promise.all(
-        resAds.data.map(async advert => {
-          try {
-            const [userRes, imageRes] = await Promise.all([
-              axios.get(
-                `https://localhost:7083/api/User/GetUser/${advert.userId}`
-              ),
-              axios.get(
-                `https://localhost:7083/api/PlantImage/GetAnnonce/${advert.plantId}`
-              ),
-            ])
+        resAds.data
+          .filter(advert => advert.userId === id)
+          .map(async advert => {
+            try {
+              const [userRes, imageRes] = await Promise.all([
+                axios.get(`https://localhost:7083/api/User/GetUser/${id}`),
+                axios.get(
+                  `https://localhost:7083/api/PlantImage/GetAnnonce/${advert.plantId}`
+                ),
+              ])
 
-            // create a new advert object that includes the user and image data
-            return {
-              ...advert,
-              user: userRes.data,
-              image: imageRes.data,
+              // create a new advert object that includes the user and image data
+              return {
+                ...advert,
+                user: userRes.data,
+                image: imageRes.data,
+              }
+            } catch (err) {
+              console.error(err)
+              toast.error('Erreur lors de la récupération des données', {
+                position: 'bottom-right',
+              })
+
+              // return an empty object to avoid undefined values in the resulting array
+              return {}
             }
-          } catch (err) {
-            console.error(err)
-            toast.error('Erreur lors de la récupération des données', {
-              position: 'bottom-right',
-            })
-
-            // return an empty object to avoid undefined values in the resulting array
-            return {}
-          }
-        })
+          })
       )
 
       // update the state with the new array of adverts

@@ -1,7 +1,5 @@
 import { navigate } from 'gatsby'
 import React from 'react'
-import posthog from 'posthog-js'
-import CookieBanner from './CookieBanner'
 
 const Footer = () => (
   <footer className="flex justify-between bg-headerGreen px-4 py-6 fixed bottom-0 w-full">

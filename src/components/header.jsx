@@ -66,12 +66,7 @@ const Header = () => {
           <div
             to="/home"
             className="flex text-lg font-bold cursor-pointer"
-            onClick={() => (
-              navigate('/home'),
-              setTimeout(() => {
-                window.location.reload()
-              }, 1000)
-            )}
+            onClick={() => navigate('/home')}
           >
             <img
               width="100%"
@@ -108,23 +103,13 @@ const Header = () => {
               <>
                 <div
                   className="w-[150px] h-8 text-black header-button mr-4 text-center cursor-pointer"
-                  onClick={() => (
-                    navigate('/register'),
-                    setTimeout(() => {
-                      window.location.reload()
-                    }, 400)
-                  )}
+                  onClick={() => navigate('/register')}
                 >
                   Créer un compte
                 </div>
                 <div
                   className="w-[120px] h-8 text-black header-button mr-4 text-center cursor-pointer"
-                  onClick={() => (
-                    navigate('/login'),
-                    setTimeout(() => {
-                      window.location.reload()
-                    }, 400)
-                  )}
+                  onClick={() => navigate('/login')}
                 >
                   Se connecter
                 </div>
@@ -133,12 +118,7 @@ const Header = () => {
               <>
                 <div
                   className="w-[170px] h-8 text-black header-button mr-4 text-center cursor-pointer"
-                  onClick={() => (
-                    navigate('/new'),
-                    setTimeout(() => {
-                      window.location.reload()
-                    }, 500)
-                  )}
+                  onClick={() => navigate('/new')}
                 >
                   + Nouvelle annonce
                 </div>
@@ -155,12 +135,7 @@ const Header = () => {
                     icon={faUser}
                     size="2xl"
                     className="w-5 h-5 text-black"
-                    onClick={() => (
-                      navigate(`/account/${user}/`),
-                      setTimeout(() => {
-                        window.location.reload()
-                      }, 600)
-                    )}
+                    onClick={() => navigate(`/account/${user}/`)}
                   />
                 </div>
               </>

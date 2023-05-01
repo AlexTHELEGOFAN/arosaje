@@ -47,10 +47,13 @@ const PlantPage = () => {
     }
   }
 
-  useEffect(async () => {
+  const initData = async () => {
     await fetchCurrentPlant()
     await fetchCurrentPlantInfos()
-    setIsLoading(false)
+  }
+
+  useEffect(() => {
+    initData().then(() => setIsLoading(false))
   }, [])
 
   return isLoading ? (
@@ -59,12 +62,12 @@ const PlantPage = () => {
     <Layout>
       <button
         className="flex text-center items-center"
-        onClick={() => (
-          navigate(-1),
-          setTimeout(() => {
-            window.location.reload()
-          }, 10)
-        )}
+        onClick={() =>
+          navigate(-1)
+          // setTimeout(() => {
+          //   window.location.reload()
+          // }, 10)
+        }
       >
         <FontAwesomeIcon
           icon={faArrowLeft}

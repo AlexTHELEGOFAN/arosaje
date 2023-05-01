@@ -78,10 +78,13 @@ const AccountPage = () => {
     }
   }
 
-  useEffect(async () => {
+  const initData = async () => {
     await fetchUser()
     await fetchUserPlants()
-    setIsLoading(false)
+  }
+
+  useEffect(() => {
+    initData().then(() => setIsLoading(false))
   }, [])
 
   return isLoading ? (
@@ -90,12 +93,7 @@ const AccountPage = () => {
     <Layout>
       <button
         className="flex text-center items-center"
-        onClick={() => (
-          navigate(-1),
-          setTimeout(() => {
-            window.location.reload()
-          }, 10)
-        )}
+        onClick={() => navigate(-1)}
       >
         <FontAwesomeIcon
           icon={faArrowLeft}
@@ -121,14 +119,6 @@ const AccountPage = () => {
               <p className="font-medium pr-2">Statut :</p>
               {user?.status === 0 ? 'Inactif' : 'Actif'}
             </div>
-            {/* <div className="flex text-center">
-              <p className="font-medium pr-2">Adresse :</p>
-              {user?.userAddress}
-            </div>
-            <div className="flex text-center">
-              <p className="font-medium pr-2">Adresse email :</p>
-              {user?.email}
-            </div> */}
             <div className="flex text-center">
               <p className="font-medium pr-2">Numéro de téléphone :</p>
               {user?.phone}
@@ -138,12 +128,7 @@ const AccountPage = () => {
           <div className="">
             <button
               className="header-button mb-4"
-              onClick={() => (
-                navigate(`/messages/1`),
-                setTimeout(() => {
-                  window.location.reload()
-                }, 1000)
-              )}
+              onClick={() => navigate(`/messages/1`)}
             >
               Contacter
             </button>
@@ -169,12 +154,7 @@ const AccountPage = () => {
                           }
                           alt={plant.name + ' ' + plant.species}
                           className="drop-shadow-md pb-1 cursor-pointer max-w-[300px]"
-                          onClick={() => (
-                            navigate(`/plant/${plant.plantId}/`),
-                            setTimeout(() => {
-                              window.location.reload()
-                            }, 1000)
-                          )}
+                          onClick={() => navigate(`/plant/${plant.plantId}/`)}
                         />
                       </div>
                     </div>

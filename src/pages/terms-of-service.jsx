@@ -10,12 +10,7 @@ const LegalNotice = () => {
     <Layout>
       <button
         className="flex text-center items-center"
-        onClick={() => (
-          navigate(-1),
-          setTimeout(() => {
-            window.location.reload()
-          }, 10)
-        )}
+        onClick={() => navigate(-1)}
       >
         <FontAwesomeIcon
           icon={faArrowLeft}

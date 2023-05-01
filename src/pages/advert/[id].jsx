@@ -97,10 +97,13 @@ const Advert = () => {
     }
   }
 
-  useEffect(async () => {
+  const initData = async () => {
     await fetchCurrentAd()
     await fetchPlants()
-    setIsLoading(false)
+  }
+
+  useEffect(() => {
+    initData().then(() => setIsLoading(false))
   }, [])
 
   return isLoading ? (
@@ -109,12 +112,7 @@ const Advert = () => {
     <Layout>
       <button
         className="flex text-center items-center pb-6"
-        onClick={() => (
-          navigate(-1),
-          setTimeout(() => {
-            window.location.reload()
-          }, 1000)
-        )}
+        onClick={() => navigate(-1)}
       >
         <FontAwesomeIcon
           icon={faArrowLeft}
@@ -134,12 +132,7 @@ const Advert = () => {
               }
               alt={currentAdImage.image}
               className="drop-shadow-md pb-1 cursor-pointer"
-              onClick={() => (
-                navigate(`/plant/${currentAdImage?.plantId}/`),
-                setTimeout(() => {
-                  window.location.reload()
-                }, 1000)
-              )}
+              onClick={() => navigate(`/plant/${currentAdImage?.plantId}/`)}
             />
           )}
         </div>
@@ -178,12 +171,7 @@ const Advert = () => {
 
           <div
             className="flex items-center pb-6 cursor-pointer"
-            onClick={() => (
-              navigate(`/account/${currentAd.userId}/`),
-              setTimeout(() => {
-                window.location.reload()
-              }, 1000)
-            )}
+            onClick={() => navigate(`/account/${currentAd.userId}/`)}
           >
             <FontAwesomeIcon
               icon={faUser}
@@ -197,12 +185,7 @@ const Advert = () => {
 
           <button
             className="header-button mb-4"
-            onClick={() => (
-              navigate(`/messages/1`),
-              setTimeout(() => {
-                window.location.reload()
-              }, 1000)
-            )}
+            onClick={() => navigate(`/messages/1`)}
           >
             Contacter
           </button>

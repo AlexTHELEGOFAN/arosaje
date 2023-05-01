@@ -47,10 +47,6 @@ const Login = () => {
         setCurrentUser(decodedToken.unique_name)
         localStorage.setItem('user', decodedToken.unique_name)
         navigate('/home')
-
-        setTimeout(() => {
-          window.location.reload()
-        }, 1000)
       })
       .catch(err => {
         toast.error("Nom d'utilisateur ou mot de passe incorrect", {
@@ -69,12 +65,7 @@ const Login = () => {
     <div>
       <button
         className="flex text-center items-center ml-5 mt-5"
-        onClick={() => (
-          navigate(-1),
-          setTimeout(() => {
-            window.location.reload()
-          }, 10)
-        )}
+        onClick={() => navigate(-1)}
       >
         <FontAwesomeIcon
           icon={faArrowLeft}

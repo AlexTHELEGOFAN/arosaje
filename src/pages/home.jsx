@@ -106,10 +106,13 @@ const HomePage = () => {
     setFilteredAdverts(sortedAdverts)
   }
 
-  useEffect(async () => {
+  const initData = async () => {
     await fetchPlants()
     setFiltersAds(items)
-    setIsLoading(false)
+  }
+
+  useEffect(() => {
+    initData().then(() => setIsLoading(false))
   }, [])
 
   useEffect(() => {

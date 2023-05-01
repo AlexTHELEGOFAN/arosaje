@@ -19,12 +19,7 @@ const AdCard = ({ advert }) => {
           src={imageSrc}
           alt={advert.image.image}
           className="bg-green-100 block ml-auto mr-auto w-full h-full rounded-t-2xl drop-shadow-md cursor-pointer"
-          onClick={() => (
-            navigate(`/advert/${advert.plantId}/`),
-            setTimeout(() => {
-              window.location.reload()
-            }, 1000)
-          )}
+          onClick={() => navigate(`/advert/${advert.plantId}/`)}
         />
       </div>
 
@@ -42,12 +37,7 @@ const AdCard = ({ advert }) => {
 
             <div
               className="flex items-center pb-6 cursor-pointer"
-              onClick={() => (
-                navigate(`/account/${advert.userId}/`),
-                setTimeout(() => {
-                  window.location.reload()
-                }, 1000)
-              )}
+              onClick={() => navigate(`/account/${advert.userId}/`)}
             >
               <div>
                 {advert.user.firstName} {advert.user.lastName}

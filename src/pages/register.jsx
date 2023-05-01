@@ -41,9 +41,6 @@ const Register = () => {
       })
       .then(res => {
         navigate('/login')
-        setTimeout(() => {
-          window.location.reload()
-        }, 1000)
       })
       .catch(err => {
         console.error(err)
@@ -63,12 +60,7 @@ const Register = () => {
     <div>
       <button
         className="flex text-center items-center ml-5 mt-5"
-        onClick={() => (
-          navigate(-1),
-          setTimeout(() => {
-            window.location.reload()
-          }, 10)
-        )}
+        onClick={() => navigate(-1)}
       >
         <FontAwesomeIcon
           icon={faArrowLeft}

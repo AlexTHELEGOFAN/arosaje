@@ -37,10 +37,8 @@ const Messages = () => {
       await axios(
         `https://localhost:7083/api/User/GetUser/${currentUserId}`
       ).then(response => setCurrentUser(response.data))
-    } catch {
-      toast.error('Erreur lors du chargement des données', {
-        position: 'bottom-right',
-      })
+    } catch (err) {
+      console.log(err)
     }
   }
 

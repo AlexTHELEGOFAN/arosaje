@@ -19,13 +19,23 @@ const AccountPage = () => {
   const [user, setUser] = useState()
   const [userPlants, setUserPlants] = useState()
   const [isLoading, setIsLoading] = useState(true)
-  const [userType, setUserType] = useState()
+  const [type, setType] = useState('')
 
   const fetchUser = async () => {
     try {
-      await axios(`https://localhost:7083/api/User/GetUser/${id}`).then(
-        response => setUser(response.data)
+      const response = await axios(
+        `https://localhost:7083/api/User/GetUser/${id}`
       )
+
+      if (response.data.typeId === 1) {
+        setType('Propriétaire')
+      } else if (response.data.typeId === 2) {
+        setType('Botaniste')
+      } else if (response.data.typeId === 3) {
+        setType('Gardien')
+      }
+
+      setUser(response.data)
     } catch {
       toast.error('Erreur lors du chargement des données', {
         position: 'bottom-right',
@@ -114,6 +124,10 @@ const AccountPage = () => {
             <div className="font-medium text-lg">{user?.username}</div>
           </div>
           <div className="pb-6">
+            <div className="flex text-center">
+              <p className="font-medium pr-2">Type :</p>
+              {type}
+            </div>
             <div className="flex text-center">
               <p className="font-medium pr-2">Statut :</p>
               {user?.status === 0 ? 'Inactif' : 'Actif'}

@@ -24,6 +24,7 @@ const Advert = () => {
   const [currentAdUser, setCurrentAdUser] = useState([])
   const [adverts, setAdverts] = useState([])
   const [isLoading, setIsLoading] = useState(true)
+  const [type, setType] = useState('')
 
   const jwt = localStorage.getItem('jwt')
 
@@ -50,7 +51,16 @@ const Advert = () => {
         ),
       ])
 
+      if (advertUser.data.typeId === 1) {
+        setType('Propriétaire')
+      } else if (advertUser.data.typeId === 2) {
+        setType('Botaniste')
+      } else if (advertUser.data.typeId === 3) {
+        setType('Gardien')
+      }
+
       setCurrentAdUser(advertUser.data)
+
       setCurrentAdImage(advertImage.data)
     } catch (error) {
       toast.error('Erreur lors du chargement des données', {
@@ -109,16 +119,6 @@ const Advert = () => {
   const initData = async () => {
     await fetchCurrentAd()
     await fetchPlants()
-  }
-
-  let type = ''
-
-  if (currentAdUser.typeId === 1) {
-    type = 'Propriétaire'
-  } else if (currentAdUser.typeId === 2) {
-    type = 'Botaniste'
-  } else if (currentAdUser.typeId === 3) {
-    type = 'Gardien'
   }
 
   useEffect(() => {
@@ -198,7 +198,7 @@ const Advert = () => {
               className="w-5 h-5 pr-2"
             />
             <div>
-              {currentAdUser.firstName} {currentAdUser.lastName}, {type}
+              {currentAdUser.username}, {type}
             </div>
           </div>
 

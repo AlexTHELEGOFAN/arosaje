@@ -111,6 +111,16 @@ const Advert = () => {
     await fetchPlants()
   }
 
+  let type = ''
+
+  if (currentAdUser.typeId === 1) {
+    type = 'Propriétaire'
+  } else if (currentAdUser.typeId === 2) {
+    type = 'Botaniste'
+  } else if (currentAdUser.typeId === 3) {
+    type = 'Gardien'
+  }
+
   useEffect(() => {
     initData().then(() => setIsLoading(false))
   }, [])
@@ -188,7 +198,7 @@ const Advert = () => {
               className="w-5 h-5 pr-2"
             />
             <div>
-              {currentAdUser.firstName} {currentAdUser.lastName}
+              {currentAdUser.firstName} {currentAdUser.lastName}, {type}
             </div>
           </div>
 

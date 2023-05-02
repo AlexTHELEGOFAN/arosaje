@@ -112,7 +112,6 @@ const AccountPage = () => {
               className="w-5 h-5 pr-4"
             />
             <div className="font-medium text-lg">{user?.username}</div>
-            <div className=""></div>
           </div>
           <div className="pb-6">
             <div className="flex text-center">

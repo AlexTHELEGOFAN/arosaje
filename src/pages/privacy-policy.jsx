@@ -11,6 +11,7 @@ const PrivacyPolicy = () => {
   const cookies = new Cookies()
 
   const handleCookieDelete = () => {
+    cookies.remove('cookies', { path: '/' })
     cookies.remove('age', { path: '/' })
     cookies.remove('phone', { path: '/' })
     toast.success('Vos cookies ont été supprimés', {

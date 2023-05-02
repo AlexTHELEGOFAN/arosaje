@@ -49,15 +49,28 @@ const PlantPage = () => {
     }
   }
 
+  const handleDeletePlant = async () => {
+    await deletePlantImage()
+    await deletePlant()
+  }
+
+  const deletePlantImage = async () => {
+    try {
+      await axios.delete(
+        `https://localhost:7083/api/PlantImage/DeletePlant/${id}`
+      )
+    } catch {
+      toast.error('Erreur', {
+        position: 'bottom-right',
+      })
+    }
+  }
+
   const deletePlant = async () => {
     try {
-      await axios
-        .delete(`https://localhost:7083/api/PlantImage/DeletePlant/${id}`)
-        .then(
-          await axios.delete(
-            `https://localhost:7083/api/Annonce/DeletePlant/${id}`
-          )
-        )
+      await axios.delete(`https://localhost:7083/api/Annonce/DeletePlant/${id}`)
+      navigate('/home')
+
       toast.success('Votre annonce a été supprimée', {
         position: 'bottom-right',
       })
@@ -84,12 +97,7 @@ const PlantPage = () => {
     <Layout>
       <button
         className="flex text-center items-center"
-        onClick={
-          () => navigate(-1)
-          // setTimeout(() => {
-          //   window.location.reload()
-          // }, 10)
-        }
+        onClick={() => navigate(-1)}
       >
         <FontAwesomeIcon
           icon={faArrowLeft}
@@ -126,7 +134,7 @@ const PlantPage = () => {
             {currentPlant.userId === user && (
               <button
                 className="flex text-center items-center"
-                onClick={deletePlant}
+                onClick={handleDeletePlant}
               >
                 <FontAwesomeIcon
                   icon={faTrash}

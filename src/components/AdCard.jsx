@@ -23,7 +23,7 @@ const AdCard = ({ advert }) => {
             navigate(`/advert/${advert.plantId}/`),
             setTimeout(() => {
               window.location.reload()
-            }, 400)
+            }, 700)
           )}
         />
       </div>

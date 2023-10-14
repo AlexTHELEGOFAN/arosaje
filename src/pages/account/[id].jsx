@@ -9,6 +9,7 @@ import { useState } from 'react'
 import { toast } from 'react-toastify'
 import axios from 'axios'
 import Spinner from '../../components/Spinner'
+import dayjs from 'dayjs'
 
 // Account page
 const AccountPage = () => {
@@ -18,10 +19,11 @@ const AccountPage = () => {
 
   const [user, setUser] = useState()
   const [userPlants, setUserPlants] = useState()
+  const [messageHistory, setMessageHistory] = useState()
   const [isLoading, setIsLoading] = useState(true)
   const [type, setType] = useState('')
 
-  const fetchUser = async () => {
+  const fetchUser = async userId => {
     try {
       const response = await axios(
         `https://localhost:7083/api/User/GetUser/${id}`

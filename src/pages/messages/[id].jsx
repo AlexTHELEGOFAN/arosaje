@@ -1,6 +1,6 @@
 // ** React imports
 
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import Layout from '../../components/layout'
 import { Formik, Form, ErrorMessage, Field } from 'formik'
@@ -12,10 +12,10 @@ import axios from 'axios'
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { navigate } from 'gatsby'
+import dayjs from 'dayjs'
 
 const Messages = () => {
   const [isLoading, setIsLoading] = useState(true)
-
   const jwt = localStorage.getItem('jwt')
 
   let decodedToken = ''
@@ -27,6 +27,7 @@ const Messages = () => {
   const currentUserId = localStorage.getItem('user')
   const [currentUser, setCurrentUser] = useState()
   const [recipientUser, setRecipientUser] = useState()
+  const [messageHistory, setMessageHistory] = useState()
 
   const url = window.location.href
   const parts = url.split('/')
@@ -34,20 +35,41 @@ const Messages = () => {
 
   const fetchCurrentUser = async () => {
     try {
-      await axios(
+      const response = await axios.get(
         `https://localhost:7083/api/User/GetUser/${currentUserId}`
-      ).then(response => setCurrentUser(response.data))
+      )
+      setCurrentUser(response.data)
     } catch (err) {
-      console.log(err)
+      console.error(err)
+      toast.error('Erreur lors du chargement des données', {
+        position: 'bottom-right',
+      })
     }
   }
 
   const fetchRecipientUser = async () => {
     try {
-      await axios(
+      const response = await axios.get(
         `https://localhost:7083/api/User/GetUser/${recipientId}`
-      ).then(response => setRecipientUser(response.data))
-    } catch {
+      )
+      setRecipientUser(response.data)
+    } catch (err) {
+      console.error(err)
+      toast.error('Erreur lors du chargement des données', {
+        position: 'bottom-right',
+      })
+    }
+  }
+
+  const fetchMessageHistory = async () => {
+    try {
+      const response = await axios.get(
+        `https://localhost:7083/api/Message/GetMessages`
+      )
+
+      setMessageHistory(response.data)
+    } catch (err) {
+      console.error(err)
       toast.error('Erreur lors du chargement des données', {
         position: 'bottom-right',
       })
@@ -55,8 +77,12 @@ const Messages = () => {
   }
 
   const initData = async () => {
-    await fetchCurrentUser()
-    await fetchRecipientUser()
+    try {
+      await fetchCurrentUser()
+      await fetchRecipientUser().then(fetchMessageHistory())
+    } catch (err) {
+      console.error(err)
+    }
   }
 
   useEffect(() => {
@@ -67,6 +93,7 @@ const Messages = () => {
     const form = {
       to_name: recipientUser?.username,
       to_email: recipientUser?.email,
+      from_email: currentUser?.email,
       from_name: currentUser?.username,
       message: values.message,
     }
@@ -77,6 +104,16 @@ const Messages = () => {
         form,
         'REQIuB5vj3Wo6oAXl'
       )
+
+      await axios.post('https://localhost:7083/api/Message/InsertMessage', {
+        sendDate: dayjs().format(),
+        content: values.message,
+        userId: currentUser?.userId,
+        userId_1: recipientUser?.userId,
+      })
+
+      await fetchMessageHistory()
+
       toast.success('Votre message a été envoyé', {
         position: 'bottom-right',
       })
@@ -104,7 +141,7 @@ const Messages = () => {
       </button>
 
       <div className="flex justify-center items-center">
-        <div className="bg-green-200 px-8 py-5  w-[70%] rounded-md drop-shadow-md">
+        <div className="bg-green-200 px-8 py-5 w-[70%] rounded-md drop-shadow-md">
           <h1 className="text-center text-2xl font-medium my-4">
             Formulaire de contact
           </h1>
@@ -165,6 +202,53 @@ const Messages = () => {
               </Form>
             )}
           </Formik>
+        </div>
+      </div>
+
+      <div className="flex justify-center items-center py-6">
+        <div className="bg-green-200 px-8 py-5 w-[70%] rounded-md drop-shadow-md">
+          <h1 className="text-center text-2xl font-medium my-4">Historique</h1>
+          {messageHistory?.length ? (
+            messageHistory
+
+              .filter(
+                message =>
+                  (message?.userId === currentUser?.userId &&
+                    message?.userId_1 === recipientUser?.userId) ||
+                  (message?.userId === recipientUser?.userId &&
+                    message?.userId_1 === currentUser?.userId)
+              )
+              .sort(
+                (a, b) =>
+                  dayjs(a.sendDate).valueOf() - dayjs(b.sendDate).valueOf()
+              )
+
+              .map(message => (
+                <div className="pt-5 pr-0 " key={message?.messageId}>
+                  {message?.userId === currentUser?.userId ? (
+                    <div className="grid justify-start">
+                      <p className="text-base  font-semibold  pb-4">
+                        Vous le{' '}
+                        {dayjs(message?.sendDate).format('DD/MM/YYYY HH:mm:ss')}{' '}
+                        à {recipientUser?.username} :
+                      </p>
+                      <p className="text-base pb-4">{message?.content}</p>
+                    </div>
+                  ) : (
+                    <div className="grid justify-start">
+                      <p className="text-base  font-semibold  pb-4">
+                        {recipientUser?.username} le{' '}
+                        {dayjs(message?.sendDate).format('DD/MM/YYYY HH:mm:ss')}{' '}
+                        à vous :
+                      </p>
+                      <p className="text-base pb-4">{message?.content}</p>
+                    </div>
+                  )}
+                </div>
+              ))
+          ) : (
+            <p className="flex text-center">Aucun message envoyé</p>
+          )}
         </div>
       </div>
     </Layout>

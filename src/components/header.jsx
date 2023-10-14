@@ -32,6 +32,7 @@ const Header = () => {
   ]
 
   const optionLinks = [
+    { value: `/history/${user}/`, label: 'Historique' },
     { value: '/new', label: '+ Nouvelle annonce' },
     { value: ``, label: 'Se déconnecter' },
     { value: `/account/${user}/`, label: 'Mon compte' },
@@ -116,6 +117,13 @@ const Header = () => {
               </>
             ) : (
               <>
+                <div
+                  className="w-[130px] h-8 text-black header-button mr-4 text-center cursor-pointer"
+                  onClick={() => navigate(`/history/${user}/`)}
+                >
+                  Historique
+                </div>
+
                 <div
                   className="w-[170px] h-8 text-black header-button mr-4 text-center cursor-pointer"
                   onClick={() => navigate('/new')}
